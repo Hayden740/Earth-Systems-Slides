@@ -84,6 +84,8 @@ button{font:inherit;color:inherit;cursor:pointer}
   radial-gradient(circle at 98% 92%, color-mix(in srgb,var(--geo) 20%,transparent) 0 8cqw, transparent 8.1cqw)}
 .title .num{font-family:var(--f-mono);font-weight:700;font-size:1.5cqw;color:var(--accent);letter-spacing:.04em}
 .title h1{font-family:var(--f-display);font-weight:800;font-size:6cqw;line-height:.98;letter-spacing:-.03em;margin:0;max-width:16ch;text-wrap:balance}
+.reliefSw{position:absolute;top:2cqw;right:2.4cqw;font-size:1.3cqw;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.4cqw 1.2cqw;text-decoration:none;background:var(--surface)}
+.reliefTag{background:var(--accent);color:var(--surface);padding:.1cqw .7cqw;border-radius:.5cqw}
 .lisc{display:grid;grid-template-columns:1fr 1fr;gap:2cqw;max-width:72cqw}
 .lisc .box{background:var(--surface)}
 .lisc h3{font-size:1.4cqw;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:var(--f-body);font-weight:700}
@@ -991,6 +993,27 @@ LESSONS.push(
 { n:10, title:"Carbon cycle processes",
   li:"Describe the key processes in the carbon cycle.",
   sc:["I can explain how carbon moves through photosynthesis, respiration, decomposition and combustion.","I can say whether each process adds or removes CO&#8322; from the air."],
+  reliefPrep:"Each student needs their Week 3 carbon cycle booklet (Lesson 10 pages) and green and red pencils. No other set-up.",
+  relief:[
+  {mode:"check", h:"Starter: what do you remember?",
+   html:`<div class="grid3">${[["What is a carbon reservoir?","A place where carbon is stored for a time, like the air, plants, the ocean or rocks."],["Name the biggest carbon reservoir.","Rocks (limestone and other sedimentary rock)."],["What is the difference between a sink and a source?","A sink takes in more carbon than it releases. A source releases more than it takes in."]].map(c=>rv(c[0],c[1])).join("")}</div><p class="lead">Think on your own for 30 seconds, then hands up. Click a card to show the answer.</p>`,
+   notes:"Relief: about 5 minutes. Read each question, take one or two answers, then click the card to reveal. This is revision from last lesson."},
+  {mode:"learn", h:"Four big processes",
+   html:`<div class="grid2 fill">${[
+     ["bio","Photosynthesis","Plants take CO&#8322; from the air and use sunlight to make sugar.","Removes CO&#8322; from the air"],
+     ["atmo","Respiration","All living things break down sugar for energy and release CO&#8322;.","Adds CO&#8322; to the air"],
+     ["geo","Decomposition","Fungi and bacteria break down dead things and waste, releasing CO&#8322;.","Adds CO&#8322; to the air"],
+     ["hydro","Combustion","Burning wood or fossil fuels releases CO&#8322; quickly.","Adds CO&#8322; to the air"]
+   ].map(c=>`<div class="box tint ${c[0]}"><h3 class="ink">${c[1]}</h3><p>${c[2]}</p><p><b style="color:${c[3].startsWith("Removes")?"var(--good)":"var(--bad)"}">${c[3]}</b></p></div>`).join("")}</div><p class="small">Green means it removes CO&#8322; from the air. Red means it adds CO&#8322;. You'll use these colours in your booklet.</p>`,
+   notes:"Relief: about 5 minutes. Read each box aloud. Students don't need to copy this; it's all in the Lesson 10 reading in their booklet."},
+  {mode:"check", h:"Adds or removes CO&#8322;?",
+   html:`<p class="lead">Thumbs up if it <b style="color:var(--bad)">adds</b> CO&#8322; to the air. Thumbs down if it <b style="color:var(--good)">removes</b> it.</p><div class="grid4">${[["A cow breathing out","Adds (respiration)"],["A car engine running","Adds (combustion)"],["Seagrass growing in Gulf St Vincent","Removes (photosynthesis)"],["A compost heap breaking down","Adds (decomposition)"]].map(c=>rv(c[0],c[1])).join("")}</div>`,
+   notes:"Relief: about 3 minutes. Read each one, students show thumbs, then click to reveal. These are different examples from the sort on their activity page, so it isn't giving away answers."},
+  {mode:"write", timer:40, h:"Booklet time: Lesson 10 (pages 6 to 9)",
+   html:`<div class="grid2 fill"><div class="box"><h3>Work through your Lesson 10 pages in order</h3>${steps(["<b>Reading:</b> read it carefully. Highlight the five keywords.","<b>Questions:</b> answer all eight in full sentences. Every answer is in the reading.","<b>Activity:</b> write the process for each numbered arrow (1 to 6) using the word bank. Colour the arrows green or red. Then sort the examples into adds or removes CO&#8322;.","<b>Word search:</b> only once everything else is done."])}</div>
+   <div class="box"><h3>Expectations</h3><ul><li>Work quietly on your own.</li><li>Stuck? Re-read the reading first, then ask.</li><li>Finished early? Check your answers, then do the word search.</li></ul><p class="small">Your teacher will check these pages next lesson.</p></div></div>`,
+   notes:"Relief: rest of the lesson. Start the timer and let students work. In the last 5 minutes ask two students to share which process removes CO2 from the air (photosynthesis, and ocean uptake). Collect nothing; booklets stay with students."}
+  ],
   prep:"Seven station signs (Atmosphere, Plants, Animals, Soil, Ocean, Fossil fuels, Rocks). Coloured pencils (green and red) for the diagram.",
   slides:[
   {mode:"check", h:"Retrieval",
@@ -1029,6 +1052,28 @@ LESSONS.push(
 { n:11, title:"The carbon cycle and Earth's spheres",
   li:"Explain how the carbon cycle depends on interactions between spheres.",
   sc:["I can link carbon movements to the atmosphere, biosphere, hydrosphere and geosphere.","I can write a scientific explanation of a carbon cycle process."],
+  reliefPrep:"Each student needs their Week 3 carbon cycle booklet (Lesson 11 pages). Check the video plays before class; if it doesn't, use the ABC Education link under it.",
+  relief:[
+  {mode:"check", h:"Starter: name the process",
+   html:`<div class="grid4">${[["A kangaroo breathes out","Respiration"],["Seagrass in sunlight","Photosynthesis"],["A log rotting","Decomposition"],["A gas stove burning","Combustion"]].map(c=>rv(c[0],c[1])).join("")}</div><p class="lead">Which carbon cycle process is happening? Hands up, then click to check.</p>`,
+   notes:"Relief: about 4 minutes. Revision from last lesson."},
+  {mode:"watch", h:"The global carbon cycle",
+   html:vid({mp4:"https://abceducationmedia.akamaized.net/4477599164001/ABC-LIC-SCI256_576.mp4?source=web&content_id=13607624", page:"https://www.abc.net.au/education/keeping-up-with-carbon/13607624", poster:"https://live-production.wcms.abc-cdn.net.au/afa03505a62b4d93726d92c7be6421ac?impolicy=wcms_crop_resize&cropH=360&cropW=639&xPos=0&yPos=0&width=862&height=485"},"Keeping up with carbon","NASA, via ABC Education, 5 min",["Where is carbon stored? Name as many places as you can.","Which movements of carbon are fast, and which are slow?","What does the video say about the ocean?"]),
+   notes:"Relief: about 7 minutes. Play the whole video, then take a couple of answers to question 1 (air, plants and animals, soil, ocean, rocks and fossil fuels)."},
+  {mode:"learn", h:"Carbon moves between Earth's spheres",
+   html:`<div class="tablewrap"><table class="ctable"><thead><tr><th>Process</th><th>Carbon moves from...</th><th>...to</th></tr></thead><tbody>${[
+     ["Photosynthesis","Atmosphere (CO&#8322; in the air)","Biosphere (plants)"],["Respiration","Biosphere (living things)","Atmosphere"],["Decomposition","?","?"],["Combustion of fossil fuels","?","?"],["Ocean uptake","?","?"]
+   ].map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table></div><p class="small">Every carbon move is an <b>interaction</b> between two spheres. The first two are done for you. You'll finish the rest on your Lesson 11 activity page, using the reading.</p>`,
+   notes:"Relief: about 4 minutes. Talk through the two worked rows. Students complete the rest in their booklet, so leave the question marks. Answers if asked: decomposition, biosphere to atmosphere (and soil); combustion, geosphere to atmosphere; ocean uptake, atmosphere to hydrosphere."},
+  {mode:"learn", h:"How to write a scientific explanation",
+   html:`<div class="grid2 fill"><div class="box"><h3>Example</h3><p><span class="chip bio">Claim</span> Photosynthesis moves carbon from the atmosphere into the biosphere. <span class="chip atmo">Process</span> Plants take in carbon dioxide through their leaves and use energy from sunlight to turn it into glucose. <span class="chip hydro">Example</span> For example, a river red gum stores this carbon in its wood for hundreds of years. <span class="chip geo">Link</span> This shows that the carbon cycle depends on interactions between the atmosphere and the biosphere.</p></div>
+   <div class="box"><h3>Four parts</h3><ol><li><b>Claim:</b> which spheres, which direction</li><li><b>Process:</b> how it happens</li><li><b>Example:</b> a real example</li><li><b>Link:</b> back to spheres interacting</li></ol><p class="small">You'll write one of these on your activity page.</p></div></div>`,
+   notes:"Relief: about 4 minutes. Read the example aloud, pointing to each coloured part. The same model is in the Lesson 11 reading."},
+  {mode:"write", timer:35, h:"Booklet time: Lesson 11 (pages 10 to 13)",
+   html:`<div class="grid2 fill"><div class="box"><h3>Work through your Lesson 11 pages in order</h3>${steps(["<b>Reading:</b> read it carefully. Highlight the five keywords.","<b>Questions:</b> answer all eight in full sentences. Every answer is in the reading.","<b>Activity:</b> complete the spheres table. Then choose decomposition, combustion or ocean uptake and write your own explanation: Claim, Process, Example, Link. Tick the checklist.","<b>Word search:</b> only once everything else is done."])}</div>
+   <div class="box"><h3>Expectations</h3><ul><li>Work quietly on your own.</li><li>Stuck? Re-read the reading first, then ask.</li><li>Finished early? Check your explanation has all four parts, then do the word search.</li></ul><p class="small">Your teacher will check these pages next lesson.</p></div></div>`,
+   notes:"Relief: rest of the lesson. Start the timer and let students work. In the last 5 minutes, ask one or two students to read out their Claim sentence."}
+  ],
   prep:"Butcher paper, two colours of sticky notes and markers per group.",
   slides:[
   {mode:"check", h:"Retrieval: name the process",
@@ -1618,7 +1663,9 @@ function chime(){try{const a=new (window.AudioContext||window.webkitAudioContext
 const WEEKS=["Introducing Earth as a system","Cycles in Earth systems","The carbon cycle","Photosynthesis, respiration and investigation","Analysing evidence and human impacts","The greenhouse effect and climate","Consolidation and assessment"];
 const wk=l=>Math.ceil(LESSONS[l].n/4);
 let L=-1,S=0;
-function deck(l){return [{title:true},...LESSONS[l].slides]}
+const RELIEF=/[?&]relief\b/.test(location.search);
+const useRelief=l=>RELIEF&&!!LESSONS[l].relief;
+function deck(l){return [{title:true},...(useRelief(l)?LESSONS[l].relief:LESSONS[l].slides)]}
 function drawNav(){
   const w=L<0?0:wk(L), nav=$("#lessonNav");
   nav.innerHTML=WEEKS.map((t,i)=>`<button class="wk" data-w="${i+1}" title="Week ${i+1}: ${t}" aria-current="${w===i+1}">Wk ${i+1}</button>`).join("")
@@ -1637,7 +1684,8 @@ function render(){
   $("#ctrl").style.visibility="visible";
   const x=LESSONS[L],d=deck(L),s=d[S];
   if(s.title){
-    stage.innerHTML=`<section class="slide title"><span class="num">LESSON ${x.n} OF 28 &middot; WEEK ${wk(L)}</span><h1>${x.title}</h1><div class="lisc"><div class="box"><h3>Learning intention</h3><p>${x.li}</p></div><div class="box"><h3>Success criteria</h3><ul>${x.sc.map(c=>`<li>${c}</li>`).join("")}</ul></div></div></section>`;
+    const rv2=useRelief(L), sw=x.relief?`<a class="reliefSw" href="${rv2?location.pathname:location.pathname+"?relief"}#l${x.n}-1">${rv2?"Switch to the full lesson":"Switch to the relief version"}</a>`:"";
+    stage.innerHTML=`<section class="slide title">${sw}<span class="num">LESSON ${x.n} OF 28 &middot; WEEK ${wk(L)}${rv2?' &middot; <span class="reliefTag">RELIEF VERSION</span>':""}</span><h1>${x.title}</h1><div class="lisc"><div class="box"><h3>Learning intention</h3><p>${x.li}</p></div><div class="box"><h3>Success criteria</h3><ul>${x.sc.map(c=>`<li>${c}</li>`).join("")}</ul></div></div></section>`;
   } else {
     const m=MODES[s.mode]||MODES.learn;
     stage.innerHTML=`<section class="slide${s.timer?" hasTimer":""}"><div class="eyebrow"><span class="mode" style="--mc:${m[1]}">${m[0]}</span><span>Lesson ${x.n}</span>${s.timer?`<span>&middot; ${s.timer} min</span>`:""}</div><h2>${s.h}</h2>${s.html}${s.timer?timerHTML(s.timer):""}</section>`;
@@ -1648,7 +1696,7 @@ function render(){
   bindTimer();
   $("#count").textContent=`${S+1} / ${d.length}`;$("#progBar").style.width=`${(S+1)/d.length*100}%`;
   $("#prev").disabled=S===0&&L===0;
-  $("#notes").innerHTML=`<h4>Teacher notes</h4><p>${s.title?`Lesson ${x.n}. Read the learning intention aloud and ask a student to rephrase a success criterion in their own words.${x.prep?`</p><p><b>Prepare:</b> ${x.prep}`:""}`:(s.notes||"")}</p>`;
+  $("#notes").innerHTML=`<h4>Teacher notes</h4><p>${s.title?`Lesson ${x.n}. Read the learning intention aloud and ask a student to rephrase a success criterion in their own words.${(useRelief(L)?x.reliefPrep:x.prep)?`</p><p><b>Prepare:</b> ${useRelief(L)?x.reliefPrep:x.prep}`:""}`:(s.notes||"")}</p>`;
   save();
 }
 function go(l,s){L=l;S=s;render();try{history.replaceState(null,"",L<0?"#home":`#l${LESSONS[L].n}-${S+1}`)}catch(e){}}
