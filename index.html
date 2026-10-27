@@ -288,6 +288,7 @@ function $(s){return document.querySelector(s)}
 function shuffle(a){return a.slice().sort(()=>Math.random()-.5)}
 
 function player(id, title, source){
+  if(typeof id==="object") return `<div><div class="vid"><video controls preload="metadata" playsinline src="${id.mp4}"${id.poster?` poster="${id.poster}"`:""} style="width:100%;height:100%;display:block;background:#000"></video></div><p class="small" style="margin-top:.4cqw">Video not playing? <a href="${id.page}" target="_blank" rel="noopener" style="color:inherit">Watch it on ABC Education</a></p></div>`;
   return CAN_EMBED
     ? `<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${title}" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
     : `<a class="vidlink" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span><b>${title}</b><span>${source} &middot; opens on YouTube</span></a>`;
@@ -1034,8 +1035,8 @@ LESSONS.push(
    html:`<div class="grid4">${[["A kangaroo breathes out","Respiration"],["Seagrass in sunlight","Photosynthesis"],["A log rotting","Decomposition"],["A gas stove burning","Combustion"]].map(c=>rv(c[0],c[1])).join("")}</div>`,
    notes:"Fast warm-up."},
   {mode:"watch", h:"The global carbon cycle",
-   html:vid("aLuSi_6Ol8M","The Global Carbon Cycle","CrashCourse Chemistry",["Which reservoirs does the video name?","Which processes move carbon quickly, and which slowly?","What does the video say about the ocean?"],"Chemistry-heavy: watching the first part is enough."),
-   notes:"This video is pitched above Year 9. Pause often and translate. Stop when it gets too technical."},
+   html:vid({mp4:"https://abceducationmedia.akamaized.net/4477599164001/ABC-LIC-SCI256_576.mp4?source=web&content_id=13607624", page:"https://www.abc.net.au/education/keeping-up-with-carbon/13607624", poster:"https://live-production.wcms.abc-cdn.net.au/afa03505a62b4d93726d92c7be6421ac?impolicy=wcms_crop_resize&cropH=360&cropW=639&xPos=0&yPos=0&width=862&height=485"},"Keeping up with carbon","NASA, via ABC Education (Years 9 and 10), 5 min",["Where is carbon stored? Name as many places as you can.","Which movements of carbon are fast, and which are slow?","What does the video say about the ocean?"]),
+   notes:"NASA clip hosted by ABC Education, tagged for Years 9 and 10, 5 min 24 s. Plays straight from the ABC; if the school network blocks it, use the ABC Education link under the video."},
   {mode:"whole", h:"Which spheres does each process connect?", init:"cells",
    html:`<div class="tablewrap"><table class="ctable"><thead><tr><th>Process</th><th>Carbon moves from...</th><th>...to</th></tr></thead><tbody>${[
      ["Photosynthesis","Atmosphere (CO&#8322;)","Biosphere (plants)"],["Respiration","Biosphere","Atmosphere"],["Decomposition","Biosphere (dead matter)","Atmosphere, and geosphere (soil)"],["Combustion of fossil fuels","Geosphere","Atmosphere"],["Ocean uptake","Atmosphere","Hydrosphere"],["Shells forming limestone","Hydrosphere and biosphere","Geosphere"],["Volcanic eruption","Geosphere","Atmosphere"]
