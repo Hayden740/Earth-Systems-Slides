@@ -6,3 +6,5 @@ Live site: https://hayden740.github.io/Earth-Systems-Slides/
 
 - Use the arrow keys to move between slides, N for teacher notes, T to start or pause a timer, and F for full screen.
 - YouTube videos play on the slides when the site is hosted here on GitHub Pages.
+
+Relief lesson: Lesson 13 (Photosynthesis and carbon uptake) has a standalone student site with a six page self-marking worksheet at https://hayden740.github.io/Earth-Systems-Slides/relief-photosynthesis/
