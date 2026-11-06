@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carbon Storage SHE Task | Year 9 Earth Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: projector-first 16:9 stage under a slim lesson bar; sphere colours carry meaning everywhere */
+:root{
+  --bg:#e9efed; --surface:#fbfdfc; --ink:#13221e; --muted:#566862; --line:#cad7d2;
+  --atmo:#2f73bb; --hydro:#0f7f80; --geo:#b0512a; --bio:#3a7f35;
+  --accent:#b0512a; --accent-ink:#ffffff; --good:#2f7d3a; --bad:#b3372f;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1614; --surface:#15201e; --ink:#e4eeea; --muted:#9db1aa; --line:#2b3c38;
+  --atmo:#7db2ea; --hydro:#4fc4c1; --geo:#e9895a; --bio:#82c47a;
+  --accent:#e9895a; --accent-ink:#1a0e08; --good:#7fcf86; --bad:#f08a80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1614; --surface:#15201e; --ink:#e4eeea; --muted:#9db1aa; --line:#2b3c38;
+  --atmo:#7db2ea; --hydro:#4fc4c1; --geo:#e9895a; --bio:#82c47a;
+  --accent:#e9895a; --accent-ink:#1a0e08; --good:#7fcf86; --bad:#f08a80; color-scheme:dark}
+
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.app{display:flex;flex-direction:column;height:100%;padding-inline:16px}
+
+/* top bar */
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:18px;letter-spacing:-.01em;background:none;border:0;padding:0;display:flex;align-items:center;gap:8px}
+.brand .dots{display:inline-flex;gap:3px}
+.brand .dots i{width:9px;height:9px;border-radius:50%;display:block}
+.lessons{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.lessons button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:14px}
+.lessons button[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* stage */
+.stageWrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.stage{width:min(100%, calc((100dvh - 130px) * 16 / 9));aspect-ratio:16/9;max-width:100%;container-type:inline-size;
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;position:relative;overflow:hidden}
+.slide{position:absolute;inset:0;padding:3.2cqw 4cqw 3cqw;display:flex;flex-direction:column;gap:1.4cqw;overflow:auto;font-size:1.85cqw}
+.eyebrow{display:flex;align-items:center;gap:1cqw;font-size:1.25cqw;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.mode{display:inline-flex;align-items:center;gap:.6cqw;padding:.35cqw 1cqw;border-radius:999px;background:var(--ink);color:var(--bg);letter-spacing:.06em}
+.mode::before{content:"";width:.8cqw;height:.8cqw;border-radius:50%;background:var(--mc,var(--accent))}
+.slide h2{font-family:var(--f-display);font-weight:800;font-size:3.5cqw;line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.slide h3{font-family:var(--f-display);font-weight:600;font-size:2.1cqw;margin:0;line-height:1.15}
+.slide p{margin:0;max-width:62ch}
+.slide ul,.slide ol{margin:0;padding-left:1.4em;display:grid;gap:.5cqw}
+.lead{font-size:2.3cqw;line-height:1.3}
+.small{font-size:1.4cqw;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:2cqw}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6cqw}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4cqw}
+.grid2>*,.grid3>*,.grid4>*{min-width:0}
+.box{border:1px solid var(--line);border-radius:1cqw;padding:1.4cqw 1.6cqw;display:flex;flex-direction:column;gap:.7cqw}
+.steps{counter-reset:s;list-style:none;padding:0 !important}
+.steps li{counter-increment:s;display:grid;grid-template-columns:3cqw 1fr;gap:1cqw;align-items:start}
+.steps li::before{content:counter(s);font-family:var(--f-display);font-weight:800;width:2.6cqw;height:2.6cqw;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:1.5cqw}
+.key{font-weight:700;color:var(--accent)}
+.def{border-left:.5cqw solid var(--accent);padding:.6cqw 0 .6cqw 1.4cqw;font-size:2.2cqw;line-height:1.3;max-width:56ch}
+.chip{display:inline-block;padding:.2cqw .9cqw;border-radius:999px;font-weight:700;font-size:.9em}
+.atmo{--sc:var(--atmo)} .hydro{--sc:var(--hydro)} .geo{--sc:var(--geo)} .bio{--sc:var(--bio)}
+.tint{background:color-mix(in srgb,var(--sc) 13%,var(--surface));border-color:color-mix(in srgb,var(--sc) 45%,var(--line))}
+.ink{color:var(--sc)}
+.chip.atmo,.chip.hydro,.chip.geo,.chip.bio{background:var(--sc);color:var(--surface)}
+.fill{flex:1;min-height:0}
+.row{display:flex;gap:1cqw;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:.8cqw;padding:.6cqw 1.3cqw;font-size:1.45cqw;font-weight:700}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* title slide */
+.title{justify-content:center;gap:2cqw;background:
+  radial-gradient(circle at 92% 18%, color-mix(in srgb,var(--atmo) 22%,transparent) 0 9cqw, transparent 9.1cqw),
+  radial-gradient(circle at 84% 70%, color-mix(in srgb,var(--hydro) 20%,transparent) 0 11cqw, transparent 11.1cqw),
+  radial-gradient(circle at 70% 32%, color-mix(in srgb,var(--bio) 18%,transparent) 0 7cqw, transparent 7.1cqw),
+  radial-gradient(circle at 98% 92%, color-mix(in srgb,var(--geo) 20%,transparent) 0 8cqw, transparent 8.1cqw)}
+.title .num{font-family:var(--f-mono);font-weight:700;font-size:1.5cqw;color:var(--accent);letter-spacing:.04em}
+.title h1{font-family:var(--f-display);font-weight:800;font-size:6cqw;line-height:.98;letter-spacing:-.03em;margin:0;max-width:16ch;text-wrap:balance}
+.reliefSw{position:absolute;top:2cqw;right:2.4cqw;font-size:1.3cqw;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.4cqw 1.2cqw;text-decoration:none;background:var(--surface)}
+.reliefTag{background:var(--accent);color:var(--surface);padding:.1cqw .7cqw;border-radius:.5cqw}
+.lisc{display:grid;grid-template-columns:1fr 1fr;gap:2cqw;max-width:72cqw}
+.lisc .box{background:var(--surface)}
+.lisc h3{font-size:1.4cqw;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:var(--f-body);font-weight:700}
+
+/* reveal cards */
+.reveal{border:1px dashed var(--line);border-radius:1cqw;padding:1.2cqw 1.4cqw;background:var(--surface);text-align:left;display:flex;flex-direction:column;gap:.5cqw;min-height:7cqw}
+.reveal .q{font-weight:700}
+.reveal .a{display:none;color:var(--ink)}
+.reveal .hint{font-size:1.2cqw;color:var(--muted)}
+.reveal.open{border-style:solid;border-color:var(--accent)}
+.reveal.open .a{display:block}
+.reveal.open .hint{display:none}
+
+/* tabs */
+.tabbar{display:flex;gap:.6cqw;flex-wrap:wrap}
+.tabbar button{border:1px solid var(--line);background:var(--surface);border-radius:.8cqw;padding:.5cqw 1.1cqw;font-size:1.45cqw;font-weight:700}
+.tabbar button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{display:none}.panel.on{display:flex}
+
+/* video */
+.vid{aspect-ratio:16/9;width:100%;border-radius:1cqw;overflow:hidden;background:#000;border:1px solid var(--line)}
+.vid iframe{width:100%;height:100%;border:0;display:block}
+.vidlink{aspect-ratio:16/9;width:100%;border-radius:1cqw;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1cqw;text-decoration:none;color:var(--ink);
+  background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--hydro) 10%,var(--surface)) 0 1.2cqw,var(--surface) 1.2cqw 2.4cqw)}
+.vidlink .play{width:7cqw;height:7cqw;border-radius:50%;background:var(--bad);display:grid;place-items:center}
+.vidlink .play::after{content:"";border-left:2.4cqw solid #fff;border-top:1.5cqw solid transparent;border-bottom:1.5cqw solid transparent;margin-left:.6cqw}
+.vidlink b{font-family:var(--f-display);font-size:2cqw;text-align:center;padding-inline:2cqw}
+.vidlink span{font-size:1.3cqw;color:var(--muted)}
+.vgrid{display:grid;grid-template-columns:1.55fr 1fr;gap:2cqw;align-items:start}
+.vgrid>*{min-width:0}
+
+/* timer */
+.timer{position:absolute;right:2.2cqw;bottom:2cqw;display:flex;align-items:center;gap:.6cqw;background:var(--ink);color:var(--bg);border-radius:1.2cqw;padding:.6cqw .8cqw .6cqw 1.3cqw;z-index:2}
+.timer .t{font-family:var(--f-mono);font-weight:700;font-size:2.6cqw;font-variant-numeric:tabular-nums;min-width:8.5ch;text-align:center}
+.timer button{background:transparent;border:1px solid color-mix(in srgb,var(--bg) 40%,transparent);color:var(--bg);border-radius:.6cqw;padding:.3cqw .8cqw;font-size:1.25cqw;font-weight:700}
+.timer.done{background:var(--bad)}
+.timer.done .t{animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.hasTimer{padding-bottom:8cqw}
+
+/* sorter */
+.sortItems{display:flex;flex-wrap:wrap;gap:.7cqw;min-height:4cqw;padding:1cqw;border:1px dashed var(--line);border-radius:1cqw}
+.card{border:1px solid var(--line);background:var(--surface);border-radius:.7cqw;padding:.45cqw 1cqw;font-size:1.5cqw;font-weight:700;touch-action:none;user-select:none}
+.card.sel{outline:3px solid var(--accent)}
+.card.ok{border-color:var(--good);box-shadow:inset 0 0 0 2px var(--good)}
+.card.no{border-color:var(--bad);box-shadow:inset 0 0 0 2px var(--bad)}
+.zones{display:grid;grid-template-columns:repeat(4,1fr);gap:1cqw;flex:1;min-height:0}
+.zone{border:2px solid;border-radius:1cqw;padding:1cqw;display:flex;flex-direction:column;gap:.6cqw;align-content:flex-start;min-height:12cqw;text-align:left;background:color-mix(in srgb,var(--sc) 9%,var(--surface));border-color:color-mix(in srgb,var(--sc) 55%,var(--line))}
+.zone h3{color:var(--sc)}
+.zone .drop{display:flex;flex-wrap:wrap;gap:.5cqw}
+.zone.over{background:color-mix(in srgb,var(--sc) 22%,var(--surface))}
+
+/* big spotlight */
+.spot{font-family:var(--f-display);font-weight:800;font-size:6cqw;line-height:1;letter-spacing:-.02em;text-align:center;padding:2cqw}
+.corners{display:grid;grid-template-columns:1fr 1fr;gap:1cqw}
+.corner{border-radius:1cqw;padding:1cqw 1.4cqw;font-weight:700;color:var(--surface);background:var(--sc);font-size:1.7cqw}
+.corner.dim{opacity:.25}
+
+/* matrix */
+.matrix{display:grid;grid-template-columns:auto repeat(4,1fr);gap:.5cqw;font-size:1.4cqw}
+.matrix .h{font-weight:700;padding:.5cqw;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:.6cqw;color:var(--surface);background:var(--sc)}
+.matrix button{border:1px solid var(--line);background:var(--surface);border-radius:.6cqw;padding:.7cqw;font-size:1.3cqw;min-height:4.4cqw}
+.matrix button.seen{background:color-mix(in srgb,var(--accent) 14%,var(--surface));border-color:var(--accent)}
+.matrix button.self{opacity:.55}
+.mout{border:1px solid var(--accent);border-radius:1cqw;padding:1.2cqw 1.4cqw;min-height:9cqw}
+
+/* timeline ordering */
+.ordered{display:flex;flex-direction:column;gap:.5cqw;counter-reset:o;list-style:none;padding:0 !important}
+.ordered li{counter-increment:o;display:flex;gap:1cqw;align-items:center;border:1px solid var(--line);border-radius:.7cqw;padding:.45cqw 1cqw;font-weight:700;font-size:1.5cqw}
+.ordered li::before{content:counter(o);font-family:var(--f-mono);color:var(--muted);width:2.4cqw}
+.ordered li small{font-weight:400;color:var(--muted);margin-left:auto;font-size:1.25cqw}
+.ordered li.ok{border-color:var(--good);box-shadow:inset 0 0 0 2px var(--good)}
+.ordered li.no{border-color:var(--bad);box-shadow:inset 0 0 0 2px var(--bad)}
+.scale{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:1.15cqw;color:var(--muted);border-top:2px solid var(--muted);padding-top:.4cqw}
+
+svg text{font-family:var(--f-body)}
+.cm-edge{transition:opacity .4s}
+@media (prefers-reduced-motion:reduce){.cm-edge{transition:none}.timer.done .t{animation:none}}
+
+/* footer controls */
+.ctrl{display:flex;align-items:center;gap:8px;padding-block:10px;flex-wrap:wrap}
+.ctrl button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 14px;font-weight:700;font-size:14px}
+.ctrl .count{font-family:var(--f-mono);font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.prog{flex:1;min-width:80px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent);width:0}
+.hint{font-size:12px;color:var(--muted)}
+
+/* notes drawer */
+.notes{position:fixed;right:16px;bottom:64px;width:min(420px,calc(100% - 32px));max-height:55%;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 10px 30px rgba(0,0,0,.18);z-index:10;font-size:15px}
+.notes h4{margin:0 0 6px;font-family:var(--f-display);font-size:16px}
+.notes p{margin:0 0 6px}
+
+/* home */
+.home{position:absolute;inset:0;overflow:auto;padding:3cqw 4cqw;display:flex;flex-direction:column;gap:1.6cqw;font-size:1.7cqw}
+.home h1{font-family:var(--f-display);font-weight:800;font-size:5cqw;margin:0;letter-spacing:-.03em;line-height:1}
+.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4cqw}
+.lcard{border:1px solid var(--line);background:var(--surface);border-radius:1.2cqw;padding:1.6cqw;text-align:left;display:flex;flex-direction:column;gap:.8cqw;min-width:0}
+.lcard:hover{border-color:var(--accent)}
+.lcard .n{font-family:var(--f-mono);color:var(--accent);font-weight:700;font-size:1.3cqw}
+.lcard b{font-family:var(--f-display);font-size:2.2cqw;line-height:1.05}
+.lcard span{font-size:1.35cqw;color:var(--muted)}
+.weeks{display:flex;gap:.8cqw;flex-wrap:wrap}
+.weeks span{border:1px dashed var(--line);border-radius:999px;padding:.4cqw 1.2cqw;font-size:1.3cqw;color:var(--muted)}
+
+/* narrow screens: let slides grow tall instead of shrinking type */
+@media (max-width:760px){
+  .stage{aspect-ratio:auto;width:100%;height:auto;min-height:60vh}
+  .stageWrap{align-items:stretch}
+  .slide,.home{position:relative;inset:auto;font-size:16px;padding:20px 18px}
+  .slide h2{font-size:26px}.slide h3{font-size:19px}.title h1,.home h1{font-size:34px}
+  .lead,.def{font-size:18px}.small,.eyebrow,.hint,.reveal .hint{font-size:13px}
+  .grid2,.grid3,.grid4,.vgrid,.zones,.lisc,.lcards,.corners{grid-template-columns:1fr}
+  .btn,.tabbar button,.card,.ordered li,.matrix,.matrix button,.lcard span,.lcard .n{font-size:14px}
+  .lcard b{font-size:20px}.timer .t{font-size:22px}.timer button{font-size:13px}
+  .timer{position:sticky;bottom:8px;align-self:flex-end}
+  .spot{font-size:34px}.corner{font-size:15px}.mode::before{width:8px;height:8px}
+  .steps li{grid-template-columns:28px 1fr}.steps li::before{width:24px;height:24px;font-size:13px}
+  .vidlink .play{width:56px;height:56px}.vidlink b{font-size:17px}.vidlink span{font-size:13px}
+  .vidlink .play::after{border-left-width:18px;border-top-width:11px;border-bottom-width:11px}
+}
+
+/* ---- additions for weeks 2 to 7 ---- */
+.wkSep{width:1px;height:22px;background:var(--line);margin-inline:4px}
+.lessons button.wk{font-family:var(--f-mono);font-size:13px}
+.slot{cursor:pointer}
+.slot rect{fill:var(--surface);stroke:var(--accent);stroke-width:2;stroke-dasharray:5 4}
+.slot text{font-size:14px;font-weight:700;fill:var(--ink);font-family:var(--f-body)}
+.slot.ok rect{stroke:var(--good);stroke-dasharray:none;stroke-width:3}
+.slot.no rect{stroke:var(--bad);stroke-dasharray:none;stroke-width:3}
+.slot:focus-visible rect{stroke-width:4}
+.blank{display:inline-block;min-width:7em;border:0;border-bottom:3px dashed var(--accent);background:transparent;text-align:center;font-weight:700;padding:0 .3em;font-size:inherit}
+.blank.ok{border-bottom-style:solid;border-color:var(--good)}
+.blank.no{border-bottom-style:solid;border-color:var(--bad)}
+.bank{display:flex;flex-wrap:wrap;gap:.6cqw}
+.bank .card.used{opacity:.45}
+.eqn{font-size:2.3cqw;line-height:2.2;font-family:var(--f-display)}
+.ctable{border-collapse:collapse;width:100%;font-size:1.45cqw}
+.ctable th,.ctable td{border:1px solid var(--line);padding:.6cqw .8cqw;text-align:left;vertical-align:top}
+.ctable th{background:color-mix(in srgb,var(--ink) 6%,var(--surface))}
+.ctable td.rcell{cursor:pointer;color:transparent;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--accent) 8%,var(--surface)) 0 .6cqw,var(--surface) .6cqw 1.2cqw)}
+.ctable td.rcell.open{color:var(--ink);background:var(--surface)}
+.tablewrap{overflow-x:auto;max-width:100%}
+.die{width:9cqw;height:9cqw;border-radius:1.4cqw;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:5cqw;font-weight:700}
+.stations{display:grid;grid-template-columns:repeat(4,1fr);gap:.6cqw}
+.stations button{border:1px solid var(--line);background:var(--surface);border-radius:.7cqw;padding:.6cqw;font-weight:700;font-size:1.4cqw}
+.stations button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.journey{display:flex;flex-wrap:wrap;gap:.4cqw;align-items:center;font-size:1.3cqw}
+.journey span{border:1px solid var(--line);border-radius:999px;padding:.2cqw .8cqw}
+.teams{display:grid;grid-template-columns:repeat(4,1fr);gap:.8cqw}
+.team{border:1px solid var(--line);border-radius:1cqw;padding:.8cqw;display:flex;flex-direction:column;align-items:center;gap:.4cqw}
+.team b{font-family:var(--f-mono);font-size:3cqw;font-variant-numeric:tabular-nums}
+.team .row{justify-content:center}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:.8cqw}
+.opts div{border:1px solid var(--line);border-radius:.8cqw;padding:.8cqw 1.1cqw}
+.opts div.right{border-color:var(--good);box-shadow:inset 0 0 0 2px var(--good)}
+.chartbox svg{width:100%;height:auto;display:block}
+.chartbox text{font-size:12px;fill:var(--muted)}
+.wkList{display:grid;grid-template-columns:1fr;gap:.7cqw}
+.wkCol{display:grid;grid-template-columns:9cqw repeat(5,1fr);gap:.6cqw;align-items:stretch;min-width:0}
+.wkCol>div{min-width:0}
+.wkCol h3{font-family:var(--f-display);font-size:1.7cqw;margin:0}
+.wkCol .lc{border:1px solid var(--line);background:var(--surface);border-radius:.8cqw;padding:.5cqw .8cqw;text-align:left;font-size:1.2cqw;display:flex;gap:.7cqw;align-items:baseline;min-width:0}
+.wkCol .lc:hover{border-color:var(--accent)}
+.wkCol .lc i{font-style:normal;font-family:var(--f-mono);color:var(--accent);font-weight:700;min-width:2.2em}
+@media (max-width:760px){
+  .eqn{font-size:18px}.ctable{font-size:13px}.die{width:64px;height:64px;font-size:34px}
+  .stations,.teams,.opts{grid-template-columns:1fr 1fr}.wkCol{grid-template-columns:1fr}
+  .stations button,.journey,.wkCol .lc{font-size:14px}.team b{font-size:22px}.wkCol h3{font-size:17px}
+}
+.writebox{border:.35cqw solid var(--geo);border-radius:1.2cqw;padding:2cqw 2.4cqw;background:color-mix(in srgb,var(--geo) 8%,var(--surface));display:flex;flex-direction:column;gap:1.2cqw}
+.writebox .wpage{align-self:flex-start;font-family:var(--f-mono);font-weight:700;font-size:1.7cqw;letter-spacing:.04em;text-transform:uppercase;background:var(--geo);color:#fff;border-radius:.6cqw;padding:.4cqw 1.2cqw}
+.writebox ol{font-size:2.1cqw;line-height:1.35;gap:.9cqw}
+.writebox .wnext{margin-top:auto;font-size:1.5cqw;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <button class="brand" id="homeBtn" aria-label="Unit home"><span class="dots"><i style="background:var(--atmo)"></i><i style="background:var(--hydro)"></i><i style="background:var(--geo)"></i><i style="background:var(--bio)"></i></span>Carbon Storage SHE Task</button>
+    <nav class="lessons" id="lessonNav" aria-label="Parts and steps"></nav>
+  </header>
+  <main class="stageWrap"><div class="stage" id="stage" aria-live="polite"></div></main>
+  <footer class="ctrl" id="ctrl">
+    <button id="prev" aria-label="Previous slide">&larr; Back</button>
+    <button id="next" aria-label="Next slide">Next &rarr;</button>
+    <span class="count" id="count"></span>
+    <div class="prog" aria-hidden="true"><i id="progBar"></i></div>
+    <button id="notesBtn" aria-pressed="false" hidden>Notes</button>
+    <button id="fsBtn">Full screen</button>
+    <span class="hint">Keys: &larr; &rarr; slides, F full screen</span>
+  </footer>
+</div>
+<aside class="notes" id="notes" hidden></aside>
+<script>
+/* ---------- helpers ---------- */
+const CAN_EMBED = location.protocol === "file:" || /(^|\.)github\.io$/.test(location.hostname) || /^(localhost|127\.)/.test(location.hostname);
+const MODES = {
+  learn:["Learn","var(--atmo)"], watch:["Watch","var(--bad)"], talk:["Turn and talk","var(--bio)"],
+  group:["Group work","var(--hydro)"], move:["Get moving","var(--geo)"], research:["Research","var(--atmo)"],
+  write:["Quick write","var(--muted)"], check:["Check in","var(--accent)"], whole:["Whole class","var(--bio)"],
+  prac:["Practical","var(--hydro)"], assess:["Assessment","var(--bad)"]
+};
+const SPH = {atmo:"Atmosphere", hydro:"Hydrosphere", geo:"Geosphere", bio:"Biosphere"};
+const LESSONS = [];
+function $(s){return document.querySelector(s)}
+function shuffle(a){return a.slice().sort(()=>Math.random()-.5)}
+
+function player(id, title, source){
+  if(typeof id==="object") return `<div><div class="vid"><video controls preload="metadata" playsinline src="${id.mp4}"${id.poster?` poster="${id.poster}"`:""} style="width:100%;height:100%;display:block;background:#000"></video></div><p class="small" style="margin-top:.4cqw">Video not playing? <a href="${id.page}" target="_blank" rel="noopener" style="color:inherit">Watch it on ABC Education</a></p></div>`;
+  return CAN_EMBED
+    ? `<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${title}" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
+    : `<a class="vidlink" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span><b>${title}</b><span>${source} &middot; opens on YouTube</span></a>`;
+}
+function vid(id, title, source, qs, tip){
+  return `<div class="vgrid">${player(id,title,source)}<div class="box"><h3>Watch for</h3><ol>${qs.map(q=>`<li>${q}</li>`).join("")}</ol><p class="small">${title} &middot; ${source}${tip?`<br>${tip}`:""}</p></div></div>`;
+}
+const rv = (q,a,hint="Click to reveal") => `<button class="reveal" data-reveal><span class="q">${q}</span><span class="a">${a}</span><span class="hint">${hint}</span></button>`;
+const steps = arr => `<ol class="steps">${arr.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+const tabs = items => `<div class="tabbar" role="tablist">${items.map((t,i)=>`<button role="tab" data-tab="${i}" aria-selected="${i===0}">${t[0]}</button>`).join("")}</div>${items.map((t,i)=>`<div class="panel box ${i===0?"on":""}" data-panel="${i}">${t[1]}</div>`).join("")}`;
+const slot = (x,y,w,ans) => `<g class="slot" data-slot data-ans="${ans}" tabindex="0" role="button" aria-label="Label slot"><rect x="${x}" y="${y}" width="${w}" height="30" rx="7"/><text data-st x="${x+w/2}" y="${y+20}" text-anchor="middle">?</text></g>`;
+const blank = ans => `<button class="blank" data-slot data-ans="${ans}"><span data-st>?</span></button>`;
+const bankUI = `<div class="bank" id="bank"></div><div class="row"><button class="btn primary" id="slCheck">Check</button><button class="btn" id="slShow">Show answers</button><button class="btn" id="slReset">Reset</button><span class="small" id="slMsg">Click a word, then click where it goes.</span></div>`;
+const sortUI = `<div class="sortItems" id="pool"></div><div class="zones" id="zones"></div><div class="row"><button class="btn primary" id="sortCheck">Check</button><button class="btn" id="sortReset">Reset</button><span class="small" id="sortMsg"></span></div>`;
+const orderUI = (lo,hi) => `<div class="grid2 fill"><div style="display:flex;flex-direction:column;gap:1cqw"><div class="sortItems" id="oPool"></div><div class="row"><button class="btn primary" id="oCheck">Check</button><button class="btn" id="oShow">Show answer</button><button class="btn" id="oReset">Reset</button></div><p class="small" id="oMsg"></p></div><div style="display:flex;flex-direction:column;gap:.6cqw">${lo?`<div class="scale"><span>${lo}</span><span>${hi}</span></div>`:""}<ol class="ordered" id="oList"></ol></div></div>`;
+const voteUI = (btn="Reveal answer") => `<div class="box fill" style="justify-content:center;align-items:center"><div class="spot" id="voteItem"></div><p id="voteAns" class="lead" style="text-align:center;max-width:60ch" hidden></p></div><div class="row"><button class="btn primary" id="voteReveal">${btn}</button><button class="btn" id="voteNext">Next</button><span class="small" id="voteCount"></span></div>`;
+
+/* ---------- SVG builders ---------- */
+function globeSVG(){
+  return `<svg viewBox="0 0 300 300" width="88%" role="img" aria-label="Earth seen from space">
+  <defs><clipPath id="gc"><circle cx="150" cy="150" r="118"/></clipPath></defs>
+  <circle cx="150" cy="150" r="138" fill="none" stroke="var(--atmo)" stroke-width="10" opacity=".35"/>
+  <circle cx="150" cy="150" r="118" fill="var(--hydro)"/>
+  <g clip-path="url(#gc)" fill="var(--bio)"><path d="M70 90 q30 -30 70 -10 q20 20 -5 45 q-30 10 -40 40 q-30 0 -35 -30 z"/><path d="M170 150 q40 -20 70 10 q10 40 -30 70 q-30 10 -45 -20 q-15 -30 5 -60z"/><path d="M180 60 q25 -5 40 15 q-10 15 -35 5z" fill="var(--geo)"/></g>
+  <g fill="#fff" opacity=".85"><ellipse cx="110" cy="200" rx="40" ry="8"/><ellipse cx="200" cy="105" rx="30" ry="6"/><ellipse cx="130" cy="70" rx="22" ry="5"/></g></svg>`;
+}
+function spheresVenn(note){
+  const c = [["atmo",120,105],["hydro",200,105],["geo",120,185],["bio",200,185]];
+  return `<svg viewBox="0 0 320 300" width="92%" role="img" aria-label="Four overlapping circles for the four spheres">
+  ${c.map(s=>`<circle cx="${s[1]}" cy="${s[2]}" r="72" fill="var(--${s[0]})" fill-opacity=".18" stroke="var(--${s[0]})" stroke-width="3"/>`).join("")}
+  ${c.map(s=>`<text x="${s[1]+(s[1]<160?-28:28)}" y="${s[2]+(s[2]<150?-30:42)}" text-anchor="middle" font-size="15" font-weight="700" fill="var(--${s[0]})">${SPH[s[0]]}</text>`).join("")}
+  <text x="160" y="150" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="700">Earth</text><text x="160" y="164" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="700">system</text>
+  ${note?`<text x="160" y="290" text-anchor="middle" font-size="12" fill="var(--muted)">${note}</text>`:""}</svg>`;
+}
+const CM_NODES = {sun:[60,50,"Sun","var(--accent)"],atmo:[300,60,"Atmosphere","var(--atmo)"],hydro:[520,150,"Hydrosphere","var(--hydro)"],geo:[300,330,"Geosphere","var(--geo)"],bio:[90,230,"Biosphere","var(--bio)"]};
+const CM_EDGES = [["sun","atmo","heats the air, making wind"],["sun","bio","gives light for photosynthesis"],["hydro","atmo","evaporates into"],["atmo","hydro","falls back as rain"],["hydro","geo","weathers and erodes rock"],["geo","bio","provides nutrients in soil"],["bio","atmo","breathing releases CO&#8322; into"],["geo","atmo","volcanoes release gases into"]];
+function cmapSVG(){
+  const n=CM_NODES;
+  const edges = CM_EDGES.map((e,i)=>{const a=n[e[0]],b=n[e[1]];const bend=(i%2?1:-1)*24;const mx=(a[0]+b[0])/2+bend,my=(a[1]+b[1])/2-bend;
+    return `<g class="cm-edge" data-e="${i}" opacity="0"><path d="M${a[0]} ${a[1]} Q${mx} ${my} ${b[0]} ${b[1]}" fill="none" stroke="var(--muted)" stroke-width="2.5" marker-end="url(#ah)"/><circle cx="${mx}" cy="${my}" r="12" fill="var(--accent)"/><text x="${mx}" y="${my+4}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent-ink)">${i+1}</text></g>`}).join("");
+  const nodes = Object.values(n).map(v=>`<g><rect x="${v[0]-62}" y="${v[1]-20}" width="124" height="40" rx="20" fill="var(--surface)" stroke="${v[3]}" stroke-width="3"/><text x="${v[0]}" y="${v[1]+5}" text-anchor="middle" font-size="15" font-weight="700" fill="${v[3]}">${v[2]}</text></g>`).join("");
+  return `<svg viewBox="0 0 600 380" width="100%" role="img" aria-label="Concept map of the Earth system"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>${edges}${nodes}</svg>`;
+}
+function cliffSVG(){
+  return `<svg viewBox="0 0 600 300" width="100%" role="img" aria-label="Cliff that retreats as years increase">
+  <rect x="0" y="0" width="600" height="300" fill="color-mix(in srgb,var(--atmo) 12%,var(--surface))"/>
+  <rect x="0" y="210" width="600" height="90" fill="var(--hydro)" opacity=".75"/>
+  <path id="beach" d="" fill="color-mix(in srgb,var(--geo) 35%,var(--surface))"/>
+  <path id="cliff" d="" fill="var(--geo)"/><path id="grass" d="" fill="var(--bio)"/>
+  <g id="house"><rect width="44" height="30" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><path d="M-6 0 L22 -22 L50 0z" fill="var(--bad)"/></g>
+  <g id="rocks" fill="var(--geo)" opacity=".8"></g>
+  <path d="M0 214 q20 -6 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>
+  <text id="houseNote" x="20" y="30" font-size="15" font-weight="700" fill="var(--bad)"></text></svg>`;
+}
+const ARROW = `<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker></defs>`;
+function waterSVG(){
+  return `<svg viewBox="0 0 640 360" width="100%" role="img" aria-label="Water cycle diagram with blank labels">${ARROW}
+  <rect width="640" height="360" fill="color-mix(in srgb,var(--atmo) 10%,var(--surface))"/>
+  <circle cx="600" cy="40" r="26" fill="var(--accent)" opacity=".85"/>
+  <g fill="var(--surface)" stroke="var(--muted)" stroke-width="2"><ellipse cx="300" cy="62" rx="70" ry="26"/><ellipse cx="350" cy="52" rx="50" ry="24"/></g>
+  <path d="M0 300 L0 170 L90 90 L170 170 L230 240 L330 300 Z" fill="var(--geo)" opacity=".85"/>
+  <rect x="330" y="285" width="310" height="75" fill="var(--hydro)" opacity=".8"/>
+  <path d="M0 300 L330 300 L330 360 L0 360 Z" fill="color-mix(in srgb,var(--geo) 45%,var(--surface))"/>
+  <path d="M20 330 L300 330" stroke="var(--hydro)" stroke-width="6" stroke-dasharray="10 8" opacity=".8"/>
+  <g fill="var(--bio)"><rect x="41" y="112" width="8" height="28"/><circle cx="45" cy="102" r="20"/></g>
+  <g stroke="var(--hydro)" stroke-width="2"><path d="M270 95 l-8 22"/><path d="M295 95 l-8 22"/><path d="M320 95 l-8 22"/><path d="M345 92 l-8 22"/></g>
+  <path d="M480 280 C480 200 430 140 400 95" fill="none" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ar)"/>
+  <path d="M62 88 C110 55 180 50 232 62" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+  <path d="M150 150 C190 200 250 260 328 292" fill="none" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ar)"/>
+  <path d="M80 300 L80 325" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ar)"/>
+  ${slot(440,150,150,"Evaporation")}${slot(418,64,140,"Condensation")}${slot(262,128,150,"Precipitation")}${slot(52,212,120,"Runoff")}${slot(72,12,150,"Transpiration")}${slot(10,264,150,"Infiltration")}
+  </svg>`;
+}
+function carbonSVG(){
+  return `<svg viewBox="0 0 660 380" width="100%" role="img" aria-label="Carbon cycle diagram with blank labels">${ARROW}
+  <rect width="660" height="380" fill="color-mix(in srgb,var(--atmo) 10%,var(--surface))"/>
+  <text x="330" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="var(--atmo)">CO&#8322; in the atmosphere</text>
+  <rect x="0" y="250" width="420" height="130" fill="color-mix(in srgb,var(--geo) 40%,var(--surface))"/>
+  <rect x="420" y="250" width="240" height="130" fill="var(--hydro)" opacity=".8"/>
+  <rect x="0" y="340" width="420" height="40" fill="var(--ink)" opacity=".7"/><text x="210" y="365" text-anchor="middle" font-size="13" fill="var(--surface)" font-weight="700">Fossil fuels (coal, oil, gas)</text>
+  <g fill="var(--bio)"><rect x="76" y="170" width="10" height="80"/><circle cx="81" cy="160" r="34"/></g>
+  <g fill="var(--muted)"><ellipse cx="200" cy="232" rx="30" ry="15"/><rect x="180" y="242" width="6" height="10"/><rect x="214" y="242" width="6" height="10"/><circle cx="232" cy="222" r="9"/></g>
+  <g fill="var(--muted)"><rect x="320" y="185" width="50" height="65"/><rect x="340" y="140" width="14" height="45"/></g>
+  <circle cx="347" cy="125" r="10" fill="var(--muted)" opacity=".5"/>
+  <path d="M60 60 L70 120" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ar)"/>
+  <path d="M215 210 L230 70" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ar)"/>
+  <path d="M130 290 C160 200 150 120 150 70" fill="none" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ar)"/>
+  <path d="M347 112 L370 60" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ar)"/>
+  <path d="M520 60 L520 245" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ar)"/>
+  <path d="M60 300 L60 335" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ar)"/>
+  ${slot(-2,80,140,"Photosynthesis")}${slot(200,120,135,"Respiration")}${slot(110,270,145,"Decomposition")}${slot(370,82,135,"Combustion")}${slot(530,140,125,"Ocean uptake")}${slot(0,300,135,"Fossilisation")}
+  </svg>`;
+}
+function greenhouseSVG(){
+  return `<svg viewBox="0 0 640 360" width="100%" role="img" aria-label="Greenhouse effect diagram with blank labels">${ARROW}
+  <rect width="640" height="360" fill="color-mix(in srgb,var(--atmo) 6%,var(--surface))"/>
+  <circle cx="60" cy="60" r="40" fill="var(--accent)"/>
+  <rect x="0" y="150" width="640" height="60" fill="var(--atmo)" opacity=".18"/>
+  <g fill="var(--atmo)">${[60,140,230,330,420,520,600].map((x,i)=>`<circle cx="${x}" cy="${170+(i%2)*18}" r="7"/>`).join("")}</g>
+  <path d="M0 310 Q320 270 640 310 L640 360 L0 360 Z" fill="var(--bio)" opacity=".7"/>
+  <path d="M95 85 L250 295" stroke="var(--accent)" stroke-width="4" marker-end="url(#ar)"/>
+  <path d="M330 290 C340 230 360 140 380 20" fill="none" stroke="var(--bad)" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#ar)"/>
+  <path d="M430 290 L470 190" stroke="var(--bad)" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#ar)"/>
+  <path d="M500 180 L530 290" stroke="var(--bad)" stroke-width="3" marker-end="url(#ar)"/>
+  ${slot(110,110,160,"Sunlight in")}${slot(250,300,170,"Infrared heat out")}${slot(20,215,170,"Greenhouse gases")}${slot(400,20,160,"Escapes to space")}${slot(470,230,160,"Sent back down")}
+  </svg>`;
+}
+function dartSVG(){
+  const board=(cx,pts,label)=>`<g><circle cx="${cx}" cy="80" r="60" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/><circle cx="${cx}" cy="80" r="38" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="${cx}" cy="80" r="14" fill="var(--accent)" opacity=".3"/>${pts.map(p=>`<circle cx="${cx+p[0]}" cy="${80+p[1]}" r="5" fill="var(--ink)"/>`).join("")}<text x="${cx}" y="162" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">${label}</text></g>`;
+  return `<svg viewBox="0 0 600 175" width="100%" role="img" aria-label="Four dartboards showing accuracy and precision">
+  ${board(75,[[-3,2],[4,-3],[1,5],[-4,-4]],"A")}${board(225,[[30,-28],[36,-24],[33,-33],[27,-30]],"B")}${board(375,[[-40,10],[25,35],[10,-45],[-20,-30]],"C")}${board(525,[[-35,30],[40,-10],[-5,-48],[30,40]],"D")}</svg>`;
+}
+function lineChart(series, o){
+  const W=600,H=o.h||230,P={l:48,r:16,t:16,b:30};
+  const xs=series.flatMap(s=>s.pts.map(p=>p[0])), ys=series.flatMap(s=>s.pts.map(p=>p[1]));
+  const x0=o.xmin??Math.min(...xs), x1=o.xmax??Math.max(...xs), y0=o.ymin??Math.min(...ys), y1=o.ymax??Math.max(...ys);
+  const X=v=>P.l+(v-x0)/(x1-x0)*(W-P.l-P.r), Y=v=>H-P.b-(v-y0)/(y1-y0)*(H-P.t-P.b);
+  const yt=o.yticks, xt=o.xticks;
+  let g=yt.map(v=>`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${P.l-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`).join("");
+  g+=xt.map(v=>`<text x="${X(v)}" y="${H-10}" text-anchor="middle">${v}</text>`).join("");
+  if(o.zero!==undefined)g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(o.zero)}" y2="${Y(o.zero)}" stroke="var(--muted)" stroke-dasharray="4 4"/>`;
+  const lines=series.map(s=>{
+    const d=s.pts.map((p,i)=>`${i?"L":"M"}${X(p[0]).toFixed(1)} ${Y(p[1]).toFixed(1)}`).join(" ");
+    const last=s.pts[s.pts.length-1];
+    return `<g class="${s.cls||""}" ${s.hidden?'opacity="0"':""}>${s.line===false?"":`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.w||2.5}" ${s.dash?`stroke-dasharray="${s.dash}"`:""}/>`}
+      ${s.dots?s.pts.map(p=>`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="${s.r||4}" fill="${p[2]||s.color}"/>`).join(""):`<circle cx="${X(last[0])}" cy="${Y(last[1])}" r="5" fill="${s.color}"/>`}</g>`}).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.label}">${g}${lines}<text x="${P.l}" y="11" font-weight="700" style="fill:var(--ink)">${o.ylabel}</text></svg>`;
+}
+
+/* ---------- interactives (data-driven; each receives the slide) ---------- */
+const INIT = {
+  vote(s){
+    const items=s.data; let i=0; const it=$("#voteItem"),an=$("#voteAns"),ct=$("#voteCount"),rb=$("#voteReveal");
+    const show=()=>{it.innerHTML=items[i][0];an.innerHTML=items[i][1]||"";an.hidden=true;rb.hidden=!items[i][1];ct.textContent=`${i+1} of ${items.length}`};
+    rb.onclick=()=>an.hidden=false; $("#voteNext").onclick=()=>{i=(i+1)%items.length;show()}; show();
+  },
+  cmap(){
+    let k=0; const g=[...document.querySelectorAll(".cm-edge")],lab=$("#cmLabel"),cnt=$("#cmCount");
+    const upd=()=>{g.forEach((e,i)=>e.setAttribute("opacity",i<k?1:0));cnt.textContent=`${k} of ${g.length} links`;
+      if(k){const e=CM_EDGES[k-1];lab.innerHTML=`<p class="small">Link ${k}</p><p class="lead"><b style="color:${CM_NODES[e[0]][3]}">${CM_NODES[e[0]][2]}</b> ${e[2]} <b style="color:${CM_NODES[e[1]][3]}">${CM_NODES[e[1]][2]}</b></p>`}else lab.innerHTML=`<p class="small">Click "Next link" to start.</p>`};
+    $("#cmNext").onclick=()=>{if(k<g.length)k++;upd()}; $("#cmAll").onclick=()=>{k=g.length;upd()}; $("#cmReset").onclick=()=>{k=0;upd()}; upd();
+  },
+  sort(s){
+    const {zones,items,note}=s.data; const pool=$("#pool"),zb=$("#zones"); let sel=null;
+    zb.style.gridTemplateColumns=`repeat(${zones.length},1fr)`;
+    zb.innerHTML=zones.map(z=>`<div class="zone ${z[2]||""}" data-zone="${z[0]}" tabindex="0" ${z[2]?"":'style="--sc:var(--muted)"'}><h3>${z[1]}</h3><div class="drop"></div></div>`).join("");
+    const mk=([t,a])=>{const c=document.createElement("button");c.className="card";c.innerHTML=t;c.dataset.ans=a;c.draggable=true;
+      c.onclick=e=>{e.stopPropagation();if(sel)sel.classList.remove("sel");sel=(sel===c?null:c);if(sel)sel.classList.add("sel")};
+      c.ondragstart=e=>{sel=c;e.dataTransfer.setData("text/plain","x")};return c};
+    const reset=()=>{pool.innerHTML="";zb.querySelectorAll(".drop").forEach(d=>d.innerHTML="");shuffle(items).forEach(x=>pool.appendChild(mk(x)));$("#sortMsg").textContent=""};
+    const place=z=>{if(!sel)return;z.querySelector(".drop").appendChild(sel);sel.classList.remove("sel","ok","no");sel=null};
+    zb.querySelectorAll(".zone").forEach(z=>{z.onclick=()=>place(z);z.onkeydown=e=>{if(e.key==="Enter")place(z)};
+      z.ondragover=e=>{e.preventDefault();z.classList.add("over")};z.ondragleave=()=>z.classList.remove("over");z.ondrop=e=>{e.preventDefault();z.classList.remove("over");place(z)}});
+    pool.onclick=()=>{if(sel){pool.appendChild(sel);sel.classList.remove("sel");sel=null}};
+    $("#sortCheck").onclick=()=>{let ok=0,tot=0;zb.querySelectorAll(".zone").forEach(z=>z.querySelectorAll(".card").forEach(c=>{tot++;const g=c.dataset.ans.split(" ").includes(z.dataset.zone);c.classList.toggle("ok",g);c.classList.toggle("no",!g);if(g)ok++}));
+      $("#sortMsg").textContent=`${ok} of ${tot} placed correctly.${pool.children.length?` ${pool.children.length} still to sort.`:""}${note?" "+note:""}`};
+    $("#sortReset").onclick=reset; reset();
+  },
+  corners(s){
+    const items=s.data;
+    let order=shuffle(items),i=-1;const it=$("#cItem"),why=$("#cWhy"),key=[...document.querySelectorAll("#cornerKey .corner")];
+    const dim=a=>key.forEach(k=>k.classList.toggle("dim",a&&!a.includes(k.dataset.c)));
+    $("#cNext").onclick=()=>{i=(i+1)%order.length;it.textContent=order[i][0];why.hidden=true;dim(null)};
+    $("#cShow").onclick=()=>{if(i<0)return;const a=order[i][1];why.textContent=a.map(x=>SPH[x]).join(" + ");why.hidden=false;dim(a)};
+  },
+  matrix(s){
+    const S=["atmo","hydro","geo","bio"],X=s.data;
+    const m=$("#matrix"),o=$("#mout");m.innerHTML=`<div></div>`+S.map(k=>`<div class="h ${k}">${SPH[k]}</div>`).join("");
+    S.forEach(r=>{m.insertAdjacentHTML("beforeend",`<div class="h ${r}">${SPH[r]}</div>`);S.forEach(c=>{const b=document.createElement("button");b.textContent="?";if(r===c)b.classList.add("self");
+      b.onclick=()=>{b.classList.add("seen");b.textContent="✓";o.innerHTML=`<h3><span class="${r} ink">${SPH[r]}</span> &rarr; <span class="${c} ink">${SPH[c]}</span></h3><p class="lead">${X[r+"-"+c]}</p>`};m.appendChild(b)})});
+  },
+  order(s){
+    const ev=s.data; const pool=$("#oPool"),list=$("#oList");let picked=[];
+    const draw=()=>{pool.innerHTML="";shuffleOnce(ev).filter(e=>!picked.includes(e)).forEach(e=>{const c=document.createElement("button");c.className="card";c.innerHTML=e[0];c.onclick=()=>{picked.push(e);draw()};pool.appendChild(c)});
+      list.innerHTML=picked.map(e=>`<li>${e[0]}</li>`).join("");$("#oMsg").textContent=picked.length?"Click a placed item to send it back.":"Click the items in order.";
+      [...list.children].forEach((li,i)=>li.onclick=()=>{picked.splice(i,1);draw()})};
+    $("#oCheck").onclick=()=>{let ok=0;[...list.children].forEach((li,i)=>{const g=picked[i]===ev[i];li.classList.add(g?"ok":"no");if(g)ok++});$("#oMsg").textContent=`${ok} of ${ev.length} in the right position.`};
+    $("#oShow").onclick=()=>{picked=ev.slice();draw();[...list.children].forEach((li,i)=>{li.classList.add("ok");if(ev[i][1])li.insertAdjacentHTML("beforeend",`<small>${ev[i][1]}</small>`)})};
+    $("#oReset").onclick=()=>{picked=[];draw()}; draw();
+  },
+  slots(s){
+    const root=$("#stage"),slots=[...root.querySelectorAll("[data-slot]")],bank=$("#bank");let sel=null;
+    const words=shuffle([...new Set(slots.map(x=>x.dataset.ans).concat((s.data&&s.data.extra)||[]))]);
+    const paint=()=>{bank.innerHTML="";words.forEach(w=>{const b=document.createElement("button");b.className="card";b.textContent=w;
+      if(slots.some(x=>x.dataset.val===w))b.classList.add("used");if(sel===w)b.classList.add("sel");
+      b.onclick=()=>{sel=(sel===w?null:w);paint()};bank.appendChild(b)})};
+    const put=x=>{if(!sel){x.dataset.val="";x.querySelector("[data-st]").textContent="?";x.classList.remove("ok","no");paint();return}
+      slots.forEach(o=>{if(o.dataset.val===sel){o.dataset.val="";o.querySelector("[data-st]").textContent="?"}});
+      x.dataset.val=sel;x.querySelector("[data-st]").textContent=sel;x.classList.remove("ok","no");sel=null;paint()};
+    slots.forEach(x=>{x.onclick=()=>put(x);x.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();put(x)}}});
+    $("#slCheck").onclick=()=>{let ok=0;slots.forEach(x=>{const g=x.dataset.val===x.dataset.ans;x.classList.toggle("ok",g);x.classList.toggle("no",!g);if(g)ok++});$("#slMsg").textContent=`${ok} of ${slots.length} correct.`};
+    $("#slShow").onclick=()=>{slots.forEach(x=>{x.dataset.val=x.dataset.ans;x.querySelector("[data-st]").textContent=x.dataset.ans;x.classList.add("ok");x.classList.remove("no")});paint()};
+    $("#slReset").onclick=()=>{slots.forEach(x=>{x.dataset.val="";x.querySelector("[data-st]").textContent="?";x.classList.remove("ok","no")});sel=null;paint();$("#slMsg").textContent="Click a word, then click where it goes."};
+    paint();
+  },
+  cells(){ $("#stage").querySelectorAll(".rcell").forEach(c=>c.onclick=()=>c.classList.toggle("open")); const a=$("#cellsAll"); if(a)a.onclick=()=>$("#stage").querySelectorAll(".rcell").forEach(c=>c.classList.add("open")); },
+  dice(s){
+    const st=s.data, names=Object.keys(st); let cur=names[0], trail=[cur];
+    const sb=$("#stations"), die=$("#die"), out=$("#diceOut"), jr=$("#journey");
+    const drawSt=()=>{sb.innerHTML=names.map(n=>`<button data-n="${n}" aria-pressed="${n===cur}">${n}</button>`).join("");sb.querySelectorAll("button").forEach(b=>b.onclick=()=>{cur=b.dataset.n;trail=[cur];drawSt();out.innerHTML=`<p class="small">You are carbon in: <b>${cur}</b>. Roll the die.</p>`;drawJ()})};
+    const drawJ=()=>{jr.innerHTML=trail.map((t,i)=>`${i?"&rarr; ":""}<span>${t}</span>`).join(" ")};
+    $("#roll").onclick=()=>{const r=1+Math.floor(Math.random()*6);die.textContent=r;const [to,why]=st[cur][r-1];
+      out.innerHTML=to===cur?`<p class="lead">Stay in <b>${cur}</b>.</p><p>${why}</p>`:`<p class="lead">Move to <b>${to}</b>.</p><p>${why}</p>`;cur=to;trail.push(to);drawSt();drawJ()};
+    drawSt();drawJ();out.innerHTML=`<p class="small">Pick a starting reservoir, then roll.</p>`;
+  },
+  quiz(s){
+    const Q=s.data; let i=0; const sc=[0,0,0,0];
+    const tm=$("#teams");tm.innerHTML=sc.map((v,k)=>`<div class="team"><span class="small">Team ${k+1}</span><b id="sc${k}">0</b><div class="row"><button class="btn" data-k="${k}" data-d="1">+1</button><button class="btn" data-k="${k}" data-d="-1">&minus;1</button></div></div>`).join("");
+    tm.querySelectorAll("button").forEach(b=>b.onclick=()=>{const k=+b.dataset.k;sc[k]=Math.max(0,sc[k]+ +b.dataset.d);$("#sc"+k).textContent=sc[k]});
+    const show=()=>{const q=Q[i];$("#qText").innerHTML=`<span class="small">Question ${i+1} of ${Q.length}</span><br>${q[0]}`;$("#qOpts").innerHTML=q[1].map((o,k)=>`<div data-k="${k}"><b>${"ABCD"[k]}.</b> ${o}</div>`).join("");$("#qWhy").hidden=true;$("#qWhy").innerHTML=q[3]};
+    $("#qReveal").onclick=()=>{$("#qOpts").children[Q[i][2]].classList.add("right");$("#qWhy").hidden=false};
+    $("#qNext").onclick=()=>{i=(i+1)%Q.length;show()}; show();
+  },
+  cliff(){
+    const r=$("#yrs"),out=$("#yrsOut");
+    const draw=()=>{const y=+r.value,edge=300-y*0.11;
+      $("#cliff").setAttribute("d",`M0 95 L${edge} 95 L${edge+18} 140 L${edge+8} 175 L${edge+30} 225 L0 225 Z`);
+      $("#grass").setAttribute("d",`M0 88 L${edge-4} 88 L${edge} 95 L0 95 Z`);
+      $("#beach").setAttribute("d",`M${edge+10} 225 L${edge+150} 225 L${edge+190} 214 L${edge+20} 205 Z`);
+      const hx=170;$("#house").setAttribute("transform",`translate(${hx} 65)`);
+      const fall=edge<hx+44;$("#house").setAttribute("opacity",fall?0.25:1);$("#houseNote").textContent=fall?"The house is now over the edge":"";
+      $("#rocks").innerHTML=Array.from({length:Math.min(12,Math.floor(y/150))},(_,i)=>`<circle cx="${edge+40+i*14}" cy="${218-(i%3)*3}" r="${5+(i%3)*2}"/>`).join("");
+      out.textContent=y};
+    r.oninput=draw; draw();
+  },
+  leaf(){
+    const D=LEAF_DATA, el=$("#leafChart");
+    const pts=[];D.forEach(d=>d.t.forEach(t=>pts.push([d.cm,t,(d.cm===40&&t===22)?"var(--bad)":"var(--ink)"])));
+    const avg=D.map(d=>{const v=d.cm===40?d.t.filter(t=>t!==22):d.t;return [d.cm,v.reduce((a,b)=>a+b,0)/v.length]});
+    const draw=(showAvg)=>{el.innerHTML=lineChart([{pts,color:"var(--ink)",dots:true,line:false},{pts:avg,color:"var(--hydro)",hidden:!showAvg,dots:true,r:5}],{label:"Example leaf disk results",ylabel:"Minutes until 5 of 10 disks float",xmin:5,xmax:55,ymin:0,ymax:25,yticks:[0,5,10,15,20,25],xticks:[10,20,30,40,50]})};
+    draw(false);
+    $("#leafAvg").onclick=()=>{draw(true);$("#leafTbl").querySelectorAll(".rcell").forEach(c=>c.classList.add("open"))};
+  },
+  climate(){
+    const co2=CO2.map(d=>[d[0],d[1]]), tmp=TEMP.map(d=>[d[0],d[1]]);
+    if($("#co2Chart"))$("#co2Chart").innerHTML=lineChart([{pts:co2,color:"var(--atmo)",dots:true,r:3}],{label:"Atmospheric carbon dioxide at Mauna Loa",ylabel:"CO₂ (ppm)",xmin:1958,xmax:2025,ymin:300,ymax:430,yticks:[300,340,380,420],xticks:[1960,1980,2000,2020],h:200});
+    if($("#tChart"))$("#tChart").innerHTML=lineChart([{pts:tmp,color:"var(--bad)",dots:true,r:3}],{label:"Global temperature difference",ylabel:"Temperature vs 1901 to 2000 average (°C)",xmin:1958,xmax:2025,ymin:-0.4,ymax:1.4,yticks:[-0.4,0,0.4,0.8,1.2],xticks:[1960,1980,2000,2020],zero:0,h:200});
+  }
+};
+let _sh=new Map(); function shuffleOnce(a){if(!_sh.has(a))_sh.set(a,shuffle(a));return _sh.get(a)}
+
+/* ---------- data used by charts ---------- */
+const LEAF_DATA=[{cm:10,t:[6,7,6]},{cm:20,t:[8,9,8]},{cm:30,t:[11,10,12]},{cm:40,t:[14,22,15]},{cm:50,t:[19,18,20]}];
+/* NOAA GML Mauna Loa annual mean CO2 (ppm) */
+const CO2=[[1960,316.91],[1965,320.04],[1970,325.68],[1975,331.13],[1980,338.76],[1985,346.35],[1990,354.45],[1995,360.97],[2000,369.71],[2005,379.98],[2010,390.10],[2015,401.01],[2020,414.21],[2023,421.08]];
+/* NOAA NCEI global land and ocean temperature anomaly, mean of 12 monthly values, base 1901 to 2000 */
+const TEMP_M={1960:[0.01,0.16,-0.24,-0.12,-0.1,-0.03,0.02,0.01,0.05,0.02,-0.13,0.21],1965:[-0.08,-0.16,-0.13,-0.18,-0.09,-0.09,-0.11,-0.06,-0.09,0.01,0,-0.02],1970:[0.16,0.19,0.09,0.09,0.02,0,0.04,-0.07,0.06,-0.04,0.02,-0.12],1975:[0.03,0.08,0.14,0.07,0.12,0.06,0.01,-0.12,0,-0.16,-0.17,-0.13],1980:[0.34,0.43,0.33,0.31,0.36,0.25,0.28,0.25,0.21,0.17,0.26,0.23],1985:[0.27,0.03,0.21,0.12,0.19,0.18,0.03,0.17,0.15,0.12,0.08,0.18],1990:[0.36,0.38,0.7,0.56,0.47,0.36,0.39,0.33,0.31,0.39,0.38,0.4],1995:[0.5,0.73,0.48,0.47,0.33,0.46,0.5,0.5,0.39,0.42,0.43,0.29],2000:[0.3,0.54,0.51,0.58,0.37,0.4,0.4,0.43,0.44,0.29,0.3,0.27],2005:[0.76,0.61,0.72,0.66,0.62,0.64,0.59,0.57,0.67,0.7,0.73,0.7],2010:[0.74,0.81,0.88,0.85,0.75,0.68,0.64,0.62,0.63,0.66,0.75,0.49],2015:[0.81,0.84,0.91,0.78,0.79,0.83,0.75,0.8,0.89,1.03,1.01,1.08],2020:[1.17,1.21,1.13,1.13,1,0.93,0.9,0.9,0.99,0.9,1.07,0.82],2023:[0.88,1.01,1.22,0.99,0.96,1.06,1.16,1.24,1.4,1.35,1.4,1.35],2024:[1.29,1.39,1.31,1.26,1.15,1.17,1.18,1.24,1.21,1.31,1.3,1.25]};
+const TEMP=Object.entries(TEMP_M).map(([y,m])=>[+y,Math.round(m.reduce((a,b)=>a+b,0)/12*100)/100]);
+
+/* ================= WEEK 5 ================= */
+const TECHS = {
+ "CCS":{node:"Capture plant",col:"var(--geo)",
+  steps:[["geo","tech","Natural gas comes up from deep rock with CO&#8322; mixed in. That carbon has been underground for millions of years."],["tech","atmo","Normally the CO&#8322; is separated out and released into the air.",1],["tech","geo","With CCS, the CO&#8322; is captured, compressed and pumped back into old gas reservoirs deep underground."]],
+  how:"CO&#8322; is separated at a gas plant, power station or factory, compressed into a dense fluid and injected into porous rock deep underground, under cap rock that stops it escaping.",
+  eff:"Moomba CCS (Cooper Basin, SA) started in late 2024 and is designed to store up to 1.7 million tonnes of CO&#8322; a year. Santos reported 2 million tonnes stored by May 2026.",
+  lim:"Cuts new emissions but removes nothing already in the air. Expensive. Some projects store much less than promised: Gorgon in WA captured about 30% of its CO&#8322; in 2023-24. Sites must be monitored for leaks."},
+ "Direct air capture":{node:"DAC machine",col:"var(--atmo)",
+  steps:[["atmo","tech","Giant fans pull ordinary air through filters that grab CO&#8322;."],["tech","geo","The filters are heated to release pure CO&#8322;. In Iceland it is mixed with water and pumped into basalt, where it turns into solid rock within about two years."]],
+  how:"Air passes over a material that CO&#8322; sticks to. Heating it releases concentrated CO&#8322; for storage. CO&#8322; is only about 0.04% of air, so huge volumes of air must be processed.",
+  eff:"Mammoth in Iceland opened in 2024 and is designed to capture 36,000 tonnes a year. It can remove carbon released anywhere, including in the past.",
+  lim:"Uses lots of energy (Mammoth runs on geothermal power). Costs have been around US$1,000 per tonne. In 2025 Icelandic journalists reported the plants were capturing only a fraction of their designed amount."},
+ "Biochar":{node:"Pyrolysis kiln",col:"var(--bio)",
+  steps:[["atmo","bio","Plants take in CO&#8322; by photosynthesis and build it into wood and leaves."],["bio","tech","Crop waste or wood is heated with very little oxygen (pyrolysis). It chars instead of burning."],["tech","geo","The biochar is dug into soil, where microbes struggle to break it down."]],
+  how:"Plant waste already holds carbon from the air. Heating it without oxygen locks much of that carbon into a stable, porous charcoal that can also help soil hold water and nutrients.",
+  eff:"Most of the carbon in well-made biochar stays in soil for hundreds of years, and recent research suggests thousands. Amazonian Indigenous peoples made charcoal-rich 'terra preta' soils that are still fertile today.",
+  lim:"Needs lots of plant waste, transport and land to spread it on. How long it lasts depends on how it was made and the climate. Growing crops just for biochar could compete with food and forests."},
+ "Ocean fertilisation":{node:"Iron added",col:"var(--hydro)",pos:[555,40],
+  steps:[["tech","hydro","Iron is added to surface sea water where plankton are short of it."],["atmo","hydro","CO&#8322; from the air dissolves into the ocean surface."],["hydro","bio","Phytoplankton bloom and use the CO&#8322; for photosynthesis."],["bio","geo","Some dead plankton sink to the deep ocean and sea floor, taking carbon with them."]],
+  how:"Some ocean regions have light and CO&#8322; but not enough iron for phytoplankton. Adding iron can trigger a big bloom that absorbs CO&#8322;, and some carbon may sink when the plankton die.",
+  eff:"Experiments have made large blooms, but much of the carbon is eaten and respired near the surface. Only a small, uncertain amount reaches the deep ocean.",
+  lim:"Blooms can use up oxygen and change food webs. Effects cross borders. Under the London Protocol, countries agreed in 2008 that only approved scientific research should go ahead, and made it legally binding in 2013."}
+};
+function techSVG(){return `<svg viewBox="0 0 640 330" width="100%" role="img" aria-label="Carbon path between Earth's spheres for the chosen technology" id="techSvg"></svg>`}
+INIT.tech=function(){
+  const N={atmo:[320,40,"Atmosphere","var(--atmo)"],bio:[90,165,"Biosphere","var(--bio)"],hydro:[550,165,"Hydrosphere","var(--hydro)"],geo:[320,290,"Geosphere","var(--geo)"],tech:[320,165,"","var(--ink)"]};
+  const names=Object.keys(TECHS); let cur=names[0], k=0;
+  const svg=$("#techSvg"), sb=$("#techPick"), out=$("#techOut"), cnt=$("#techCount");
+  const edge=(a,b,i,bl,all)=>{const A=N[a],B=N[b],dx=B[0]-A[0],dy=B[1]-A[1],d=Math.hypot(dx,dy),ux=dx/d,uy=dy/d;
+    const hw=n=>(n==="tech"?70:85)+6,hh=34,clip=n=>Math.min(Math.abs(dx)>.1?hw(n)/Math.abs(ux):1e9,Math.abs(dy)>.1?hh/Math.abs(uy):1e9);
+    const off=all.some(s=>s[0]===b&&s[1]===a)?18:0,px=-uy*off,py=ux*off;
+    const x1=A[0]+ux*clip(a)+px,y1=A[1]+uy*clip(a)+py,x2=B[0]-ux*clip(b)+px,y2=B[1]-uy*clip(b)+py,mx=(x1+x2)/2,my=(y1+y2)/2,c=bl?"var(--bad)":"var(--ink)";
+    return `<g class="te" data-i="${i}" opacity="0"><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="4" ${bl?'stroke-dasharray="8 7"':""} marker-end="url(#${bl?"tx":"ta"})"/><circle cx="${mx}" cy="${my}" r="15" fill="${c}"/><text x="${mx}" y="${my+6}" text-anchor="middle" font-size="16" font-weight="700" fill="var(--surface)">${bl?"&#10007;":i+1}</text></g>`};
+  const draw=()=>{const t=TECHS[cur];N.tech=[...(t.pos||[320,165]),t.node,"var(--ink)"];
+    let h=`<defs><marker id="ta" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker><marker id="tx" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--bad)"/></marker></defs>`;
+    Object.entries(N).forEach(([n,v])=>{const w=n==="tech"?140:170;h+=`<rect x="${v[0]-w/2}" y="${v[1]-28}" width="${w}" height="56" rx="${n==="tech"?8:24}" fill="${n==="tech"?"var(--surface)":`color-mix(in srgb,${v[3]} 18%,var(--surface))`}" stroke="${v[3]}" stroke-width="3" ${n==="tech"?'stroke-dasharray="6 4"':""}/><text x="${v[0]}" y="${v[1]+8}" text-anchor="middle" font-size="20" font-weight="700" fill="${n==="tech"?"var(--ink)":v[3]}">${v[2]}</text>`});
+    h+=t.steps.map((s,i)=>edge(s[0],s[1],i,s[3],t.steps)).join("");svg.innerHTML=h;
+    sb.innerHTML=names.map(n=>`<button aria-pressed="${n===cur}" data-t="${n}">${n}</button>`).join("");
+    sb.querySelectorAll("button").forEach(b=>b.onclick=()=>{cur=b.dataset.t;k=0;draw()});upd()};
+  const upd=()=>{const t=TECHS[cur];svg.querySelectorAll(".te").forEach((g,i)=>g.setAttribute("opacity",i<k?1:0));cnt.textContent=`${k} of ${t.steps.length} steps`;
+    out.innerHTML=k<t.steps.length?`<h3>${cur}</h3>${t.steps.slice(0,k).map((s,i)=>`<p><b>${s[3]?"Without capture":"Step "+(i+1)}:</b> ${s[2]}</p>`).join("")||'<p class="small">Click "Next step" to follow the carbon.</p>'}`
+      :`<h3>${cur}</h3><p><b>How it works.</b> ${t.how}</p><p><b>How effective?</b> ${t.eff}</p><p><b>Limitations.</b> ${t.lim}</p>`};
+  $("#techNext").onclick=()=>{if(k<TECHS[cur].steps.length)k++;upd()};$("#techAll").onclick=()=>{k=TECHS[cur].steps.length;upd()};$("#techReset").onclick=()=>{k=0;upd()};
+  draw();
+};
+const techUI=`<div class="grid2 fill" style="grid-template-columns:1.25fr 1fr"><div style="display:flex;flex-direction:column;gap:.8cqw"><div class="stations" id="techPick"></div><div class="box" style="padding:.6cqw">${techSVG()}</div><div class="row"><button class="btn primary" id="techNext">Next step</button><button class="btn" id="techAll">Show the facts</button><button class="btn" id="techReset">Reset</button><span class="small" id="techCount"></span></div></div><div class="box" id="techOut" style="overflow:auto;font-size:1.5cqw;gap:.5cqw"></div></div>`;
+const techCard=n=>{const t=TECHS[n];return `<h3>${n}</h3><p><b>How it works.</b> ${t.how}</p><p><b>How effective?</b> ${t.eff}</p><p><b>Limitations.</b> ${t.lim}</p>`};
+
+const TVID={"CCS":["2SwfbHhWgO8","Roads to Removal: Carbon Capture and Storage","Lawrence Livermore National Laboratory",["Where is the CO&#8322; captured?","Where is it stored, and what stops it escaping?","How do scientists check it stays there?"]],
+ "Direct air capture":["4w2xyo_GXUg","The technology that fights climate change","Climeworks",["How does the machine catch CO&#8322;?","What energy does it use?","Who made this video? Why might that matter?"],"A company video: compare its claims with independent sources."],
+ "Biochar":["uEOK3fk45Rg","How Biochar Removes CO2 from the Air, and Helps Farmers Thrive","TED (Axel Reinaud)",["How is biochar made?","How does it help farmers?","How long does the carbon stay stored?"],"About 11 minutes."],
+ "Ocean fertilisation":["wD_PuHx2ca0","Fertilising the oceans with iron","Prof Richard Lampitt, National Oceanography Centre",["Why would adding iron make plankton grow?","How much of the carbon sinks?","What could go wrong?"]]};
+/* ================= STUDENT STEPS (follow the booklet) ================= */
+MODES.book=["Write in your booklet","var(--geo)"];
+const PARTS=["Understanding the carbon cycle","Carbon storage technologies","SHE analysis"];
+const write=(page,label,items,extra="")=>({mode:"book",h:"&#9999;&#65039; Now write in your booklet",
+  html:`<div class="writebox fill"><div class="wpage">Booklet page ${page} &middot; ${label}</div><ol>${items.map(i=>`<li>${i}</li>`).join("")}</ol>${extra?`<p class="small">${extra}</p>`:""}<p class="wnext">Finished? Click <b>Next &rarr;</b> to keep going.</p></div>`});
+
+LESSONS.push(
+{ n:1, part:1, title:"The carbon problem",
+  li:"Understand how carbon is stored in and moves between Earth's spheres, and how humans have changed this.",
+  sc:["I can describe carbon stores in each sphere.","I can explain how fossil fuels and deforestation change the carbon cycle."],
+  slides:[
+  {mode:"learn", h:"Your SHE task",
+   html:`<div class="grid3 fill">${[["Part 1","Understanding the carbon cycle","Research organiser, a <b>hand-drawn</b> carbon cycle diagram and a 200-word explanation.","Steps 1 to 3"],["Part 2","Investigating two technologies","Research two carbon storage technologies, compare them and write a 300-word evaluation.","Steps 4 to 8"],["Part 3","SHE analysis","Ethics, cultural values and collaboration with real examples (300 words), plus a reference list.","Steps 9 to 11"]].map(c=>`<div class="box"><span class="small">${c[0]} &middot; ${c[3]}</span><h3>${c[1]}</h3><p>${c[2]}</p></div>`).join("")}</div><p class="small">Work through the steps in order. When you see a <b>Write in your booklet</b> slide, stop and write. Read the rubric on page 2 of your booklet first.</p>`},
+  {mode:"watch", h:"A year of CO&#8322; from space",
+   html:vid("x1SgmFa0r04","A Year in the Life of Earth's CO2","NASA Goddard",["Where on Earth does most CO&#8322; come from?","What happens to CO&#8322; in the northern summer? Why?","How does the CO&#8322; move around the planet?"])},
+  {mode:"learn", h:"Where carbon is stored",
+   html:`<div class="grid2 fill">${[["atmo","Atmosphere","CO&#8322; and methane gas. Carbon enters by respiration, combustion, decomposition and volcanoes, and leaves by photosynthesis and dissolving into the ocean."],["hydro","Hydrosphere","Dissolved CO&#8322; in oceans, rivers and lakes, and carbon in shells. The ocean is the biggest active carbon store on the surface."],["bio","Biosphere","Carbon in living things and dead matter. Moves by photosynthesis, feeding, respiration and decomposition."],["geo","Geosphere (lithosphere)","Limestone, fossil fuels and soil. Carbon stays here for millions of years unless humans or volcanoes release it."]].map(c=>`<div class="box tint ${c[0]}"><h3 class="ink">${c[1]}</h3><p>${c[2]}</p></div>`).join("")}</div>`},
+  {mode:"learn", h:"How humans change the carbon cycle",
+   html:`<div class="grid2 fill"><div class="box tint geo"><h3 class="ink">Burning fossil fuels</h3><p>Moves carbon from the geosphere, where it was stored for millions of years, into the atmosphere in seconds.</p></div><div class="box tint bio"><h3 class="ink">Deforestation</h3><p>Fewer trees means less photosynthesis, and burning or rotting the wood releases CO&#8322;.</p></div></div><div class="grid3">${[["280 ppm","CO&#8322; before industry"],["about 421 ppm","CO&#8322; at Mauna Loa, 2023"],["about 37 billion t","CO&#8322; from fossil fuels, 2024"]].map(c=>`<div class="box" style="align-items:center;text-align:center"><b style="font-family:var(--f-display);font-size:2.6cqw">${c[0]}</b><span class="small">${c[1]}</span></div>`).join("")}</div><p class="small">Data: NOAA Global Monitoring Laboratory; Global Carbon Project.</p>`},
+  {mode:"check", h:"Natural or human?", init:"sort",
+   data:{zones:[["n","Natural","bio"],["h","Human",""],["b","Both","hydro"]],
+     items:[["Volcanic eruption","n"],["Burning petrol","h"],["Making cement","h"],["Bushfire","b"],["Respiration","n"],["Clearing scrub for housing","h"],["Methane from cattle","h"],["Decomposition","n"],["Methane from wetlands","n"]],
+     note:"Bushfires start naturally (lightning) and from people."},
+   html:sortUI},
+  write(3,"1A and 1B",["<b>1A:</b> for each sphere, write what it is, where carbon is stored, and how carbon moves in and out. Use dot points.","<b>1B:</b> for fossil fuel combustion and deforestation, write what happens and how it changes the carbon cycle.","Write every source you used at the bottom of page 3."],`Need more detail? Use the Khan Academy carbon cycle page linked on your booklet cover.`)
+  ]},
+
+{ n:2, part:1, title:"Draw your carbon cycle",
+  li:"Represent the carbon cycle in a clear, accurate diagram.",
+  sc:["I can show all four spheres with labelled arrows.","I can show human impacts on my diagram."],
+  slides:[
+  {mode:"learn", h:"Processes to include",
+   html:`<div class="tablewrap"><table class="ctable"><thead><tr><th>Process</th><th>Carbon moves</th></tr></thead><tbody>${[["Photosynthesis","atmosphere &rarr; biosphere"],["Respiration","biosphere &rarr; atmosphere"],["Decomposition","dead matter &rarr; atmosphere and soil"],["Ocean exchange","atmosphere &harr; hydrosphere"],["Fossil fuel combustion (human)","geosphere &rarr; atmosphere"],["Deforestation (human)","biosphere &rarr; atmosphere"]].map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join("")}</tbody></table></div><p class="small">Use one colour for natural processes and a different colour for human impacts.</p>`},
+  write(4,"1C (turn your booklet sideways)",["Draw your carbon cycle diagram <b>by hand</b>. Start from your Lesson 12 poster plan.","Show all four spheres and labelled arrows for every process on the last slide.","Add fossil fuel combustion and deforestation.","Give it a title and a key.","Tick each item in the checklist box on page 4 as you add it."])
+  ]},
+
+{ n:3, part:1, title:"Explain your diagram",
+  li:"Explain the carbon cycle clearly in writing.",
+  sc:["I can explain how carbon moves between spheres.","I can explain why human impacts matter."],
+  slides:[
+  {mode:"learn", h:"What a strong explanation does",
+   html:`<div class="grid2 fill"><div class="box"><ul><li>Names all four spheres and a carbon store in each</li><li>Uses process words correctly</li><li>Explains <b>why</b> human impacts matter, not just what they are</li></ul></div><div class="box tint atmo"><h3 class="ink">Example sentence</h3><p>"When fossil fuels are burnt, carbon that was stored in the geosphere for millions of years is released into the atmosphere as CO&#8322; in seconds, which is much faster than photosynthesis and the oceans can remove it."</p></div></div>`},
+  write(5,"1D",["Write about <b>200 words</b> explaining your diagram.","Use the sentence starters on page 5 if they help.","Count your words and write the total in the box."])
+  ]},
+
+{ n:4, part:2, title:"Carbon storage technologies",
+  li:"Describe how emerging technologies capture and store carbon.",
+  sc:["I can explain how a technology moves carbon between spheres.","I can choose two technologies to investigate."],
+  slides:[
+  {mode:"learn", h:"Two ways to fix the carbon problem",
+   html:`<div class="grid2 fill"><div class="box tint geo"><h3 class="ink">Stop it getting out</h3><p>Catch CO&#8322; at a chimney or gas plant <b>before</b> it reaches the air.</p><p class="small">Example: carbon capture and storage (CCS)</p></div><div class="box tint bio"><h3 class="ink">Take it back out</h3><p>Remove CO&#8322; that is <b>already</b> in the atmosphere.</p><p class="small">Examples: direct air capture, biochar, ocean fertilisation</p></div></div><p class="small"><b>Key idea:</b> good storage is <b>durable</b>. Carbon in a tree might burn in a bushfire; carbon turned into rock underground could stay there for millions of years.</p>`},
+  {mode:"learn", h:"Follow the carbon", init:"tech", html:techUI},
+  {mode:"watch", h:"Watch: choose a technology",
+   html:tabs(Object.keys(TECHS).map(n=>[n,vid(...TVID[n])]))},
+  write(6,"Part 2",["Tick the <b>two</b> technologies you will investigate. Choosing two that work differently makes comparing easier.","Fill in <b>First impressions</b>: what you already know and what you want to find out.","Write why you chose these two."])
+  ]},
+
+{ n:5, part:2, title:"Research Technology A",
+  li:"Research how a carbon storage technology works, how effective it is and its limitations.",
+  sc:["I can sketch and explain how my technology works.","I can support my answers with numbers and reliable sources."],
+  slides:[
+  {mode:"research", h:"Fact files",
+   html:`<div style="font-size:1.6cqw;display:flex;flex-direction:column;gap:.8cqw">${tabs(Object.keys(TECHS).map(n=>[n,techCard(n)]))}</div><p class="small">These facts are a starting point. Find at least one more source of your own.</p>`},
+  {mode:"research", h:"Research tips",
+   html:`<div class="grid2 fill"><div class="box"><h3>Reliable sources</h3><ul><li>CSIRO, IPCC, NASA, NOAA</li><li>ABC News and ABC Education</li><li>Company and industry websites: useful facts, but they are selling something. Check their claims.</li></ul></div><div class="box"><h3>Search terms to try</h3><ul><li>CCS: Moomba CCS, Gorgon CCS</li><li>Direct air capture: Climeworks Mammoth, Carbfix</li><li>Biochar: biochar carbon removal, terra preta</li><li>Ocean fertilisation: iron fertilisation, London Protocol</li></ul></div></div><p class="small">Write down the author, year, title and website of every source you use.</p>`},
+  write(7,"Technology A",["Write the name of your first technology at the top of page 7.","<b>2A:</b> sketch and label how it captures and stores carbon. Show where the carbon starts and ends and name the spheres. Then explain it in your own words.","<b>2B:</b> how effective could it be? Include a number, such as tonnes of CO&#8322; stored per year.","<b>2C:</b> its limitations or challenges.","Write your sources at the bottom of the page."])
+  ]},
+
+{ n:6, part:2, title:"Research Technology B",
+  li:"Research a second carbon storage technology.",
+  sc:["I can sketch and explain how my second technology works.","I can support my answers with numbers and reliable sources."],
+  slides:[
+  {mode:"research", h:"Fact files",
+   html:`<div style="font-size:1.6cqw;display:flex;flex-direction:column;gap:.8cqw">${tabs(Object.keys(TECHS).map(n=>[n,techCard(n)]))}</div><p class="small">Go back to step 4 to rewatch the videos or follow the carbon again.</p>`},
+  write(8,"Technology B",["Write the name of your second technology at the top of page 8.","<b>2A:</b> sketch, label and explain how it works.","<b>2B:</b> how effective could it be? Include a number.","<b>2C:</b> its limitations or challenges.","Write your sources at the bottom of the page."])
+  ]},
+
+{ n:7, part:2, title:"Compare your technologies",
+  li:"Compare two technologies using the same criteria.",
+  sc:["I can rate both technologies with evidence.","I can identify similarities and differences."],
+  slides:[
+  {mode:"learn", h:"Three ways to compare",
+   html:`<div class="grid3 fill">${[["Environmental impact","Benefits and risks to land, oceans, air and living things. Energy, water and land use. Could carbon leak?","bio"],["Cost and feasibility","Cost per tonne. Can it work at a large scale? Is it ready now or still being tested?","atmo"],["Social and ethical","Who benefits and who carries the risks? Is it fair? Would communities accept it?","geo"]].map(c=>`<div class="box tint ${c[2]}"><h3 class="ink">${c[0]}</h3><p>${c[1]}</p></div>`).join("")}</div>`},
+  {mode:"talk", h:"How big is the problem? Scale it up",
+   html:`<div class="tablewrap"><table class="ctable"><thead><tr><th>Project</th><th>Storage per year</th></tr></thead><tbody><tr><td>Moomba CCS, SA (designed capacity)</td><td>up to 1.7 million tonnes</td></tr><tr><td>Mammoth direct air capture, Iceland (designed)</td><td>36,000 tonnes</td></tr><tr><td>Global fossil fuel CO&#8322; (2024)</td><td>about 37,000 million tonnes</td></tr></tbody></table></div><div class="grid2">${rv("How many Moomba-sized projects to store it all?","About 22,000 (37,000 &divide; 1.7). Australia has only a handful.","Estimate, then click")}${rv("How many Mammoth-sized plants?","About 1 million (37,000,000,000 &divide; 36,000).","Estimate, then click")}</div><p class="small">What does this tell you about relying on storage alone? Use this idea in your evaluation.</p>`},
+  write("9 and 10","2D and 2E",["<b>2D (page 9):</b> for each criterion, write evidence for both technologies, then circle a rating out of 5. Add up the totals.","<b>2E (page 10):</b> fill in the Venn diagram: only A on the left, only B on the right, both in the middle.","Answer the two questions under the Venn diagram."],"Tip: swap one fact with a classmate who researched a different technology.")
+  ]},
+
+{ n:8, part:2, title:"Write your evaluation",
+  li:"Write an evaluation that reaches a judgement supported by evidence.",
+  sc:["I can compare both technologies on all three criteria.","I can back up my judgement with evidence."],
+  slides:[
+  {mode:"learn", h:"Writing your evaluation",
+   html:`<div class="grid2 fill"><div class="box"><h3>Paragraph plan</h3><ol><li>Introduction: both technologies and your judgement</li><li>Environment compared</li><li>Cost and feasibility compared</li><li>Social and ethical compared</li><li>Conclusion: judgement and strongest reason</li></ol></div><div class="box"><h3>Model sentences</h3><p>"CCS can store large amounts of CO&#8322;, such as up to 1.7 million tonnes a year at Moomba, <b>whereas</b> direct air capture plants currently store far less."</p><p>"<b>However</b>, unlike CCS, direct air capture can remove carbon that is already in the atmosphere."</p></div></div>`},
+  write(11,"2F",["Fill in the paragraph plan boxes first.","Write about <b>300 words</b>: which technology is more promising, compared on all three criteria with evidence from your table.","Use comparison words: whereas, however, both, unlike.","Count your words and write the total in the box."])
+  ]},
+
+{ n:9, part:3, title:"SHE perspectives",
+  li:"Analyse the social, ethical and environmental implications of carbon storage.",
+  sc:["I can use three SHE lenses to think about a technology.","I can find real examples to support my ideas."],
+  slides:[
+  {mode:"learn", h:"Three SHE lenses",
+   html:`<div class="grid3 fill">${[["Ethics: equity and justice","Who pays and who benefits? Who lives near the risks? Countries that emitted the least often feel climate change the most. What do we owe future generations?","geo"],["Cultural and societal values","How do communities value land, oceans and Country? Would people accept it? Do Traditional Owners get a real say over projects on their Country?","bio"],["Collaboration","Scientists test and monitor. Governments fund and regulate. Industries build and run. International agreements decide what happens in shared oceans.","hydro"]].map(c=>`<div class="box tint ${c[2]}"><h3 class="ink">${c[0]}</h3><p>${c[1]}</p></div>`).join("")}</div>`},
+  {mode:"learn", h:"Case study: Moomba CCS, South Australia",
+   html:`<div class="grid2 fill"><div class="box"><p>Australia's first large-scale onshore CCS project is at Moomba in the Cooper Basin, the traditional lands of the <b>Yandruwandha Yawarrawarrka</b> people, whose native title was recognised in 2015. Santos runs it with Beach Energy. It stored 2 million tonnes of CO&#8322; in about its first 18 months. The CO&#8322; comes from processing natural gas.</p></div><div class="grid2">${[["Who collaborated?","Santos and Beach Energy built and run it. The federal government gave grant funding. The Clean Energy Regulator issues carbon credits for the CO&#8322; stored."],["What do supporters say?","It cuts emissions from an industry that is hard to clean up, and could store CO&#8322; for other industries."],["What do critics say?","It helps keep gas production going for longer, and storage is small compared with total emissions."],["What would you research?","How were Traditional Owners consulted? Who earns money from the carbon credits? Who monitors for leaks?"]].map(c=>rv(c[0],c[1])).join("")}</div></div>`},
+  {mode:"learn", h:"Case study: iron in the ocean",
+   html:`<div class="grid2 fill"><div class="box"><p>In 2012 a private project added about 100 tonnes of iron to the Pacific Ocean off Canada's west coast to grow plankton. Countries in the London Protocol expressed grave concern. In 2013 they made it legally binding that only approved scientific research can go ahead.</p></div><div class="grid2">${[["Which SHE lens fits best?","Collaboration: the ocean is shared, so international agreements decide what is allowed. Ethics too: one group's actions affect everyone's ocean."],["Why did scientists object?","Effects on ecosystems were unknown and the carbon storage could not be checked."]].map(c=>rv(c[0],c[1])).join("")}</div></div>`},
+  write(12,"3A",["For each SHE perspective, write dot points for Technology A and Technology B.","Add a <b>real example</b> for each row: who, where and when.","Use these case studies or your own research."])
+  ]},
+
+{ n:10, part:3, title:"Write your SHE analysis",
+  li:"Communicate a SHE analysis using real examples.",
+  sc:["I can write about ethics, cultural values and collaboration.","I can include a real example in every paragraph."],
+  slides:[
+  {mode:"learn", h:"Structure and sentence starters",
+   html:`<div class="grid2 fill"><div class="box"><h3>Three paragraphs</h3><ol><li>Ethics: equity and justice</li><li>Cultural and societal values</li><li>Collaboration between scientists, governments and industries</li></ol></div><div class="box"><h3>Sentence starters</h3><ul><li>One ethical issue with ___ is ___ because ___.</li><li>For example, at ___ ...</li><li>Some communities value ___, so they might ___.</li><li>This shows that ___.</li></ul></div></div>`},
+  write(13,"3B",["Write about <b>300 words</b> using your planner from page 12.","Include at least one real example in each paragraph.","Count your words and write the total in the box."])
+  ]},
+
+{ n:11, part:3, title:"References and final check",
+  li:"Reference sources correctly and check the task is complete.",
+  sc:["I can write references in APA format.","I can check my work against the rubric."],
+  slides:[
+  {mode:"learn", h:"APA reference list",
+   html:`<div class="grid2 fill"><div class="box"><h3>Web page format</h3><p class="def">Author. (Year, Month Day). <i>Title of page</i>. Site Name. URL</p><p class="small">Use (n.d.) when there is no date. Put the list in alphabetical order.</p></div><div class="box"><h3>Example</h3><p style="overflow-wrap:anywhere">Khan Academy. (n.d.). <i>The carbon cycle</i>. https://www.khanacademy.org/science/biology/ecology/biogeochemical-cycles/a/the-carbon-cycle</p></div></div>`},
+  write(14,"Reference list and checklist",["Write every source you used in APA format, in alphabetical order.","Tick each item in the final checklist on page 14.","Look at the rubric on page 2 and circle the level you think you reached for each criterion.","Hand your booklet in to your teacher."])
+  ]}
+);
+
+/* ---------- timer ---------- */
+let T={left:0,run:false,id:null,el:null};
+function timerHTML(min){return `<div class="timer" id="timer" data-min="${min}"><span class="t" id="tDisp">${fmt(min*60)}</span><button id="tGo">Start</button><button id="tAdd" aria-label="Add one minute">+1</button><button id="tReset">Reset</button></div>`}
+function fmt(s){return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`}
+function bindTimer(){
+  clearInterval(T.id);T={left:0,run:false,id:null,el:$("#timer")};if(!T.el)return;
+  T.left=+T.el.dataset.min*60;
+  const paint=()=>{$("#tDisp").textContent=fmt(T.left);$("#tGo").textContent=T.run?"Pause":"Start";T.el.classList.toggle("done",T.left===0)};
+  const tick=()=>{if(T.left>0){T.left--;if(T.left===0){T.run=false;clearInterval(T.id);chime()}}paint()};
+  T.toggle=()=>{if(T.left===0)return;T.run=!T.run;clearInterval(T.id);if(T.run)T.id=setInterval(tick,1000);paint()};
+  $("#tGo").onclick=T.toggle;$("#tAdd").onclick=()=>{T.left+=60;paint()};
+  $("#tReset").onclick=()=>{clearInterval(T.id);T.run=false;T.left=+T.el.dataset.min*60;paint()};paint();
+}
+function chime(){try{const a=new (window.AudioContext||window.webkitAudioContext)();[0,.25,.5].forEach(d=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.18,a.currentTime+d);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+d+.22);o.start(a.currentTime+d);o.stop(a.currentTime+d+.25)})}catch(e){}}
+
+/* ---------- rendering ---------- */
+const WEEKS=PARTS;
+const wk=l=>LESSONS[l].part;
+let L=-1,S=0;
+const RELIEF=/[?&]relief\b/.test(location.search);
+const useRelief=l=>RELIEF&&!!LESSONS[l].relief;
+function deck(l){return [{title:true},...(useRelief(l)?LESSONS[l].relief:LESSONS[l].slides)]}
+function drawNav(){
+  const w=L<0?0:wk(L), nav=$("#lessonNav");
+  nav.innerHTML=WEEKS.map((t,i)=>`<button class="wk" data-w="${i+1}" title="Part ${i+1}: ${t}" aria-current="${w===i+1}">Part ${i+1}</button>`).join("")
+    +(w?`<span class="wkSep"></span>`+LESSONS.map((x,i)=>wk(i)===w?`<button data-l="${i}" aria-current="${i===L}">Step ${x.n}</button>`:"").join(""):"");
+  nav.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>go(LESSONS.findIndex((x,i)=>wk(i)===+b.dataset.w),0));
+  nav.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>go(+b.dataset.l,0));
+}
+function render(){
+  const stage=$("#stage"); clearInterval(T.id); drawNav();
+  if(L<0){
+    stage.innerHTML=`<div class="home"><div><p class="small" style="font-family:var(--f-mono);color:var(--accent);font-weight:700">YEAR 9 SCIENCE &middot; EARTH SYSTEMS &middot; WEEK 5</p><h1 style="font-size:4cqw">Carbon Storage SHE Task</h1><p class="lead" style="font-size:1.6cqw;max-width:70ch;margin-top:.6cqw">Your guide to the booklet. Work through the 11 steps in order. When a slide says <b>Write in your booklet</b>, stop and write on the page it names.</p></div>
+    <div class="wkList">${WEEKS.map((t,w)=>`<div class="wkCol"><div title="${t}" style="display:flex;align-items:center"><h3>Part ${w+1}</h3></div>${LESSONS.map((x,i)=>wk(i)===w+1?`<button class="lc" data-go="${i}"><i>${x.n}</i><span>${x.title}</span></button>`:"").join("")}</div>`).join("")}</div></div>`;
+    stage.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(+b.dataset.go,0));
+    $("#count").textContent="";$("#progBar").style.width="0";$("#ctrl").style.visibility="hidden";$("#notes").hidden=true;$("#notesBtn").setAttribute("aria-pressed","false");save();return;
+  }
+  $("#ctrl").style.visibility="visible";
+  const x=LESSONS[L],d=deck(L),s=d[S];
+  if(s.title){
+    const rv2=useRelief(L), sw=x.relief?`<a class="reliefSw" href="${rv2?location.pathname:location.pathname+"?relief"}#l${x.n}-1">${rv2?"Switch to the full lesson":"Switch to the relief version"}</a>`:"";
+    stage.innerHTML=`<section class="slide title">${sw}<span class="num">STEP ${x.n} OF ${LESSONS.length} &middot; PART ${wk(L)}: ${PARTS[wk(L)-1].toUpperCase()}${rv2?' &middot; <span class="reliefTag">RELIEF VERSION</span>':""}</span><h1>${x.title}</h1><div class="lisc"><div class="box"><h3>Learning intention</h3><p>${x.li}</p></div><div class="box"><h3>Success criteria</h3><ul>${x.sc.map(c=>`<li>${c}</li>`).join("")}</ul></div></div></section>`;
+  } else {
+    const m=MODES[s.mode]||MODES.learn;
+    stage.innerHTML=`<section class="slide${s.timer?" hasTimer":""}"><div class="eyebrow"><span class="mode" style="--mc:${m[1]}">${m[0]}</span><span>Step ${x.n}</span>${s.timer?`<span>&middot; ${s.timer} min</span>`:""}</div><h2>${s.h}</h2>${s.html}${s.timer?timerHTML(s.timer):""}</section>`;
+  }
+  stage.querySelectorAll("[data-reveal]").forEach(b=>b.onclick=()=>b.classList.toggle("open"));
+  stage.querySelectorAll(".tabbar").forEach(bar=>{const box=bar.parentElement;bar.querySelectorAll("[data-tab]").forEach(t=>t.onclick=()=>{bar.querySelectorAll("[data-tab]").forEach(o=>o.setAttribute("aria-selected",o===t));box.querySelectorAll("[data-panel]").forEach(p=>p.classList.toggle("on",p.dataset.panel===t.dataset.tab))})});
+  if(s.init)s.init.split(" ").forEach(k=>INIT[k]&&INIT[k](s));
+  bindTimer();
+  $("#count").textContent=`${S+1} / ${d.length}`;$("#progBar").style.width=`${(S+1)/d.length*100}%`;
+  $("#prev").disabled=S===0&&L===0;
+  $("#notes").innerHTML=`<h4>Teacher notes</h4><p>${s.title?`Lesson ${x.n}. Read the learning intention aloud and ask a student to rephrase a success criterion in their own words.${(useRelief(L)?x.reliefPrep:x.prep)?`</p><p><b>Prepare:</b> ${useRelief(L)?x.reliefPrep:x.prep}`:""}`:(s.notes||"")}</p>`;
+  save();
+}
+function go(l,s){L=l;S=s;render();try{history.replaceState(null,"",L<0?"#home":`#l${LESSONS[L].n}-${S+1}`)}catch(e){}}
+function next(){if(L<0)return go(0,0);const d=deck(L);if(S<d.length-1)go(L,S+1);else if(L<LESSONS.length-1)go(L+1,0)}
+function prev(){if(L<0)return;if(S>0)go(L,S-1);else if(L>0)go(L-1,deck(L-1).length-1)}
+function save(){try{localStorage.setItem("es-she-pos",JSON.stringify([L,S]))}catch(e){}}
+
+$("#homeBtn").onclick=()=>go(-1,0);$("#next").onclick=next;$("#prev").onclick=prev;
+$("#notesBtn").onclick=()=>{const n=$("#notes");n.hidden=!n.hidden;$("#notesBtn").setAttribute("aria-pressed",!n.hidden)};
+$("#fsBtn").onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}};
+document.addEventListener("keydown",e=>{if(e.target.matches("input,textarea"))return;
+  if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();next()}
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();prev()}
+  else if(e.key==="t"||e.key==="T"){if(T.toggle)T.toggle()}
+  else if(e.key==="f"||e.key==="F")$("#fsBtn").click()});
+
+(function start(){
+  const h=location.hash.match(/^#l(\d+)-(\d+)$/);
+  if(h){const l=LESSONS.findIndex(x=>x.n===+h[1]),s=+h[2]-1;if(l>=0&&s<deck(l).length)return go(l,s)}
+  let p=null;try{p=JSON.parse(localStorage.getItem("es-she-pos"))}catch(e){}
+  if(Array.isArray(p)&&p[0]>=0&&LESSONS[p[0]]&&p[1]<deck(p[0]).length)return go(p[0],p[1]);
+  go(-1,0);
+})();
+
+</script>
+</body>
+</html>
