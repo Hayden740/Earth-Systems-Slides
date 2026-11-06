@@ -933,7 +933,7 @@ LESSONS.push(
    notes:"Classic systems demo. Outside or a cleared space works best. The rest of the class narrate each pass."},
   {mode:"talk", timer:5, h:"What if?",
    html:`<p>Turn and talk. Predict the knock-on effects across <b>both</b> cycles, then reveal.</p><div class="grid3">${[["A long drought","Less rain &rarr; plants grow less &rarr; less CO&#8322; taken from the air. Decomposition slows. Bushfire risk rises, which releases carbon."],["The ocean warms","Warm water holds less CO&#8322;, so more stays in the air. More evaporation adds water vapour, which also traps heat."],["A forest is cleared","Less transpiration, so less local rain. Less photosynthesis. Burning or rotting wood releases CO&#8322;."]].map(c=>rv(c[0],c[1],"Predict, then click")).join("")}</div>`,
-   notes:"Foreshadows human impacts (Week 5) and climate (Week 6)."},
+   notes:"Foreshadows human impacts and carbon storage (Week 5) and climate (Week 6)."},
   {mode:"write", timer:6, h:"Cycles connect because...",
    html:`<div class="grid2 fill"><div class="box"><p class="lead">Complete the sentence three ways, each using a different example:</p><p class="def">"The water cycle and the carbon cycle are connected because..."</p></div><div class="box"><h3>Ideas</h3><p>plants &middot; oceans &middot; rain and rock &middot; decomposition &middot; drought &middot; fire</p><p class="small">Stretch: add the nitrogen cycle to one of your examples.</p></div></div>`,
    notes:"Evidence for Lesson 8: short written explanation."},
@@ -1112,7 +1112,7 @@ LESSONS.push(
   prep:"A3 paper for drafts. Copies of the checklist.",
   slides:[
   {mode:"learn", h:"Your task: a carbon cycle model",
-   html:`<div class="grid2 fill"><div class="box"><p class="lead">Create a scientific representation of the carbon cycle that someone who missed this unit could learn from.</p><p>Formats: poster, 3D model, comic strip, digital diagram, or a short annotated animation.</p><p class="small">Planned today, built in Lesson 20.</p></div>
+   html:`<div class="grid2 fill"><div class="box"><p class="lead">Create a scientific representation of the carbon cycle that someone who missed this unit could learn from.</p><p>Formats: poster, 3D model, comic strip, digital diagram, or a short annotated animation.</p><p class="small">Planned today, drawn in your SHE task booklet in Lesson 17.</p></div>
    <div class="box"><h3>Checklist: must show</h3><ul><li>All four spheres, clearly labelled</li><li>At least 6 carbon reservoirs</li><li>Arrows showing carbon movement</li><li>Processes labelled on arrows (photosynthesis, respiration, decomposition, combustion, ocean uptake)</li><li>Human impacts</li><li>A key or legend</li></ul></div></div>`,
    notes:"Formative task from the planner."},
   {mode:"whole", h:"What does great look like?",
@@ -1134,7 +1134,7 @@ LESSONS.push(
    notes:"Planner evidence: poster draft plan. Conference with students needing help."},
   {mode:"move", timer:6, h:"Speed feedback",
    html:`<div class="grid2 fill"><div class="box">${steps(["Swap drafts with someone new.","2 minutes: tick the checklist on their draft and write one suggestion.","Rotate. Get feedback from 3 people."])}</div><div class="box" style="justify-content:center"><p class="lead">Feedback must be kind, specific and helpful.</p></div></div>`,
-   notes:"Students keep the feedback for Lesson 20."},
+   notes:"Students keep the feedback for Lesson 17, where they draw their final carbon cycle in the SHE task booklet."},
   {mode:"check", h:"Exit: one change",
    html:`<div class="box fill" style="justify-content:center"><p class="lead">On your draft, write: <b>"One thing I will change is ___ because ___."</b></p><p class="small">Week 3 traffic light on a sticky note too.</p></div>`,
    notes:"Collect or photograph drafts."}
@@ -1269,7 +1269,7 @@ LESSONS.push(
    notes:"Circulate. Common issue: disks won't sink. Fix: more pulls on the syringe, fresh solution, a drop more detergent."},
   {mode:"move", timer:6, h:"Pack up and pool results",
    html:`<div class="grid2 fill"><div class="box">${steps(["Lamps off and cooling.","Rinse and return equipment.","Recorder writes your averages on the class board.","Wipe benches."])}</div><div class="box" style="justify-content:center"><p class="lead">Class data lets us check if results are reliable across groups.</p></div></div>`,
-   notes:"Photograph the class data board for Lesson 17."},
+   notes:"Photograph the class data board in case students write up the investigation report."},
   {mode:"talk", timer:4, h:"Notice and wonder",
    html:`<div class="grid2 fill"><div class="box tint bio"><h3 class="ink">I notice...</h3><p class="small" style="color:var(--ink)">A pattern, a surprise, a result that doesn't fit.</p></div><div class="box tint atmo"><h3 class="ink">I wonder...</h3><p class="small" style="color:var(--ink)">A question your data raises.</p></div></div>`,
    notes:"Collect a few wonders for the evaluation lesson."},
@@ -1280,124 +1280,186 @@ LESSONS.push(
 );
 
 /* ================= WEEK 5 ================= */
+const TECHS = {
+ "CCS":{node:"Capture plant",col:"var(--geo)",
+  steps:[["geo","tech","Natural gas comes up from deep rock with CO&#8322; mixed in. That carbon has been underground for millions of years."],["tech","atmo","Normally the CO&#8322; is separated out and released into the air.",1],["tech","geo","With CCS, the CO&#8322; is captured, compressed and pumped back into old gas reservoirs deep underground."]],
+  how:"CO&#8322; is separated at a gas plant, power station or factory, compressed into a dense fluid and injected into porous rock deep underground, under cap rock that stops it escaping.",
+  eff:"Moomba CCS (Cooper Basin, SA) started in late 2024 and is designed to store up to 1.7 million tonnes of CO&#8322; a year. Santos reported 2 million tonnes stored by May 2026.",
+  lim:"Cuts new emissions but removes nothing already in the air. Expensive. Some projects store much less than promised: Gorgon in WA captured about 30% of its CO&#8322; in 2023-24. Sites must be monitored for leaks."},
+ "Direct air capture":{node:"DAC machine",col:"var(--atmo)",
+  steps:[["atmo","tech","Giant fans pull ordinary air through filters that grab CO&#8322;."],["tech","geo","The filters are heated to release pure CO&#8322;. In Iceland it is mixed with water and pumped into basalt, where it turns into solid rock within about two years."]],
+  how:"Air passes over a material that CO&#8322; sticks to. Heating it releases concentrated CO&#8322; for storage. CO&#8322; is only about 0.04% of air, so huge volumes of air must be processed.",
+  eff:"Mammoth in Iceland opened in 2024 and is designed to capture 36,000 tonnes a year. It can remove carbon released anywhere, including in the past.",
+  lim:"Uses lots of energy (Mammoth runs on geothermal power). Costs have been around US$1,000 per tonne. In 2025 Icelandic journalists reported the plants were capturing only a fraction of their designed amount."},
+ "Biochar":{node:"Pyrolysis kiln",col:"var(--bio)",
+  steps:[["atmo","bio","Plants take in CO&#8322; by photosynthesis and build it into wood and leaves."],["bio","tech","Crop waste or wood is heated with very little oxygen (pyrolysis). It chars instead of burning."],["tech","geo","The biochar is dug into soil, where microbes struggle to break it down."]],
+  how:"Plant waste already holds carbon from the air. Heating it without oxygen locks much of that carbon into a stable, porous charcoal that can also help soil hold water and nutrients.",
+  eff:"Most of the carbon in well-made biochar stays in soil for hundreds of years, and recent research suggests thousands. Amazonian Indigenous peoples made charcoal-rich 'terra preta' soils that are still fertile today.",
+  lim:"Needs lots of plant waste, transport and land to spread it on. How long it lasts depends on how it was made and the climate. Growing crops just for biochar could compete with food and forests."},
+ "Ocean fertilisation":{node:"Iron added",col:"var(--hydro)",pos:[555,40],
+  steps:[["tech","hydro","Iron is added to surface sea water where plankton are short of it."],["atmo","hydro","CO&#8322; from the air dissolves into the ocean surface."],["hydro","bio","Phytoplankton bloom and use the CO&#8322; for photosynthesis."],["bio","geo","Some dead plankton sink to the deep ocean and sea floor, taking carbon with them."]],
+  how:"Some ocean regions have light and CO&#8322; but not enough iron for phytoplankton. Adding iron can trigger a big bloom that absorbs CO&#8322;, and some carbon may sink when the plankton die.",
+  eff:"Experiments have made large blooms, but much of the carbon is eaten and respired near the surface. Only a small, uncertain amount reaches the deep ocean.",
+  lim:"Blooms can use up oxygen and change food webs. Effects cross borders. Under the London Protocol, countries agreed in 2008 that only approved scientific research should go ahead, and made it legally binding in 2013."}
+};
+function techSVG(){return `<svg viewBox="0 0 640 330" width="100%" role="img" aria-label="Carbon path between Earth's spheres for the chosen technology" id="techSvg"></svg>`}
+INIT.tech=function(){
+  const N={atmo:[320,40,"Atmosphere","var(--atmo)"],bio:[105,165,"Biosphere","var(--bio)"],hydro:[535,165,"Hydrosphere","var(--hydro)"],geo:[320,290,"Geosphere","var(--geo)"],tech:[320,165,"","var(--ink)"]};
+  const names=Object.keys(TECHS); let cur=names[0], k=0;
+  const svg=$("#techSvg"), sb=$("#techPick"), out=$("#techOut"), cnt=$("#techCount");
+  const edge=(a,b,i,bl,all)=>{const A=N[a],B=N[b],dx=B[0]-A[0],dy=B[1]-A[1],d=Math.hypot(dx,dy),ux=dx/d,uy=dy/d;
+    const hw=n=>(n==="tech"?80:95)+6,hh=34,clip=n=>Math.min(Math.abs(dx)>.1?hw(n)/Math.abs(ux):1e9,Math.abs(dy)>.1?hh/Math.abs(uy):1e9);
+    const off=all.some(s=>s[0]===b&&s[1]===a)?18:0,px=-uy*off,py=ux*off;
+    const x1=A[0]+ux*clip(a)+px,y1=A[1]+uy*clip(a)+py,x2=B[0]-ux*clip(b)+px,y2=B[1]-uy*clip(b)+py,mx=(x1+x2)/2,my=(y1+y2)/2,c=bl?"var(--bad)":"var(--ink)";
+    return `<g class="te" data-i="${i}" opacity="0"><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="4" ${bl?'stroke-dasharray="8 7"':""} marker-end="url(#${bl?"tx":"ta"})"/><circle cx="${mx}" cy="${my}" r="15" fill="${c}"/><text x="${mx}" y="${my+6}" text-anchor="middle" font-size="16" font-weight="700" fill="var(--surface)">${bl?"&#10007;":i+1}</text></g>`};
+  const draw=()=>{const t=TECHS[cur];N.tech=[...(t.pos||[320,165]),t.node,"var(--ink)"];
+    let h=`<defs><marker id="ta" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker><marker id="tx" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--bad)"/></marker></defs>`;
+    Object.entries(N).forEach(([n,v])=>{const w=n==="tech"?160:190;h+=`<rect x="${v[0]-w/2}" y="${v[1]-28}" width="${w}" height="56" rx="${n==="tech"?8:24}" fill="${n==="tech"?"var(--surface)":`color-mix(in srgb,${v[3]} 18%,var(--surface))`}" stroke="${v[3]}" stroke-width="3" ${n==="tech"?'stroke-dasharray="6 4"':""}/><text x="${v[0]}" y="${v[1]+8}" text-anchor="middle" font-size="22" font-weight="700" fill="${n==="tech"?"var(--ink)":v[3]}">${v[2]}</text>`});
+    h+=t.steps.map((s,i)=>edge(s[0],s[1],i,s[3],t.steps)).join("");svg.innerHTML=h;
+    sb.innerHTML=names.map(n=>`<button aria-pressed="${n===cur}" data-t="${n}">${n}</button>`).join("");
+    sb.querySelectorAll("button").forEach(b=>b.onclick=()=>{cur=b.dataset.t;k=0;draw()});upd()};
+  const upd=()=>{const t=TECHS[cur];svg.querySelectorAll(".te").forEach((g,i)=>g.setAttribute("opacity",i<k?1:0));cnt.textContent=`${k} of ${t.steps.length} steps`;
+    out.innerHTML=k<t.steps.length?`<h3>${cur}</h3>${t.steps.slice(0,k).map((s,i)=>`<p><b>${s[3]?"Without capture":"Step "+(i+1)}:</b> ${s[2]}</p>`).join("")||'<p class="small">Click "Next step" to follow the carbon.</p>'}`
+      :`<h3>${cur}</h3><p><b>How it works.</b> ${t.how}</p><p><b>How effective?</b> ${t.eff}</p><p><b>Limitations.</b> ${t.lim}</p>`};
+  $("#techNext").onclick=()=>{if(k<TECHS[cur].steps.length)k++;upd()};$("#techAll").onclick=()=>{k=TECHS[cur].steps.length;upd()};$("#techReset").onclick=()=>{k=0;upd()};
+  draw();
+};
+const techUI=`<div class="grid2 fill" style="grid-template-columns:1.25fr 1fr"><div style="display:flex;flex-direction:column;gap:.8cqw"><div class="stations" id="techPick"></div><div class="box" style="padding:.6cqw">${techSVG()}</div><div class="row"><button class="btn primary" id="techNext">Next step</button><button class="btn" id="techAll">Show the facts</button><button class="btn" id="techReset">Reset</button><span class="small" id="techCount"></span></div></div><div class="box" id="techOut" style="overflow:auto;font-size:1.5cqw;gap:.5cqw"></div></div>`;
+const techCard=n=>{const t=TECHS[n];return `<h3>${n}</h3><p><b>How it works.</b> ${t.how}</p><p><b>How effective?</b> ${t.eff}</p><p><b>Limitations.</b> ${t.lim}</p>`};
+
 LESSONS.push(
-{ n:17, title:"Processing and analysing data",
-  li:"Represent and interpret investigation data.",
-  sc:["I can draw a line graph that follows the graphing rules.","I can describe a trend and identify an anomaly."],
-  prep:"Graph paper or a spreadsheet. Photo of the class data board from Lesson 16.",
-  slides:[
-  {mode:"check", h:"Retrieval: variables",
-   html:`<div class="grid3">${[["What was our independent variable?","Distance from the lamp (light intensity)."],["What was our dependent variable?","Time for 5 disks to float."],["Why did we do 3 trials?","To check our results are reliable (repeatable) and to reduce the effect of random errors."]].map(c=>rv(c[0],c[1])).join("")}</div>`,
-   notes:""},
-  {mode:"learn", h:"Graphing rules: TAILS",
-   html:`<div class="grid2 fill"><div class="box"><ul><li><b>T</b>itle: what was investigated</li><li><b>A</b>xes: independent variable on the x-axis, dependent on the y-axis</li><li><b>I</b>ntervals: evenly spaced numbers</li><li><b>L</b>abels: quantity and unit on each axis</li><li><b>S</b>cale: uses most of the grid</li></ul></div><div class="box"><h3>Which type of graph?</h3><p>Both variables are numbers that change continuously, so use a <b>line graph</b> (or a scatter graph with a line of best fit).</p><p class="small">Bar graphs are for categories, like leaf type.</p></div></div>`,
-   notes:"Revisit any graphing conventions your faculty uses."},
-  {mode:"whole", h:"Practice data: find the pattern", init:"leaf cells",
-   html:`<div class="grid2 fill" style="grid-template-columns:1fr 1.2fr"><div style="display:flex;flex-direction:column;gap:.8cqw"><p class="small"><b>Example data (made up for practice).</b></p><div class="tablewrap" id="leafTbl"><table class="ctable"><thead><tr><th>Distance (cm)</th><th>T1</th><th>T2</th><th>T3</th><th>Average (min)</th></tr></thead><tbody>${LEAF_DATA.map(d=>`<tr><th>${d.cm}</th>${d.t.map(t=>`<td${d.cm===40&&t===22?' style="color:var(--bad);font-weight:700"':''}>${t}</td>`).join("")}<td class="rcell">${(d.cm===40?(14+15)/2:d.t.reduce((a,b)=>a+b,0)/3).toFixed(1)}</td></tr>`).join("")}</tbody></table></div><div class="row"><button class="btn primary" id="leafAvg">Show averages and line</button></div><p class="small">The 40 cm average leaves out the 22: why?</p></div><div class="chartbox box" id="leafChart"></div></div>`,
-   notes:"Students calculate averages on whiteboards before you reveal. Discuss excluding the anomaly with a reason."},
-  {mode:"talk", timer:4, h:"Notice and wonder: the practice data",
-   html:`<div class="grid3">${[["What is the trend?","As the distance from the lamp increases, the time for disks to float increases."],["What does that mean for photosynthesis?","Further from the lamp = less light = slower photosynthesis = less oxygen made, so disks float later."],["Which result is an anomaly?","Trial 2 at 40 cm (22 minutes). It doesn't fit the pattern. Maybe disks weren't fully infiltrated, or the lamp moved."]].map(c=>rv(c[0],c[1],"Discuss, then click")).join("")}</div>`,
-   notes:"An anomaly is a result that doesn't fit the pattern. We exclude it only with a reason, and say so."},
-  {mode:"learn", h:"Describing a trend",
-   html:`<div class="box"><h3>Sentence frame</h3><p class="def">As the <b>[independent variable]</b> increased, the <b>[dependent variable]</b> <b>[increased/decreased]</b>. This shows that...</p></div><div class="box"><h3>Example</h3><p>As the distance from the lamp increased from 10 cm to 50 cm, the average time for 5 disks to float increased from 6.3 to 19.0 minutes. This shows that the rate of photosynthesis decreased as light intensity decreased.</p></div>`,
-   notes:"Quote data in the description: first and last values make it specific."},
-  {mode:"write", timer:15, h:"Graph your own data",
-   html:`<div class="grid2 fill"><div class="box">${steps(["Calculate averages for your group's (or the class's) data.","Draw a line graph using TAILS.","Circle any anomaly.","Write a trend sentence using the frame."])}</div><div class="box"><h3>Faster finishers</h3><p>Plot the class data on the same axes in a different colour. Do the groups agree?</p></div></div>`,
-   notes:"Planner evidence: graph. A spreadsheet is fine if students know how."},
-  {mode:"group", timer:6, h:"Link it back to carbon",
-   html:`<div class="grid3">${[["Where did the oxygen in the bubbles come from?","From photosynthesis. (Strictly, from the water molecules, a fun extension fact.)"],["Where did the carbon go?","Into glucose inside the leaf: carbon moved from the hydrosphere (dissolved bicarbonate) to the biosphere."],["What would a forest in bright sun do to CO&#8322; in the air?","Take in more CO&#8322;, because photosynthesis runs faster in more light."]].map(c=>rv(c[0],c[1],"Discuss, then click")).join("")}</div>`,
-   notes:"Analysis questions: link results to the carbon cycle."},
-  {mode:"check", h:"Exit",
-   html:`<div class="box fill" style="justify-content:center"><p class="lead">Write your trend sentence on a sticky note and stick it on the board, sorted by: <b>uses data</b> / <b>no data yet</b>.</p></div>`,
-   notes:""}
-  ]},
-
-{ n:18, title:"Validity, reliability and errors",
-  li:"Evaluate a scientific investigation.",
-  sc:["I can explain validity, reliability, accuracy and precision.","I can identify limitations and suggest improvements."],
-  prep:"Students' results and graphs from Lessons 16 and 17.",
-  slides:[
-  {mode:"talk", timer:4, h:"Four dartboards",
-   html:`<div style="max-width:62%;margin-inline:auto;width:100%">${dartSVG()}</div><p class="lead">The bullseye is the true value. With your partner: which board is <b>accurate</b>? Which is <b>precise</b>? Which is both?</p><div class="grid4">${[["A","Accurate and precise"],["B","Precise, not accurate"],["C","Neither: scattered and off-centre"],["D","Neither: scattered widely"]].map(c=>rv("Board "+c[0],c[1])).join("")}</div>`,
-   notes:"Board C's average may land near the centre; good discussion on why averaging helps random error."},
-  {mode:"learn", h:"Four words scientists use carefully",
-   html:`<div class="grid2 fill">${[["Validity","Does the experiment test what it claims, fairly? Only the IV changes; everything else is controlled."],["Reliability","Do repeat trials give similar results? Improve it with more trials and averages."],["Accuracy","How close a result is to the true value."],["Precision","How close repeated results are to each other."]].map(c=>`<div class="box"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join("")}</div>
-   <p class="small"><b>Random errors</b> change results unpredictably (counting disks at slightly different moments). <b>Systematic errors</b> push every result the same way (a stopwatch that starts late).</p>`,
-   notes:"Students add these to the glossary."},
-  {mode:"group", timer:6, h:"Spot the flaw",
-   html:`<div class="grid3">${[["Group 1 used spinach for 10 cm and lettuce for 50 cm.","Validity: leaf type changed as well as distance. Use the same leaf for all trials."],["Group 2 did only one trial per distance.","Reliability: no way to check repeatability. Do 3 or more trials."],["Group 3's lamp heated the water at 10 cm.","Validity: temperature became a second variable. Use a water bath or LED lamp."],["Group 4 used old bicarbonate solution for the last trials.","Validity: CO&#8322; supply changed. Make fresh solution."],["Group 5 started timing before turning on the lamp.","Systematic error: every time is too long by the same amount."],["Group 6 rounded all times to the nearest 5 minutes.","Precision: results too rough to see differences. Record to the nearest minute or better."]].map(c=>rv(c[0],c[1],"What's the problem? Fix?")).join("")}</div>`,
-   notes:"Groups take one card each, then share."},
-  {mode:"whole", h:"Validity or reliability?", init:"sort",
-   data:{zones:[["v","Improves validity","atmo"],["r","Improves reliability","hydro"]],
-     items:[["Keep the water temperature the same","v"],["Do 3 trials at each distance","r"],["Use the same type of leaf","v"],["Calculate averages","r"],["Use fresh bicarbonate solution each time","v"],["Compare with other groups' data","r"],["Measure light with a light meter instead of distance","v"]]},
-   html:sortUI,
-   notes:"The light meter improves validity: it measures light intensity directly rather than inferring it from distance."},
-  {mode:"write", timer:10, h:"Evaluate your investigation",
-   html:`<div class="grid2 fill"><div class="box"><h3>Evaluation paragraph</h3><ol><li>One <b>limitation</b> and how it affected the results.</li><li>How <b>reliable</b> your results were (use your trials).</li><li>One <b>improvement</b> and why it helps.</li><li>A conclusion: was the hypothesis supported?</li></ol></div><div class="box"><h3>Sentence starters</h3><ul><li>One limitation was... which may have caused...</li><li>Our results were (fairly / not very) reliable because...</li><li>To improve validity, we could...</li></ul></div></div>`,
-   notes:"Planner evidence: evaluation paragraph. This begins the summative investigation write-up."},
-  {mode:"talk", timer:4, h:"Plan the write-up",
-   html:`<div class="box fill" style="justify-content:center"><p class="lead">Your investigation report needs: aim, hypothesis, variables, method, results table, graph, analysis, evaluation, conclusion linking to the carbon cycle.</p><p>Tell your partner which section you'll find hardest and one thing that will help.</p></div>`,
-   notes:"Set the due date for the report."},
-  {mode:"check", h:"Exit: one word each",
-   html:`<div class="grid4 fill">${["validity","reliability","accuracy","precision"].map(w=>`<div class="box" style="align-items:center;justify-content:center"><b style="font-family:var(--f-display);font-size:2.2cqw">${w}</b><p class="small">Write a 5-word definition</p></div>`).join("")}</div>`,
-   notes:""}
-  ]},
-
-{ n:19, title:"Human impacts on the carbon cycle",
-  li:"Understand how human activity changes natural carbon flows.",
-  sc:["I can explain how combustion and land clearing affect the carbon cycle.","I can compare a natural and a human-influenced carbon cycle."],
-  prep:"A3 placemat sheets (four sections and a centre) per group.",
+{ n:17, title:"The carbon problem",
+  li:"Explain how human activity changes the carbon cycle, and begin the carbon storage SHE task.",
+  sc:["I can explain how combustion and land clearing move carbon between spheres.","I can draw an accurate carbon cycle diagram that includes human impacts."],
+  prep:"Print the Carbon Cycle SHE Task booklet (one per student). Students need their Lesson 12 poster plan and coloured pencils. Preview the video.",
   slides:[
   {mode:"watch", h:"A year of CO&#8322; from space",
    html:vid("x1SgmFa0r04","A Year in the Life of Earth's CO2","NASA Goddard",["Where on Earth does most CO&#8322; come from?","What happens to CO&#8322; in the northern summer? Why?","How does the CO&#8322; move around the planet?"]),
-   notes:"Stunning visual. The northern summer dip is photosynthesis by northern forests."},
+   notes:"The northern summer dip is photosynthesis by northern forests. Point out that CO&#8322; doesn't stay where it is released: it is a global problem."},
   {mode:"learn", h:"How humans change the carbon cycle",
-   html:`<div class="grid2 fill">${[["Burning fossil fuels","Coal, oil and gas move carbon from the slow cycle (millions of years) into the air in seconds."],["Clearing land","Removing forests and native vegetation means less photosynthesis, and burning or rotting the wood releases CO&#8322;."],["Making cement","Heating limestone releases CO&#8322; directly, plus the fuel burned to heat it."],["Agriculture","Cattle and sheep release methane. Ploughing releases carbon stored in soil."]].map(c=>`<div class="box"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join("")}</div>`,
-   notes:"Emphasise the slow-to-fast idea from Lesson 9."},
-  {mode:"group", timer:8, h:"Placemat",
-   html:`<div class="grid2 fill"><div class="box">${steps(["Groups of 4 around an A3 placemat. Each person takes one impact.","In your section, write: which reservoir loses carbon, which gains it, and which spheres.","Rotate the placemat. Add to each section.","In the centre, agree on one sentence true for all four impacts."])}</div><div class="box" style="justify-content:center"><p class="lead">Centre sentence hint: where is the carbon ending up?</p></div></div>`,
-   notes:"Centre consensus: all four move carbon into the atmosphere faster than natural processes remove it."},
+   html:`<div class="grid2 fill">${[["Burning fossil fuels","Coal, oil and gas move carbon from the geosphere (stored for millions of years) into the atmosphere in seconds."],["Clearing land","Fewer plants means less photosynthesis, and burning or rotting the wood releases CO&#8322;."],["Making cement","Heating limestone releases CO&#8322; directly, plus the fuel burned to heat it."],["Agriculture","Cattle and sheep release methane. Ploughing releases carbon stored in soil."]].map(c=>`<div class="box"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join("")}</div>`,
+   notes:"Emphasise the slow-to-fast idea from Lesson 9. Fossil fuel combustion and deforestation are the two the SHE task asks about."},
   {mode:"learn", h:"Natural balance versus today",
-   html:`<div class="grid2 fill"><div class="box tint bio"><h3 class="ink">Natural carbon cycle</h3><p>Over thousands of years, carbon taken in (photosynthesis, oceans) roughly balanced carbon released (respiration, decomposition, volcanoes). CO&#8322; stayed close to <b>280 ppm</b> before industry.</p></div><div class="box tint geo"><h3 class="ink">Human-influenced cycle</h3><p>We add carbon faster than plants and oceans can take it up. Mauna Loa measured about <b>317 ppm</b> in 1960 and about <b>421 ppm</b> in 2023.</p></div></div><p class="small">ppm = parts per million: CO&#8322; molecules per million molecules of air. Data: NOAA Global Monitoring Laboratory.</p>`,
-   notes:"The ocean and land absorb about half of what we emit; the rest builds up in the air."},
+   html:`<div class="grid2 fill"><div class="box tint bio"><h3 class="ink">Natural carbon cycle</h3><p>Over thousands of years, carbon taken in (photosynthesis, oceans) roughly balanced carbon released (respiration, decomposition, volcanoes). CO&#8322; stayed close to <b>280 ppm</b> before industry.</p></div><div class="box tint geo"><h3 class="ink">Human-influenced cycle</h3><p>We add carbon faster than plants and oceans can take it up. Mauna Loa measured about <b>317 ppm</b> in 1960 and about <b>421 ppm</b> in 2023. Fossil fuels released roughly <b>37 billion tonnes</b> of CO&#8322; in 2024.</p></div></div><p class="small">Data: NOAA Global Monitoring Laboratory; Global Carbon Project.</p>`,
+   notes:"The ocean and land absorb about half of what we emit; the rest builds up in the air. This sets up the question for the rest of the week: can we put carbon back?"},
   {mode:"whole", h:"Natural or human?", init:"sort",
    data:{zones:[["n","Natural","bio"],["h","Human",""],["b","Both","hydro"]],
      items:[["Volcanic eruption","n"],["Burning petrol","h"],["Making cement","h"],["Bushfire","b"],["Respiration","n"],["Clearing scrub for housing","h"],["Methane from cattle","h"],["Decomposition","n"],["Methane from wetlands","n"]],
      note:"Bushfires start naturally (lightning) and from people."},
    html:sortUI,
    notes:"Bushfire goes in both. Cattle methane is human-influenced because we farm them."},
-  {mode:"write", timer:10, h:"Annotate the comparison",
-   html:`<div class="grid2 fill"><div class="box"><p class="lead">Draw two simple carbon cycles side by side: <b>natural</b> and <b>human-influenced</b>.</p><p>On the human one, add thicker arrows for combustion and land clearing. Annotate three differences.</p></div><div class="box"><h3>Must show</h3><ul><li>Fossil fuels &rarr; atmosphere</li><li>Fewer trees, less photosynthesis</li><li>Bigger atmosphere reservoir</li></ul></div></div>`,
-   notes:"Planner evidence: annotated comparison diagram."},
-  {mode:"talk", timer:4, h:"What can be done?",
-   html:`<div class="grid2 fill"><div class="box"><p class="lead">Think, pair, share: name one way to <b>reduce carbon going in</b> and one way to <b>increase carbon coming out</b> of the atmosphere.</p></div><div class="box">${rv("Some answers","Going in: renewable energy, electric transport, less land clearing. Coming out: plant trees, restore seagrass and wetlands, look after soil. South Australia now gets most of its electricity from wind and solar.")}</div></div>`,
-   notes:"Keep the tone hopeful and practical."},
+  {mode:"assess", h:"Your SHE task: Carbon storage technologies",
+   html:`<div class="grid3 fill">${[["Part 1","Understanding the carbon cycle","Research organiser, a <b>hand-drawn</b> carbon cycle diagram with human impacts, and a 200-word explanation.","Lesson 17"],["Part 2","Investigating two technologies","Research two carbon storage technologies, compare them, then write a 300-word evaluation.","Lessons 18 and 19"],["Part 3","SHE analysis","Ethics, cultural and societal values, and collaboration, with real examples (300 words). Plus an APA reference list.","Lesson 20"]].map(c=>`<div class="box"><span class="small">${c[0]} &middot; ${c[3]}</span><h3>${c[1]}</h3><p>${c[2]}</p></div>`).join("")}</div><p class="small">SHE here means the social, ethical and environmental side of science. Read the rubric on page 2 of your booklet before you start.</p>`,
+   notes:"Hand out booklets. Walk through the rubric and where each criterion is assessed (booklet page 2). Set the due date. Starting source: Khan Academy, 'The carbon cycle'."},
+  {mode:"research", timer:15, h:"Booklet 1A and 1B: research organiser",
+   html:`<div class="grid2 fill"><div class="box"><h3>1A: The four spheres</h3><p>For each sphere: what is it, where is carbon stored, and how does carbon move in and out?</p><h3>1B: Human impacts</h3><p>Fossil fuel combustion and deforestation: what happens, and how does it change the carbon cycle?</p></div><div class="box"><h3>Reliable sources</h3><ul><li>Khan Academy: The carbon cycle (link on your booklet cover)</li><li>Your Lesson 9 to 12 notes</li><li>CSIRO, NASA or NOAA websites</li></ul><p class="small">Record every source you use at the bottom of page 3. You need them for your APA reference list.</p></div></div>`,
+   notes:"Dot points only. Circulate and check the 'how carbon moves' column names processes (photosynthesis, respiration, diffusion, decomposition, combustion, sedimentation)."},
+  {mode:"write", timer:20, h:"Booklet 1C: draw your carbon cycle",
+   html:`<div class="grid2 fill"><div class="box"><h3>Must show</h3><ul><li>All four spheres</li><li>Labelled arrows showing which way carbon moves</li><li>Photosynthesis, respiration, decomposition, ocean exchange</li><li>Fossil fuel combustion and deforestation</li><li>A title and a key</li></ul></div><div class="box"><h3>Tips</h3><p>Start from your Lesson 12 poster plan and the feedback you got.</p><p>Use one colour for natural processes and another for human impacts.</p><p class="small">The diagram page in the booklet is landscape. It must be hand drawn.</p></div></div>`,
+   notes:"Planner evidence: drawn carbon cycle diagram. This replaces the separate carbon cycle model build. Students finish 1D (200-word explanation) for homework, using the sentence starters in the booklet."},
   {mode:"check", h:"Exit",
-   html:`<div class="box fill" style="justify-content:center"><p class="lead">In one sentence: <b>why does burning fossil fuels upset the balance of the carbon cycle?</b></p></div>`,
-   notes:"Look for the slow-to-fast idea."}
+   html:`<div class="box fill" style="justify-content:center"><p class="lead">In one sentence: <b>why does burning fossil fuels upset the balance of the carbon cycle?</b></p><p class="small">Homework: booklet 1D, the 200-word explanation of your diagram.</p></div>`,
+   notes:"Look for the slow-to-fast idea: carbon stored for millions of years released in seconds."}
   ]},
 
-{ n:20, title:"Finishing the carbon cycle model",
-  li:"Communicate understanding of the carbon cycle clearly.",
-  sc:["I can produce an accurate scientific representation of the carbon cycle.","I can give and use peer feedback."],
-  prep:"Drafts from Lesson 12, A3 card, coloured pencils, glue, modelling materials as needed. Sticky notes in two colours.",
+{ n:18, title:"Carbon storage technologies",
+  li:"Describe how emerging technologies capture and store carbon.",
+  sc:["I can explain how a carbon storage technology moves carbon between Earth's spheres.","I can describe the effectiveness and limitations of a technology using evidence."],
+  prep:"Booklets. Preview both videos. Optional: print the four technology fact cards (slide 6 tabs) for the jigsaw.",
   slides:[
-  {mode:"learn", h:"Today: build, check, improve",
-   html:`<div class="grid3 fill"><div class="box"><h3>30 minutes</h3><p>Build your final model from your draft.</p></div><div class="box"><h3>10 minutes</h3><p>Gallery walk peer review.</p></div><div class="box"><h3>5 minutes</h3><p>Make improvements.</p></div></div>
-   <div class="box"><h3>Don't forget human impacts!</h3><p>Add what you learned in Lesson 19: fossil fuel combustion, land clearing, and a bigger atmosphere reservoir.</p></div>`,
-   notes:"Hand back drafts and Lesson 12 feedback."},
-  {mode:"write", timer:30, h:"Build time",
-   html:`<div class="grid2 fill"><div class="box"><h3>Checklist</h3><ul><li>All four spheres labelled</li><li>6+ reservoirs</li><li>Labelled arrows: photosynthesis, respiration, decomposition, combustion, ocean uptake</li><li>Fast and slow cycle shown</li><li>Human impacts</li><li>Key or legend</li></ul></div><div class="box" style="justify-content:center"><p class="lead">Teacher conferences: be ready to explain one arrow.</p></div></div>`,
-   notes:"Conference with each student briefly. Ask: 'Talk me through this arrow.'"},
-  {mode:"move", timer:10, h:"Gallery walk: two stars and a wish",
-   html:`<div class="grid2 fill"><div class="box">${steps(["Leave your model on your desk.","Visit at least three models.","Leave two yellow sticky notes: things done well (stars).","Leave one pink sticky note: one specific improvement (wish)."])}</div><div class="box" style="justify-content:center"><p class="lead">Good wish: "Label the arrow from the factory." Unhelpful wish: "Make it better."</p></div></div>`,
-   notes:"Model the difference between specific and vague feedback."},
-  {mode:"write", timer:5, h:"Act on the feedback",
-   html:`<div class="box fill" style="justify-content:center"><p class="lead">Read your wishes. Fix at least one now. Write on the back: <b>"I changed ___ because ___."</b></p></div>`,
-   notes:"Planner evidence: final carbon cycle poster/model."},
-  {mode:"check", h:"Self-assess",
-   html:`<div class="box fill" style="justify-content:center"><p class="lead">Look at the rubric from Lesson 12. Circle the level you think you reached for each criterion.</p><p class="small">Week 5 traffic light.</p></div>`,
-   notes:"Compare self-assessment with yours when marking."}
+  {mode:"talk", timer:4, h:"Two ways to fix the carbon problem",
+   html:`<div class="grid2 fill"><div class="box tint geo"><h3 class="ink">Stop it getting out</h3><p>Catch CO&#8322; at the chimney or gas plant <b>before</b> it reaches the air.</p></div><div class="box tint bio"><h3 class="ink">Take it back out</h3><p>Remove CO&#8322; that is <b>already</b> in the atmosphere.</p></div></div><div class="grid2">${rv("Which is easier? Why?","Stopping it at the source: the gas is concentrated there. In open air CO&#8322; is only about 0.04%, so removing it takes far more energy.")}${rv("Why might we need both?","We can't stop every emission (planes, farms, cement), and there is already extra CO&#8322; in the air from past emissions.")}</div>`,
+   notes:"Think, pair, share before revealing."},
+  {mode:"check", h:"How long does it stay stored?", init:"vote",
+   data:[["Carbon in a young gum tree","Decades to a few centuries, unless it burns in a bushfire or is cleared. Not very durable."],["Carbon in soil organic matter","Years to centuries. Ploughing or warming can release it."],["Carbon in biochar dug into soil","Hundreds to possibly thousands of years."],["CO&#8322; turned into rock deep underground","Millions of years. Very durable."]],
+   html:voteUI("Reveal"),
+   notes:"Key idea: a good carbon store must be durable. Students guess a time scale for each before you reveal."},
+  {mode:"learn", h:"Follow the carbon", init:"tech",
+   html:techUI,
+   notes:"Click through each technology step by step, then 'Show the facts'. Ask: which spheres does the carbon move between? Is it stopping carbon getting out, or taking it back out?"},
+  {mode:"watch", h:"Carbon capture and storage",
+   html:vid("2SwfbHhWgO8","Roads to Removal: Carbon Capture and Storage","Lawrence Livermore National Laboratory",["Where is the CO&#8322; captured?","Where is it stored, and what stops it escaping?","How do scientists check it stays there?"]),
+   notes:"Link to Moomba, SA: CO&#8322; separated from natural gas is injected into old gas reservoirs in the Cooper Basin."},
+  {mode:"watch", h:"Direct air capture",
+   html:vid("4w2xyo_GXUg","The technology that fights climate change","Climeworks",["How does the machine catch CO&#8322;?","What energy source does it use?","Who made this video? Why might that matter?"],"This is a company video. Compare its claims with independent sources."),
+   notes:"Good SHE moment: a company promoting its own product. Mention that in 2025 Icelandic journalists reported the plants were capturing far less than their designed amount."},
+  {mode:"group", timer:12, h:"Jigsaw: become an expert",
+   html:`<div style="font-size:1.6cqw;display:flex;flex-direction:column;gap:.8cqw">${tabs(Object.keys(TECHS).map(n=>[n,techCard(n)]))}</div>`,
+   notes:"Groups of four. Each student takes one technology tab (or printed card), then teaches the group in 90 seconds: how it works, how effective, one limitation."},
+  {mode:"write", timer:15, h:"Booklet Part 2: choose and start",
+   html:`<div class="grid2 fill"><div class="box">${steps(["Tick your <b>two</b> technologies on page 6.","Fill in <b>First impressions</b>: what you know and what you want to find out.","Start <b>Technology A</b>: sketch and label how it works (2A)."])}</div><div class="box"><h3>Sketch tips</h3><ul><li>Show where the carbon starts and ends</li><li>Name the spheres</li><li>Label each step</li></ul><p class="small">The diagram on slide 3 is a model. Don't copy it: draw your own.</p></div></div>`,
+   notes:"Encourage students to choose two technologies that contrast (one 'stop it getting out' and one 'take it back out')."},
+  {mode:"check", h:"Exit: which technology?", init:"sort",
+   data:{zones:[["ccs","CCS","geo"],["dac","Direct air capture","atmo"],["bio","Biochar","bio"],["ocean","Ocean fertilisation","hydro"]],
+     items:[["Turns plant waste into charcoal for soil","bio"],["Giant fans pull CO&#8322; from air","dac"],["Adds iron to the sea","ocean"],["Pumps CO&#8322; back into old gas reservoirs","ccs"],["Runs at Moomba in SA","ccs"],["Only allowed for approved research","ocean"],["Can help soil hold water","bio"],["Needs lots of energy because CO&#8322; is only 0.04% of air","dac"]]},
+   html:sortUI,
+   notes:""}
+  ]},
+
+{ n:19, title:"Comparing carbon storage technologies",
+  li:"Compare two carbon storage technologies using evidence.",
+  sc:["I can compare technologies on environmental impact, cost and feasibility, and social and ethical issues.","I can write an evaluation that reaches a judgement supported by evidence."],
+  prep:"Booklets. Devices for research. Preview the biochar and ocean videos and choose sections.",
+  slides:[
+  {mode:"check", h:"Retrieval",
+   html:`<div class="grid3">${[["Which technology removes CO&#8322; already in the air?","Direct air capture (and biochar and ocean fertilisation, through photosynthesis)."],["What is pyrolysis?","Heating plant material with very little oxygen so it chars instead of burning."],["Why is ocean fertilisation restricted?","Uncertain carbon storage and risks to marine ecosystems. The London Protocol only allows approved research."]].map(c=>rv(c[0],c[1])).join("")}</div>`,
+   notes:""},
+  {mode:"talk", timer:5, h:"How big is the problem? Scale it up",
+   html:`<div class="tablewrap"><table class="ctable"><thead><tr><th>Project</th><th>Storage per year</th></tr></thead><tbody><tr><td>Moomba CCS, SA (designed capacity)</td><td>up to 1.7 million tonnes</td></tr><tr><td>Mammoth direct air capture, Iceland (designed)</td><td>36,000 tonnes</td></tr><tr><td>Global fossil fuel CO&#8322; (2024)</td><td>about 37,000 million tonnes</td></tr></tbody></table></div><div class="grid2">${rv("How many Moomba-sized projects to store it all?","About 22,000 (37,000 &divide; 1.7). Australia has only a handful.","Estimate, then click")}${rv("How many Mammoth-sized plants?","About 1 million (37,000,000,000 &divide; 36,000).","Estimate, then click")}</div>`,
+   notes:"Calculators allowed. Discussion: storage alone can't solve the problem; we need to cut emissions as well as remove carbon."},
+  {mode:"watch", h:"Watch: biochar or ocean fertilisation",
+   html:tabs([["Biochar",vid("uEOK3fk45Rg","How Biochar Removes CO2 from the Air, and Helps Farmers Thrive","TED (Axel Reinaud)",["How is biochar made?","How does it help farmers?","How long does the carbon stay stored?"],"About 11 minutes. Choose a section.")],["Ocean fertilisation",vid("wD_PuHx2ca0","Fertilising the oceans with iron","Prof Richard Lampitt, National Oceanography Centre",["Why would adding iron make plankton grow?","How much of the carbon actually sinks?","What could go wrong?"])]]),
+   notes:"Play whichever matches most students' choices, or let students watch on devices during research."},
+  {mode:"research", timer:20, h:"Booklet 2A to 2C: research both technologies",
+   html:`<div class="grid2 fill"><div class="box"><h3>For each technology</h3><ul><li><b>2A</b> How does it work? (sketch plus explanation)</li><li><b>2B</b> How effective could it be? Find a <b>number</b>.</li><li><b>2C</b> Limitations and challenges</li></ul></div><div class="box"><h3>Good places to look</h3><ul><li>CSIRO, IPCC, NASA or NOAA</li><li>ABC News and ABC Education</li><li>Global CCS Institute (industry body: check its claims)</li><li>Company websites: useful facts, but they are selling something</li></ul><p class="small">Record author, year, title and website for every source.</p></div></div>`,
+   notes:"Push for specific numbers in 2B: tonnes stored per year, cost per tonne, how long carbon stays stored."},
+  {mode:"learn", h:"Three ways to compare",
+   html:`<div class="grid3 fill">${[["Environmental impact","Benefits and risks to land, oceans, air and living things. Energy, water and land use. Could carbon leak?","bio"],["Cost and feasibility","Cost per tonne. Can it work at large scale? Is it ready now or still being tested?","atmo"],["Social and ethical","Who benefits and who carries the risks? Is it fair? Would communities accept it?","geo"]].map(c=>`<div class="box tint ${c[2]}"><h3 class="ink">${c[0]}</h3><p>${c[1]}</p></div>`).join("")}</div><p class="small">Rate each technology out of 5 for each criterion in your booklet table (2D), and justify each rating with evidence.</p>`,
+   notes:""},
+  {mode:"group", timer:12, h:"Booklet 2D and 2E: compare",
+   html:`<div class="grid2 fill"><div class="box">${steps(["Complete the comparison table (2D) and give each rating a reason.","Pair up with someone who chose a <b>different</b> technology. Swap one fact each.","Fill in the Venn diagram (2E): only A, only B, both.","Answer: which is more promising overall, and why?"])}</div><div class="box" style="justify-content:center"><p class="lead">A good comparison uses words like <b>whereas</b>, <b>however</b>, <b>both</b> and <b>unlike</b>.</p></div></div>`,
+   notes:""},
+  {mode:"learn", h:"Writing your evaluation",
+   html:`<div class="grid2 fill"><div class="box"><h3>Paragraph plan (2F)</h3><ol><li>Introduction: both technologies and your judgement</li><li>Environment compared</li><li>Cost and feasibility compared</li><li>Social and ethical compared</li><li>Conclusion: judgement and strongest reason</li></ol></div><div class="box"><h3>Model sentences</h3><p>"CCS can store large amounts of CO&#8322;, such as up to 1.7 million tonnes a year at Moomba, <b>whereas</b> direct air capture plants currently store far less, with Mammoth designed for 36,000 tonnes."</p><p>"<b>However</b>, unlike CCS, direct air capture can remove carbon that is already in the atmosphere."</p></div></div>`,
+   notes:"Point out the structure: claim, specific evidence, comparison word."},
+  {mode:"write", timer:15, h:"Booklet 2F: written evaluation (300 words)",
+   html:`<div class="box fill" style="justify-content:center"><p class="lead">Which of your two technologies is more promising for reducing climate change? Compare them on all three criteria and use evidence from your table.</p><p class="small">Finish for homework if needed.</p></div>`,
+   notes:"Planner evidence: written evaluation (Analysis and Evaluation criterion)."},
+  {mode:"check", h:"Exit",
+   html:`<div class="box fill" style="justify-content:center"><p class="lead">Write your judgement in one sentence, then underline the evidence that supports it.</p></div>`,
+   notes:""}
+  ]},
+
+{ n:20, title:"Carbon storage: SHE perspectives",
+  li:"Analyse the social, ethical and environmental implications of carbon storage technologies.",
+  sc:["I can discuss equity, cultural values and collaboration using real examples.","I can reference my sources correctly in APA format."],
+  prep:"Booklets. Clear a wall or line for the continuum activity.",
+  slides:[
+  {mode:"move", h:"Where do you stand?", init:"vote",
+   data:[["Carbon storage lets big polluters keep polluting instead of cutting emissions."],["The countries that emitted the most should pay to remove carbon."],["A community should be able to say no to CO&#8322; being stored under its land."],["Scientists should be allowed to test ocean fertilisation at a large scale."]],
+   html:`<p>One wall is "strongly agree", the other "strongly disagree". Move to your spot. Volunteers explain why.</p>${voteUI()}`,
+   notes:"No right answers. Ask students at both ends to give a reason, then ask someone in the middle what would change their mind."},
+  {mode:"learn", h:"Three SHE lenses for Part 3",
+   html:`<div class="grid3 fill">${[["Ethics: equity and justice","Who pays and who benefits? Who lives near the risks? Countries that emitted the least often feel climate change the most. What do we owe future generations?","geo"],["Cultural and societal values","How do communities value land, oceans and Country? Would people accept it? Do Traditional Owners get a real say over projects on their Country?","bio"],["Collaboration","Scientists test and monitor. Governments fund and regulate. Industries build and run. International agreements decide what happens in shared oceans.","hydro"]].map(c=>`<div class="box tint ${c[2]}"><h3 class="ink">${c[0]}</h3><p>${c[1]}</p></div>`).join("")}</div>`,
+   notes:""},
+  {mode:"whole", h:"Case study: Moomba CCS, South Australia",
+   html:`<div class="grid2 fill"><div class="box"><p>Australia's first large-scale onshore CCS project is at Moomba in the Cooper Basin, the traditional lands of the <b>Yandruwandha Yawarrawarrka</b> people, whose native title was recognised in 2015. Santos runs it with Beach Energy. It stored 2 million tonnes of CO&#8322; in about its first 18 months. The CO&#8322; comes from processing natural gas.</p></div><div class="grid2">${[["Who collaborated?","Santos and Beach Energy built and run it. The federal government gave grant funding. The Clean Energy Regulator issues carbon credits for the CO&#8322; stored."],["What do supporters say?","It cuts emissions from an industry that is hard to clean up, and could store CO&#8322; for other industries."],["What do critics say?","It helps keep gas production going for longer, and storage is small compared with total emissions."],["What would you ask?","How were Traditional Owners consulted? Who earns money from the carbon credits? Who monitors for leaks?"]].map(c=>rv(c[0],c[1])).join("")}</div></div>`,
+   notes:"Treat the consultation question as a research question: we don't make claims about it on the slide. Students could look for Santos, SA Government and Native Title Services SA sources."},
+  {mode:"group", timer:6, h:"Case study: iron in the ocean",
+   html:`<div class="grid2 fill"><div class="box"><p>In 2012 a private project added about 100 tonnes of iron to the Pacific Ocean off Canada's west coast to grow plankton. Countries in the London Protocol expressed <b>grave concern</b>, and in 2013 they made it legally binding that only approved research can go ahead.</p></div><div class="grid2">${[["Which SHE lens fits best?","Collaboration: the ocean is shared, so international agreements decide what is allowed. Also ethics: one group's actions affect everyone's ocean."],["Why did scientists object?","Effects on ecosystems were unknown and the carbon storage could not be checked."]].map(c=>rv(c[0],c[1],"Discuss, then click")).join("")}</div></div>`,
+   notes:""},
+  {mode:"write", timer:12, h:"Booklet 3A: SHE planner",
+   html:`<div class="grid2 fill"><div class="box">${steps(["For each lens, write dot points for Technology A and Technology B.","Find a <b>real example</b> for each row: who, where, when.","Use today's case studies, or research your own."])}</div><div class="box" style="justify-content:center"><p class="lead">No example, no evidence. Each paragraph in 3B needs at least one.</p></div></div>`,
+   notes:""},
+  {mode:"write", timer:20, h:"Booklet 3B: SHE analysis (300 words)",
+   html:`<div class="grid2 fill"><div class="box"><h3>Three paragraphs</h3><ol><li>Ethics: equity and justice</li><li>Cultural and societal values</li><li>Collaboration between scientists, governments and industries</li></ol></div><div class="box"><h3>Sentence starters</h3><ul><li>One ethical issue with ___ is ___ because ___.</li><li>For example, at ___ ...</li><li>This shows that ___.</li><li>Some people value ___, so they might ___.</li></ul></div></div>`,
+   notes:"Planner evidence: SHE analysis (SHE Perspectives criterion)."},
+  {mode:"learn", h:"APA reference list",
+   html:`<div class="grid2 fill"><div class="box"><h3>Web page format</h3><p class="def">Author. (Year, Month Day). <i>Title of page</i>. Site Name. URL</p><p class="small">Use (n.d.) when there is no date. Put the list in alphabetical order.</p></div><div class="box"><h3>Example</h3><p style="overflow-wrap:anywhere">Khan Academy. (n.d.). <i>The carbon cycle</i>. https://www.khanacademy.org/science/biology/ecology/biogeochemical-cycles/a/the-carbon-cycle</p></div></div>`,
+   notes:"Research Skills criterion. Students complete the reference list page of the booklet."},
+  {mode:"check", h:"Final checklist and self-assessment",
+   html:`<div class="grid2 fill"><div class="box"><p class="lead">Use the checklist on the last page of your booklet.</p><p>Then look at the rubric on page 2 and circle the level you think you reached for each criterion.</p></div><div class="box" style="justify-content:center"><p class="small">Week 5 traffic light.</p></div></div>`,
+   notes:"Collect booklets or confirm the due date."}
   ]}
 );
 
@@ -1660,7 +1722,7 @@ function bindTimer(){
 function chime(){try{const a=new (window.AudioContext||window.webkitAudioContext)();[0,.25,.5].forEach(d=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.18,a.currentTime+d);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+d+.22);o.start(a.currentTime+d);o.stop(a.currentTime+d+.25)})}catch(e){}}
 
 /* ---------- rendering ---------- */
-const WEEKS=["Introducing Earth as a system","Cycles in Earth systems","The carbon cycle","Photosynthesis, respiration and investigation","Analysing evidence and human impacts","The greenhouse effect and climate","Consolidation and assessment"];
+const WEEKS=["Introducing Earth as a system","Cycles in Earth systems","The carbon cycle","Photosynthesis, respiration and investigation","Human impacts and carbon storage","The greenhouse effect and climate","Consolidation and assessment"];
 const wk=l=>Math.ceil(LESSONS[l].n/4);
 let L=-1,S=0;
 const RELIEF=/[?&]relief\b/.test(location.search);
