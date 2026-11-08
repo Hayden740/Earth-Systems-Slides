@@ -259,6 +259,7 @@ svg text{font-family:var(--f-body)}
 .writebox .wpage{align-self:flex-start;font-family:var(--f-mono);font-weight:700;font-size:1.7cqw;letter-spacing:.04em;text-transform:uppercase;background:var(--geo);color:#fff;border-radius:.6cqw;padding:.4cqw 1.2cqw}
 .writebox ol{font-size:2.1cqw;line-height:1.35;gap:.9cqw}
 .writebox .wnext{margin-top:auto;font-size:1.5cqw;color:var(--muted)}
+.sph4{gap:1cqw}.sph4 .box{font-size:1.4cqw;line-height:1.3;gap:.8cqw;padding:1.2cqw 1.2cqw}.sph4 h3{font-size:1.95cqw}.sph4 ul{gap:.35cqw;margin-top:.2cqw;padding-left:1.1em}
 </style>
 </head>
 <body>
@@ -611,8 +612,25 @@ LESSONS.push(
    html:`<div class="grid3 fill">${[["Part 1","Understanding the carbon cycle","Research organiser, a <b>hand-drawn</b> carbon cycle diagram and a 200-word explanation.","Steps 1 to 3"],["Part 2","Investigating two technologies","Research two carbon storage technologies, compare them and write a 300-word evaluation.","Steps 4 to 8"],["Part 3","SHE analysis","Ethics, cultural values and collaboration with real examples (300 words), plus a reference list.","Steps 9 to 11"]].map(c=>`<div class="box"><span class="small">${c[0]} &middot; ${c[3]}</span><h3>${c[1]}</h3><p>${c[2]}</p></div>`).join("")}</div><p class="small">Work through the steps in order. When you see a <b>Write in your booklet</b> slide, stop and write. Read the rubric on page 2 of your booklet first.</p>`},
   {mode:"watch", h:"A year of CO&#8322; from space",
    html:vid("x1SgmFa0r04","A Year in the Life of Earth's CO2","NASA Goddard",["Where on Earth does most CO&#8322; come from?","What happens to CO&#8322; in the northern summer? Why?","How does the CO&#8322; move around the planet?"])},
-  {mode:"learn", h:"Where carbon is stored",
-   html:`<div class="grid2 fill">${[["atmo","Atmosphere","CO&#8322; and methane gas. Carbon enters by respiration, combustion, decomposition and volcanoes, and leaves by photosynthesis and dissolving into the ocean."],["hydro","Hydrosphere","Dissolved CO&#8322; in oceans, rivers and lakes, and carbon in shells. The ocean is the biggest active carbon store on the surface."],["bio","Biosphere","Carbon in living things and dead matter. Moves by photosynthesis, feeding, respiration and decomposition."],["geo","Geosphere (lithosphere)","Limestone, fossil fuels and soil. Carbon stays here for millions of years unless humans or volcanoes release it."]].map(c=>`<div class="box tint ${c[0]}"><h3 class="ink">${c[1]}</h3><p>${c[2]}</p></div>`).join("")}</div>`},
+  {mode:"learn", h:"The four spheres and their carbon",
+   html:`<div class="grid4 fill sph4">${[
+     ["atmo","Atmosphere",
+      ["The layer of gases around Earth: mostly nitrogen and oxygen."],
+      ["Carbon dioxide (CO&#8322;) gas","Methane (CH&#8324;) gas"],
+      ["<b>In:</b> respiration, combustion, decomposition, volcanoes","<b>Out:</b> photosynthesis, dissolving into the ocean"]],
+     ["hydro","Hydrosphere",
+      ["All of Earth's water: oceans, rivers, lakes, groundwater and ice."],
+      ["CO&#8322; dissolved in sea water","Shells and skeletons of sea creatures","Ocean sediments"],
+      ["<b>In:</b> CO&#8322; dissolves from the air into the ocean","<b>Out:</b> CO&#8322; released from warm water, used by phytoplankton in photosynthesis"]],
+     ["bio","Biosphere",
+      ["All living things, and the places they live."],
+      ["Plants, trees and seagrass","Animals and other living things","Dead matter and waste"],
+      ["<b>In:</b> photosynthesis, feeding","<b>Out:</b> respiration, decomposition, burning (bushfires, land clearing)"]],
+     ["geo","Geosphere (lithosphere)",
+      ["The solid Earth: rocks, soil, sediment and magma."],
+      ["Fossil fuels: coal, oil and gas","Limestone and other rocks","Soil"],
+      ["<b>In:</b> burial of dead matter over millions of years, sediments forming rock","<b>Out:</b> burning fossil fuels, volcanoes, weathering of rock"]]
+   ].map(c=>`<div class="box tint ${c[0]}"><h3 class="ink">${c[1]}</h3><div><b class="ink">What it is</b><ul>${c[2].map(x=>`<li>${x}</li>`).join("")}</ul></div><div><b class="ink">Where carbon is stored</b><ul>${c[3].map(x=>`<li>${x}</li>`).join("")}</ul></div><div><b class="ink">How carbon moves in and out</b><ul>${c[4].map(x=>`<li>${x}</li>`).join("")}</ul></div></div>`).join("")}</div>`},
   {mode:"learn", h:"How humans change the carbon cycle",
    html:`<div class="grid2 fill"><div class="box tint geo"><h3 class="ink">Burning fossil fuels</h3><p>Moves carbon from the geosphere, where it was stored for millions of years, into the atmosphere in seconds.</p></div><div class="box tint bio"><h3 class="ink">Deforestation</h3><p>Fewer trees means less photosynthesis, and burning or rotting the wood releases CO&#8322;.</p></div></div><div class="grid3">${[["280 ppm","CO&#8322; before industry"],["about 421 ppm","CO&#8322; at Mauna Loa, 2023"],["about 37 billion t","CO&#8322; from fossil fuels, 2024"]].map(c=>`<div class="box" style="align-items:center;text-align:center"><b style="font-family:var(--f-display);font-size:2.6cqw">${c[0]}</b><span class="small">${c[1]}</span></div>`).join("")}</div><p class="small">Data: NOAA Global Monitoring Laboratory; Global Carbon Project.</p>`},
   {mode:"check", h:"Natural or human?", init:"sort",
