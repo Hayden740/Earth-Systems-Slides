@@ -585,12 +585,12 @@ INIT.tech=function(){
     sb.innerHTML=names.map(n=>`<button aria-pressed="${n===cur}" data-t="${n}">${n}</button>`).join("");
     sb.querySelectorAll("button").forEach(b=>b.onclick=()=>{cur=b.dataset.t;k=0;draw()});upd()};
   const upd=()=>{const t=TECHS[cur];svg.querySelectorAll(".te").forEach((g,i)=>g.setAttribute("opacity",i<k?1:0));cnt.textContent=`${k} of ${t.steps.length} steps`;
-    out.innerHTML=k<t.steps.length?`<h3>${cur}</h3>${t.steps.slice(0,k).map((s,i)=>`<p><b>${s[3]?"Without capture":"Step "+(i+1)}:</b> ${s[2]}</p>`).join("")||'<p class="small">Click "Next step" to follow the carbon.</p>'}`
+    out.innerHTML=true?`<h3>${cur}</h3>${t.steps.slice(0,k).map((s,i)=>`<p><b>${s[3]?"Without capture":"Step "+(i+1)}:</b> ${s[2]}</p>`).join("")||'<p class="small">Click "Next step" to follow the carbon.</p>'}`
       :`<h3>${cur}</h3><p><b>How it works.</b> ${t.how}</p><p><b>How effective?</b> ${t.eff}</p><p><b>Limitations.</b> ${t.lim}</p>`};
-  $("#techNext").onclick=()=>{if(k<TECHS[cur].steps.length)k++;upd()};$("#techAll").onclick=()=>{k=TECHS[cur].steps.length;upd()};$("#techReset").onclick=()=>{k=0;upd()};
+  $("#techNext").onclick=()=>{if(k<TECHS[cur].steps.length)k++;upd()};$("#techReset").onclick=()=>{k=0;upd()};
   draw();
 };
-const techUI=`<div class="grid2 fill" style="grid-template-columns:1.25fr 1fr"><div style="display:flex;flex-direction:column;gap:.8cqw"><div class="stations" id="techPick"></div><div class="box" style="padding:.6cqw">${techSVG()}</div><div class="row"><button class="btn primary" id="techNext">Next step</button><button class="btn" id="techAll">Show the facts</button><button class="btn" id="techReset">Reset</button><span class="small" id="techCount"></span></div></div><div class="box" id="techOut" style="overflow:auto;font-size:1.5cqw;gap:.5cqw"></div></div>`;
+const techUI=`<div class="grid2 fill" style="grid-template-columns:1.25fr 1fr"><div style="display:flex;flex-direction:column;gap:.8cqw"><div class="stations" id="techPick"></div><div class="box" style="padding:.6cqw">${techSVG()}</div><div class="row"><button class="btn primary" id="techNext">Next step</button><button class="btn" id="techReset">Reset</button><span class="small" id="techCount"></span></div></div><div class="box" id="techOut" style="overflow:auto;font-size:1.5cqw;gap:.5cqw"></div></div>`;
 const techCard=n=>{const t=TECHS[n];return `<h3>${n}</h3><p><b>How it works.</b> ${t.how}</p><p><b>How effective?</b> ${t.eff}</p><p><b>Limitations.</b> ${t.lim}</p>`};
 
 const TVID={"CCS":["2SwfbHhWgO8","Roads to Removal: Carbon Capture and Storage","Lawrence Livermore National Laboratory",["Where is the CO&#8322; captured?","Where is it stored, and what stops it escaping?","How do scientists check it stays there?"]],
@@ -672,7 +672,6 @@ LESSONS.push(
   slides:[
   {mode:"learn", h:"Two ways to fix the carbon problem",
    html:`<div class="grid2 fill"><div class="box tint geo"><h3 class="ink">Stop it getting out</h3><p>Catch CO&#8322; at a chimney or gas plant <b>before</b> it reaches the air.</p><p class="small">Example: carbon capture and storage (CCS)</p></div><div class="box tint bio"><h3 class="ink">Take it back out</h3><p>Remove CO&#8322; that is <b>already</b> in the atmosphere.</p><p class="small">Examples: direct air capture, biochar, ocean fertilisation</p></div></div><p class="small"><b>Key idea:</b> good storage is <b>durable</b>. Carbon in a tree might burn in a bushfire; carbon turned into rock underground could stay there for millions of years.</p>`},
-  {mode:"learn", h:"Follow the carbon", init:"tech", html:techUI},
   {mode:"watch", h:"Watch: choose a technology",
    html:tabs(Object.keys(TECHS).map(n=>[n,vid(...TVID[n])]))},
   write(6,"Part 2",["Tick the <b>two</b> technologies you will investigate. Choosing two that work differently makes comparing easier.","Fill in <b>First impressions</b>: what you already know and what you want to find out.","Write why you chose these two."])
@@ -684,6 +683,8 @@ LESSONS.push(
   slides:[
   {mode:"research", h:"Fact files",
    html:`<div style="font-size:1.6cqw;display:flex;flex-direction:column;gap:.8cqw">${tabs(Object.keys(TECHS).map(n=>[n,techCard(n)]))}</div><p class="small">These facts are a starting point. Find at least one more source of your own.</p>`},
+  {mode:"learn", h:"Which spheres does the carbon move between?", init:"tech",
+   html:techUI.replace('<span class="small" id="techCount"></span></div>','<span class="small" id="techCount"></span></div><p class="small"><b>For 2A:</b> this shows which spheres the carbon moves between. Your own sketch should also show how the technology actually works (the machine, the kiln, the well or the ship).</p>')},
   {mode:"research", h:"Research tips",
    html:`<div class="grid2 fill"><div class="box"><h3>Reliable sources</h3><ul><li>CSIRO, IPCC, NASA, NOAA</li><li>ABC News and ABC Education</li><li>Company and industry websites: useful facts, but they are selling something. Check their claims.</li></ul></div><div class="box"><h3>Search terms to try</h3><ul><li>CCS: Moomba CCS, Gorgon CCS</li><li>Direct air capture: Climeworks Mammoth, Carbfix</li><li>Biochar: biochar carbon removal, terra preta</li><li>Ocean fertilisation: iron fertilisation, London Protocol</li></ul></div></div><p class="small">Write down the author, year, title and website of every source you use.</p>`},
   write(7,"Technology A",["Write the name of your first technology at the top of page 7.","<b>2A:</b> sketch and label how it captures and stores carbon. Show where the carbon starts and ends and name the spheres. Then explain it in your own words.","<b>2B:</b> how effective could it be? Include a number, such as tonnes of CO&#8322; stored per year.","<b>2C:</b> its limitations or challenges.","Write your sources at the bottom of the page."])
@@ -694,7 +695,9 @@ LESSONS.push(
   sc:["I can sketch and explain how my second technology works.","I can support my answers with numbers and reliable sources."],
   slides:[
   {mode:"research", h:"Fact files",
-   html:`<div style="font-size:1.6cqw;display:flex;flex-direction:column;gap:.8cqw">${tabs(Object.keys(TECHS).map(n=>[n,techCard(n)]))}</div><p class="small">Go back to step 4 to rewatch the videos or follow the carbon again.</p>`},
+   html:`<div style="font-size:1.6cqw;display:flex;flex-direction:column;gap:.8cqw">${tabs(Object.keys(TECHS).map(n=>[n,techCard(n)]))}</div><p class="small">Go back to step 4 to rewatch the videos.</p>`},
+  {mode:"learn", h:"Which spheres does the carbon move between?", init:"tech",
+   html:techUI.replace('<span class="small" id="techCount"></span></div>','<span class="small" id="techCount"></span></div><p class="small"><b>For 2A:</b> this shows which spheres the carbon moves between. Your own sketch should also show how the technology actually works (the machine, the kiln, the well or the ship).</p>')},
   write(8,"Technology B",["Write the name of your second technology at the top of page 8.","<b>2A:</b> sketch, label and explain how it works.","<b>2B:</b> how effective could it be? Include a number.","<b>2C:</b> its limitations or challenges.","Write your sources at the bottom of the page."])
   ]},
 
