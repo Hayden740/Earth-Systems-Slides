@@ -72,6 +72,15 @@ button{font:inherit;color:inherit;cursor:pointer}
 .ink{color:var(--sc)}
 .chip.atmo,.chip.hydro,.chip.geo,.chip.bio{background:var(--sc);color:var(--surface)}
 .fill{flex:1;min-height:0}
+.cmp4{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1.2cqw}
+.cmp4 .box{font-size:1.3cqw;line-height:1.22;gap:.35cqw;padding:.8cqw 1.2cqw .7cqw;min-width:0;min-height:0}
+.cmp4 h3{font-size:1.7cqw}.cmp4 ul{gap:.15cqw;padding-left:1.1em}.cmp4+.small{margin-top:-.4cqw}
+.rscale{margin-top:auto;padding-top:1.9cqw;position:relative;flex-shrink:0}
+.rscale .sbar{height:1.3cqw;border-radius:999px;background:linear-gradient(90deg,#2f9e44 0%,#f2c230 50%,#d9412f 100%)}
+.rscale .slab{display:flex;justify-content:space-between;font-size:1.1cqw;font-weight:700;color:var(--muted);margin-top:.3cqw}
+.rscale .sarr{position:absolute;top:0;left:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;transition:left 1s cubic-bezier(.3,1.4,.5,1)}
+.rscale .sarr b{font-size:1.05cqw;background:var(--ink);color:var(--surface);border-radius:999px;padding:0 .7cqw;white-space:nowrap}
+.rscale .sarr i{width:0;height:0;border-left:.8cqw solid transparent;border-right:.8cqw solid transparent;border-top:1cqw solid var(--ink)}
 .row{display:flex;gap:1cqw;flex-wrap:wrap;align-items:center}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:.8cqw;padding:.6cqw 1.3cqw;font-size:1.45cqw;font-weight:700}
 .btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
@@ -264,7 +273,7 @@ svg text{font-family:var(--f-body)}
 </head>
 <body>
 <div class="app">
-  <header class="bar">
+  <header class="sbar">
     <button class="brand" id="homeBtn" aria-label="Unit home"><span class="dots"><i style="background:var(--atmo)"></i><i style="background:var(--hydro)"></i><i style="background:var(--geo)"></i><i style="background:var(--bio)"></i></span>Carbon Storage SHE Task</button>
     <nav class="lessons" id="lessonNav" aria-label="Parts and steps"></nav>
   </header>
@@ -310,7 +319,7 @@ const slot = (x,y,w,ans) => `<g class="slot" data-slot data-ans="${ans}" tabinde
 const blank = ans => `<button class="blank" data-slot data-ans="${ans}"><span data-st>?</span></button>`;
 const bankUI = `<div class="bank" id="bank"></div><div class="row"><button class="btn primary" id="slCheck">Check</button><button class="btn" id="slShow">Show answers</button><button class="btn" id="slReset">Reset</button><span class="small" id="slMsg">Click a word, then click where it goes.</span></div>`;
 const sortUI = `<div class="sortItems" id="pool"></div><div class="zones" id="zones"></div><div class="row"><button class="btn primary" id="sortCheck">Check</button><button class="btn" id="sortReset">Reset</button><span class="small" id="sortMsg"></span></div>`;
-const orderUI = (lo,hi) => `<div class="grid2 fill"><div style="display:flex;flex-direction:column;gap:1cqw"><div class="sortItems" id="oPool"></div><div class="row"><button class="btn primary" id="oCheck">Check</button><button class="btn" id="oShow">Show answer</button><button class="btn" id="oReset">Reset</button></div><p class="small" id="oMsg"></p></div><div style="display:flex;flex-direction:column;gap:.6cqw">${lo?`<div class="scale"><span>${lo}</span><span>${hi}</span></div>`:""}<ol class="ordered" id="oList"></ol></div></div>`;
+const orderUI = (lo,hi) => `<div class="grid2 fill"><div style="display:flex;flex-direction:column;gap:1cqw"><div class="sortItems" id="oPool"></div><div class="row"><button class="btn primary" id="oCheck">Check</button><button class="btn" id="oShow">Show answer</button><button class="btn" id="oReset">Reset</button></div><p class="small" id="oMsg"></p></div><div style="display:flex;flex-direction:column;gap:.6cqw">${lo?`<div class="rscale"><span>${lo}</span><span>${hi}</span></div>`:""}<ol class="ordered" id="oList"></ol></div></div>`;
 const voteUI = (btn="Reveal answer") => `<div class="box fill" style="justify-content:center;align-items:center"><div class="spot" id="voteItem"></div><p id="voteAns" class="lead" style="text-align:center;max-width:60ch" hidden></p></div><div class="row"><button class="btn primary" id="voteReveal">${btn}</button><button class="btn" id="voteNext">Next</button><span class="small" id="voteCount"></span></div>`;
 
 /* ---------- SVG builders ---------- */
@@ -597,6 +606,11 @@ const TVID={"CCS":["2SwfbHhWgO8","Roads to Removal: Carbon Capture and Storage",
  "Direct air capture":["4w2xyo_GXUg","The technology that fights climate change","Climeworks",["How does the machine catch CO&#8322;?","What energy does it use?","Who made this video? Why might that matter?"],"A company video: compare its claims with independent sources."],
  "Biochar":["uEOK3fk45Rg","How Biochar Removes CO2 from the Air, and Helps Farmers Thrive","TED (Axel Reinaud)",["How is biochar made?","How does it help farmers?","How long does the carbon stay stored?"],"About 11 minutes."],
  "Ocean fertilisation":["wD_PuHx2ca0","Fertilising the oceans with iron","Prof Richard Lampitt, National Oceanography Centre",["Why would adding iron make plankton grow?","How much of the carbon sinks?","What could go wrong?"]]};
+/* criterion comparison: pos 0 = green (better) to 100 = red (worse) */
+const SCALE_WORD=v=>v<34?"Better":v<67?"Mixed":"Worse";
+const cmpSlide=(h,items,note)=>({mode:"learn",h,init:"scale",
+  html:`<div class="cmp4 fill">${items.map(c=>`<div class="box tint ${c[1]}"><h3 class="ink">${c[0]}</h3><ul>${c[2].map(b=>`<li>${b}</li>`).join("")}</ul><div class="rscale"><div class="sarr" data-pos="${c[3]}" style="left:0%"><b>${SCALE_WORD(c[3])}</b><i></i></div><div class="sbar"></div><div class="slab"><span>Good</span><span>Mixed</span><span>Bad</span></div></div></div>`).join("")}</div><p class="small">${note}</p>`});
+INIT.scale=function(){setTimeout(()=>document.querySelectorAll(".rscale .sarr").forEach(a=>a.style.left=a.dataset.pos+"%"),80)};
 /* ================= STUDENT STEPS (follow the booklet) ================= */
 MODES.book=["Write in your booklet","var(--geo)"];
 const PARTS=["Understanding the carbon cycle","Carbon storage technologies","SHE analysis"];
@@ -707,6 +721,24 @@ LESSONS.push(
   slides:[
   {mode:"learn", h:"Three ways to compare",
    html:`<div class="grid3 fill">${[["Environmental impact","Benefits and risks to land, oceans, air and living things. Energy, water and land use. Could carbon leak?","bio"],["Cost and feasibility","Cost per tonne. Can it work at a large scale? Is it ready now or still being tested?","atmo"],["Social and ethical","Who benefits and who carries the risks? Is it fair? Would communities accept it?","geo"]].map(c=>`<div class="box tint ${c[2]}"><h3 class="ink">${c[0]}</h3><p>${c[1]}</p></div>`).join("")}</div>`},
+  cmpSlide("Environmental impact: how do they compare?",[
+   ["CCS","geo",["Stores CO&#8322; deep underground in rock, where it can stay for thousands of years if the site is well chosen and monitored.","Capturing and pumping CO&#8322; uses extra energy, and there is a small risk of leaks.","At Moomba the CO&#8322; comes from gas processing, so it does not undo the emissions from burning that gas."],50],
+   ["Direct air capture","atmo",["Removes CO&#8322; that is already in the air and uses very little land.","Needs a huge amount of energy. It only helps the climate if that energy is renewable.","The captured CO&#8322; still has to be stored safely underground."],38],
+   ["Biochar","bio",["Turns plant waste into charcoal that stays in soil for hundreds of years or more.","Can help soil hold water and nutrients.","Risk: growing crops or cutting forests just to make biochar would harm habitats."],20],
+   ["Ocean fertilisation","hydro",["Plankton blooms can use up oxygen in the water and change marine food webs.","Only a small, uncertain amount of carbon sinks to the deep ocean.","Effects spread across borders and are hard to undo."],86]],
+   "The arrows are a rough guide. Base your 2D rating on your own evidence."),
+  cmpSlide("Cost and feasibility: how do they compare?",[
+   ["CCS","geo",["Already working at large scale, such as Moomba (up to 1.7 million tonnes a year).","One of the cheaper options when the CO&#8322; is already separated, as it is at a gas plant.","Needs the right rock underground and expensive wells and pipelines."],30],
+   ["Direct air capture","atmo",["The most expensive option right now: hundreds to over a thousand US dollars per tonne.","Plants are still small. Mammoth in Iceland is designed for 36,000 tonnes a year.","Costs may fall as the technology improves."],82],
+   ["Biochar","bio",["Simple technology that is ready now and used on farms around the world.","Roughly a hundred to a few hundred US dollars per tonne.","Limited by how much plant waste there is and the cost of transporting and spreading it."],30],
+   ["Ocean fertilisation","hydro",["Iron is cheap, but it is very hard to measure how much carbon is actually stored.","Only approved scientific research is allowed under the London Protocol.","Not ready to use at large scale."],76]],
+   "Think about the scale: how many projects would it take to make a real difference?"),
+  cmpSlide("Social and ethical: how do they compare?",[
+   ["CCS","geo",["Creates jobs and helps industries that are hard to clean up.","Critics say it helps keep fossil fuel production going for longer.","Raises questions about consultation with Traditional Owners and who monitors the site for the long term."],58],
+   ["Direct air capture","atmo",["Can be built almost anywhere, away from homes, so fewer communities carry the risks.","Some worry it gives polluters an excuse to keep polluting.","Who pays for it, and who earns money from the carbon credits?"],42],
+   ["Biochar","bio",["Can benefit farmers through healthier soil.","Builds on Indigenous knowledge: Amazonian peoples made charcoal-rich terra preta soils.","Must not take land away from growing food."],18],
+   ["Ocean fertilisation","hydro",["The ocean is shared, so no single community or country can give permission.","Could affect fishing communities who did not agree to it.","Countries have agreed to allow only approved scientific research."],86]],
+   "Who benefits, and who carries the risks? Use this question in your SHE analysis too."),
   {mode:"talk", h:"How big is the problem? Scale it up",
    html:`<div class="tablewrap"><table class="ctable"><thead><tr><th>Project</th><th>Storage per year</th></tr></thead><tbody><tr><td>Moomba CCS, SA (designed capacity)</td><td>up to 1.7 million tonnes</td></tr><tr><td>Mammoth direct air capture, Iceland (designed)</td><td>36,000 tonnes</td></tr><tr><td>Global fossil fuel CO&#8322; (2024)</td><td>about 37,000 million tonnes</td></tr></tbody></table></div><div class="grid2">${rv("How many Moomba-sized projects to store it all?","About 22,000 (37,000 &divide; 1.7). Australia has only a handful.","Estimate, then click")}${rv("How many Mammoth-sized plants?","About 1 million (37,000,000,000 &divide; 36,000).","Estimate, then click")}</div><p class="small">What does this tell you about relying on storage alone? Use this idea in your evaluation.</p>`},
   write("9 and 10","2D and 2E",["<b>2D (page 9):</b> for each criterion, write evidence for both technologies, then circle a rating out of 5. Add up the totals.","<b>2E (page 10):</b> fill in the Venn diagram: only A on the left, only B on the right, both in the middle.","Answer the two questions under the Venn diagram."],"Tip: swap one fact with a classmate who researched a different technology.")
