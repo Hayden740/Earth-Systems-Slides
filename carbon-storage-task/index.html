@@ -72,6 +72,22 @@ button{font:inherit;color:inherit;cursor:pointer}
 .ink{color:var(--sc)}
 .chip.atmo,.chip.hydro,.chip.geo,.chip.bio{background:var(--sc);color:var(--surface)}
 .fill{flex:1;min-height:0}
+.vpick{display:grid;grid-template-columns:1fr 1fr;gap:2cqw}
+.vbtns{display:grid;grid-template-columns:repeat(4,1fr);gap:.4cqw;margin-top:.2cqw}
+.vbtns button{border:1px solid var(--line);background:var(--surface);border-radius:.6cqw;padding:.35cqw;font-weight:700;font-size:1.2cqw}
+.vbtns button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.vbtns button:disabled{opacity:.35}
+.vwrap{display:grid;grid-template-columns:2.3fr 1fr;gap:1.4cqw}
+.venn{position:relative;min-height:0}
+.venn svg{position:absolute;inset:0;width:100%;height:100%}
+.vz{position:absolute;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5cqw;padding:1cqw .6cqw;cursor:pointer}
+.vz[data-z="a"]{left:4%;width:30%}.vz.mid{left:36%;width:28%}.vz[data-z="b"]{left:66%;width:30%}
+.vz h3{color:var(--sc);font-size:1.6cqw!important;text-align:center}
+.vz .drop{display:flex;flex-direction:column;gap:.35cqw;align-items:stretch;width:100%;min-height:3cqw}
+.vz.over{outline:2px dashed var(--accent);outline-offset:-4px;border-radius:1cqw}
+.vside{display:flex;flex-direction:column;gap:.6cqw;min-height:0}
+.vpool{display:flex;flex-direction:column;gap:.35cqw;overflow:auto;min-height:0;flex:1}
+.venn .card,.vpool .card{font-size:1.1cqw;padding:.3cqw .7cqw;text-align:left;font-weight:600}
 .cmp4{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1.2cqw}
 .cmp4 .box{font-size:1.3cqw;line-height:1.22;gap:.35cqw;padding:.8cqw 1.2cqw .7cqw;min-width:0;min-height:0}
 .cmp4 h3{font-size:1.7cqw}.cmp4 ul{gap:.15cqw;padding-left:1.1em}.cmp4+.small{margin-top:-.4cqw}
@@ -611,6 +627,46 @@ const SCALE_WORD=v=>v<34?"Better":v<67?"Mixed":"Worse";
 const cmpSlide=(h,items,note)=>({mode:"learn",h,init:"scale",
   html:`<div class="cmp4 fill">${items.map(c=>`<div class="box tint ${c[1]}"><h3 class="ink">${c[0]}</h3><ul>${c[2].map(b=>`<li>${b}</li>`).join("")}</ul><div class="rscale"><div class="sarr" data-pos="${c[3]}" style="left:0%"><b>${SCALE_WORD(c[3])}</b><i></i></div><div class="sbar"></div><div class="slab"><span>Good</span><span>Mixed</span><span>Bad</span></div></div></div>`).join("")}</div><p class="small">${note}</p>`});
 INIT.scale=function(){setTimeout(()=>document.querySelectorAll(".rscale .sarr").forEach(a=>a.style.left=a.dataset.pos+"%"),80)};
+/* Venn sorter: which technologies each statement is true for */
+const VENN_FACTS=[
+ ["Aims to lower the amount of CO&#8322; in the atmosphere",["CCS","Direct air capture","Biochar","Ocean fertilisation"]],
+ ["Can store carbon for hundreds of years or more",["CCS","Direct air capture","Biochar"]],
+ ["Stores CO&#8322; in rock deep underground",["CCS","Direct air capture"]],
+ ["Needs a lot of energy to run",["CCS","Direct air capture"]],
+ ["Takes CO&#8322; out of the air",["Direct air capture","Biochar","Ocean fertilisation"]],
+ ["Uses photosynthesis",["Biochar","Ocean fertilisation"]],
+ ["Catches CO&#8322; before it reaches the air",["CCS"]],
+ ["Linked to the gas industry",["CCS"]],
+ ["Already working at a large scale",["CCS"]],
+ ["The most expensive per tonne right now",["Direct air capture"]],
+ ["Uses very little land",["Direct air capture"]],
+ ["Stores carbon in soil",["Biochar"]],
+ ["Can help farmers' soil hold water",["Biochar"]],
+ ["Made from plant waste",["Biochar"]],
+ ["Some carbon sinks to the deep ocean",["Ocean fertilisation"]],
+ ["Could harm marine life",["Ocean fertilisation"]],
+ ["Only allowed for approved research",["Ocean fertilisation"]]];
+INIT.venn=function(){
+  const T=["CCS","Direct air capture","Biochar","Ocean fertilisation"];let A=T[0],B=T[1],sel=null;
+  const pool=$("#vPool"),venn=$("#venn"),msg=$("#vMsg");
+  const btns=()=>{[["#vA",()=>A,v=>A=v,()=>B],["#vB",()=>B,v=>B=v,()=>A]].forEach(([id,get,set,other])=>{
+    const el=$(id);el.innerHTML=T.map(t=>`<button aria-pressed="${t===get()}" ${t===other()?"disabled":""} data-t="${t}">${t}</button>`).join("");
+    el.querySelectorAll("button").forEach(b=>b.onclick=()=>{set(b.dataset.t);btns();reset()})})};
+  const mk=f=>{const c=document.createElement("button");c.className="card";c.innerHTML=f[0];
+    const a=f[1].includes(A),b=f[1].includes(B);c.dataset.ans=a&&b?"ab":a?"a":"b";
+    c.onclick=e=>{e.stopPropagation();if(sel)sel.classList.remove("sel");sel=(sel===c?null:c);if(sel)sel.classList.add("sel")};
+    c.draggable=true;c.ondragstart=e=>{sel=c;e.dataTransfer.setData("text/plain","x")};return c};
+  const reset=()=>{$("#vNameA").textContent="Only "+A;$("#vNameB").textContent="Only "+B;
+    venn.querySelectorAll(".drop").forEach(d=>d.innerHTML="");pool.innerHTML="";msg.textContent="";sel=null;
+    shuffle(VENN_FACTS.filter(f=>f[1].includes(A)||f[1].includes(B))).forEach(f=>pool.appendChild(mk(f)))};
+  const place=z=>{if(!sel)return;z.querySelector(".drop").appendChild(sel);sel.classList.remove("sel","ok","no");sel=null};
+  venn.querySelectorAll(".vz").forEach(z=>{z.onclick=()=>place(z);
+    z.ondragover=e=>{e.preventDefault();z.classList.add("over")};z.ondragleave=()=>z.classList.remove("over");z.ondrop=e=>{e.preventDefault();z.classList.remove("over");place(z)}});
+  pool.onclick=()=>{if(sel){pool.appendChild(sel);sel.classList.remove("sel");sel=null}};
+  $("#vCheck").onclick=()=>{let ok=0,tot=0;venn.querySelectorAll(".vz").forEach(z=>z.querySelectorAll(".card").forEach(c=>{tot++;const g=c.dataset.ans===z.dataset.z;c.classList.toggle("ok",g);c.classList.toggle("no",!g);if(g)ok++}));
+    msg.textContent=`${ok} of ${tot} placed correctly.${pool.children.length?` ${pool.children.length} still to sort.`:" Now use these ideas in your booklet."}`};
+  $("#vReset").onclick=reset;btns();reset();
+};
 /* ================= STUDENT STEPS (follow the booklet) ================= */
 MODES.book=["Write in your booklet","var(--geo)"];
 const PARTS=["Understanding the carbon cycle","Carbon storage technologies","SHE analysis"];
@@ -732,15 +788,15 @@ LESSONS.push(
    ["Direct air capture","atmo",["The most expensive option right now: hundreds to over a thousand US dollars per tonne.","Plants are still small. Mammoth in Iceland is designed for 36,000 tonnes a year.","Costs may fall as the technology improves."],82],
    ["Biochar","bio",["Simple technology that is ready now and used on farms around the world.","Roughly a hundred to a few hundred US dollars per tonne.","Limited by how much plant waste there is and the cost of transporting and spreading it."],30],
    ["Ocean fertilisation","hydro",["Iron is cheap, but it is very hard to measure how much carbon is actually stored.","Only approved scientific research is allowed under the London Protocol.","Not ready to use at large scale."],76]],
-   "Think about the scale: how many projects would it take to make a real difference?"),
+   "Think about scale: which ones could store enough CO&#8322; to make a real difference?"),
   cmpSlide("Social and ethical: how do they compare?",[
    ["CCS","geo",["Creates jobs and helps industries that are hard to clean up.","Critics say it helps keep fossil fuel production going for longer.","Raises questions about consultation with Traditional Owners and who monitors the site for the long term."],58],
    ["Direct air capture","atmo",["Can be built almost anywhere, away from homes, so fewer communities carry the risks.","Some worry it gives polluters an excuse to keep polluting.","Who pays for it, and who earns money from the carbon credits?"],42],
    ["Biochar","bio",["Can benefit farmers through healthier soil.","Builds on Indigenous knowledge: Amazonian peoples made charcoal-rich terra preta soils.","Must not take land away from growing food."],18],
    ["Ocean fertilisation","hydro",["The ocean is shared, so no single community or country can give permission.","Could affect fishing communities who did not agree to it.","Countries have agreed to allow only approved scientific research."],86]],
    "Who benefits, and who carries the risks? Use this question in your SHE analysis too."),
-  {mode:"talk", h:"How big is the problem? Scale it up",
-   html:`<div class="tablewrap"><table class="ctable"><thead><tr><th>Project</th><th>Storage per year</th></tr></thead><tbody><tr><td>Moomba CCS, SA (designed capacity)</td><td>up to 1.7 million tonnes</td></tr><tr><td>Mammoth direct air capture, Iceland (designed)</td><td>36,000 tonnes</td></tr><tr><td>Global fossil fuel CO&#8322; (2024)</td><td>about 37,000 million tonnes</td></tr></tbody></table></div><div class="grid2">${rv("How many Moomba-sized projects to store it all?","About 22,000 (37,000 &divide; 1.7). Australia has only a handful.","Estimate, then click")}${rv("How many Mammoth-sized plants?","About 1 million (37,000,000,000 &divide; 36,000).","Estimate, then click")}</div><p class="small">What does this tell you about relying on storage alone? Use this idea in your evaluation.</p>`},
+  {mode:"learn", h:"Get ready for your Venn diagram", init:"venn",
+   html:`<div class="vpick"><div><span class="small">Technology A</span><div class="vbtns" id="vA"></div></div><div><span class="small">Technology B</span><div class="vbtns" id="vB"></div></div></div><div class="vwrap fill"><div class="venn" id="venn"><svg viewBox="0 0 700 360" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="250" cy="180" rx="240" ry="172" fill="var(--atmo)" fill-opacity=".13" stroke="var(--atmo)" stroke-width="3"/><ellipse cx="450" cy="180" rx="240" ry="172" fill="var(--geo)" fill-opacity=".13" stroke="var(--geo)" stroke-width="3"/></svg><div class="vz" data-z="a" style="--sc:var(--atmo)"><h3 id="vNameA"></h3><div class="drop"></div></div><div class="vz mid" data-z="ab" style="--sc:var(--ink)"><h3>Both</h3><div class="drop"></div></div><div class="vz" data-z="b" style="--sc:var(--geo)"><h3 id="vNameB"></h3><div class="drop"></div></div></div><div class="vside"><p class="small">Click a card, then click where it goes in the Venn diagram.</p><div class="vpool" id="vPool"></div><div class="row"><button class="btn primary" id="vCheck">Check</button><button class="btn" id="vReset">Reset</button></div><p class="small" id="vMsg"></p></div></div><p class="small">Pick the two technologies you researched. In your booklet, add at least one fact of your own to each part of the Venn diagram.</p>`},
   write("9 and 10","2D and 2E",["<b>2D (page 9):</b> for each criterion, write evidence for both technologies, then circle a rating out of 5. Add up the totals.","<b>2E (page 10):</b> fill in the Venn diagram: only A on the left, only B on the right, both in the middle.","Answer the two questions under the Venn diagram."],"Tip: swap one fact with a classmate who researched a different technology.")
   ]},
 
