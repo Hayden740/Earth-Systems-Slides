@@ -72,6 +72,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .ink{color:var(--sc)}
 .chip.atmo,.chip.hydro,.chip.geo,.chip.bio{background:var(--sc);color:var(--surface)}
 .fill{flex:1;min-height:0}
+.she4{display:grid;grid-template-columns:repeat(4,1fr);gap:1cqw}
+.she4 .box{font-size:1.36cqw;line-height:1.27;gap:.5cqw;padding:1cqw 1.1cqw;min-width:0;min-height:0}
+.she4 h3{font-size:1.8cqw}.she4 ul{gap:.3cqw;padding-left:1.1em}
+.sheEx{margin-top:auto;background:var(--surface);border-radius:.6cqw;padding:.6cqw .8cqw;border-left:.4cqw solid var(--sc);display:flex;flex-direction:column;gap:.2cqw}
+.sheEx b{font-size:1.05cqw;text-transform:uppercase;letter-spacing:.05em;color:var(--sc)}
 .vpick{display:grid;grid-template-columns:1fr 1fr;gap:2cqw}
 .vbtns{display:grid;grid-template-columns:repeat(4,1fr);gap:.4cqw;margin-top:.2cqw}
 .vbtns button{border:1px solid var(--line);background:var(--surface);border-radius:.6cqw;padding:.35cqw;font-weight:700;font-size:1.2cqw}
@@ -667,6 +672,9 @@ INIT.venn=function(){
     msg.textContent=`${ok} of ${tot} placed correctly.${pool.children.length?` ${pool.children.length} still to sort.`:" Now use these ideas in your booklet."}`};
   $("#vReset").onclick=reset;btns();reset();
 };
+/* SHE planner slide: one lens, technologies across the top */
+const sheSlide=(h,q,d)=>{const T=[["CCS","geo"],["Direct air capture","atmo"],["Biochar","bio"],["Ocean fertilisation","hydro"]];
+ return {mode:"research",h,html:`<p class="lead" style="font-size:1.75cqw">${q}</p><div class="she4 fill">${T.map((t,i)=>`<div class="box tint ${t[1]}"><h3 class="ink">${t[0]}</h3><ul>${d[i*2].map(x=>`<li>${x}</li>`).join("")}</ul><div class="sheEx"><b>Real example</b>${d[i*2+1]}</div></div>`).join("")}</div><p class="small">For your planner on page 12: find the columns for your two technologies and put the ideas in your own words.</p>`}};
 /* ================= STUDENT STEPS (follow the booklet) ================= */
 MODES.book=["Write in your booklet","var(--geo)"];
 const PARTS=["Understanding the carbon cycle","Carbon storage technologies","SHE analysis"];
@@ -815,11 +823,34 @@ LESSONS.push(
   slides:[
   {mode:"learn", h:"Three SHE lenses",
    html:`<div class="grid3 fill">${[["Ethics: equity and justice","Who pays and who benefits? Who lives near the risks? Countries that emitted the least often feel climate change the most. What do we owe future generations?","geo"],["Cultural and societal values","How do communities value land, oceans and Country? Would people accept it? Do Traditional Owners get a real say over projects on their Country?","bio"],["Collaboration","Scientists test and monitor. Governments fund and regulate. Industries build and run. International agreements decide what happens in shared oceans.","hydro"]].map(c=>`<div class="box tint ${c[2]}"><h3 class="ink">${c[0]}</h3><p>${c[1]}</p></div>`).join("")}</div>`},
-  {mode:"learn", h:"Case study: Moomba CCS, South Australia",
-   html:`<div class="grid2 fill"><div class="box"><p>Australia's first large-scale onshore CCS project is at Moomba in the Cooper Basin, the traditional lands of the <b>Yandruwandha Yawarrawarrka</b> people, whose native title was recognised in 2015. Santos runs it with Beach Energy. It stored 2 million tonnes of CO&#8322; in about its first 18 months. The CO&#8322; comes from processing natural gas.</p></div><div class="grid2">${[["Who collaborated?","Santos and Beach Energy built and run it. The federal government gave grant funding. The Clean Energy Regulator issues carbon credits for the CO&#8322; stored."],["What do supporters say?","It cuts emissions from an industry that is hard to clean up, and could store CO&#8322; for other industries."],["What do critics say?","It helps keep gas production going for longer, and storage is small compared with total emissions."],["What would you research?","How were Traditional Owners consulted? Who earns money from the carbon credits? Who monitors for leaks?"]].map(c=>rv(c[0],c[1])).join("")}</div></div>`},
-  {mode:"learn", h:"Case study: iron in the ocean",
-   html:`<div class="grid2 fill"><div class="box"><p>In 2012 a private project added about 100 tonnes of iron to the Pacific Ocean off Canada's west coast to grow plankton. Countries in the London Protocol expressed grave concern. In 2013 they made it legally binding that only approved scientific research can go ahead.</p></div><div class="grid2">${[["Which SHE lens fits best?","Collaboration: the ocean is shared, so international agreements decide what is allowed. Ethics too: one group's actions affect everyone's ocean."],["Why did scientists object?","Effects on ecosystems were unknown and the carbon storage could not be checked."]].map(c=>rv(c[0],c[1])).join("")}</div></div>`},
-  write(12,"3A",["For each SHE perspective, write dot points for Technology A and Technology B.","Add a <b>real example</b> for each row: who, where and when.","Use these case studies or your own research."])
+  sheSlide("Ethics: equity and justice","Who pays? Who benefits? Who carries the risks? Is it fair to future generations?",[
+   ["Stores CO&#8322; from gas processing, so it can help a company keep producing gas for longer.","The company earns carbon credits. People living near the site carry any leak risk."],
+   "Gorgon CCS, Barrow Island WA (Chevron, from 2019) stored much less CO&#8322; than promised in its first years.",
+   ["Very expensive, so only rich companies and countries can pay for it.","Some worry it lets polluters keep polluting and pay to clean up later."],
+   "Climeworks, Iceland (Orca 2021, Mammoth 2024) sells carbon removal to big companies such as Microsoft.",
+   ["Can help farmers, including small farmers, grow more on poor soil.","Unfair if land used for food, or forests, is taken to grow crops for biochar."],
+   "Most of the carbon removal actually delivered worldwide so far has come from biochar.",
+   ["The ocean belongs to everyone, but one group's actions affect all of it.","People who rely on the sea carry the risk without being asked."],
+   "Haida Gwaii, Canada (2012): a company dumped about 100 tonnes of iron into the Pacific, hoping to sell carbon credits."]),
+  sheSlide("Cultural and societal values","How do communities value land, sea and Country? Would people accept it? Who gets a say?",[
+   ["Projects can be on Traditional Owners' Country.","Some people value jobs and local industry, others value leaving gas in the ground."],
+   "Moomba CCS, Cooper Basin SA (from 2024), on Yandruwandha Yawarrawarrka Country. Their native title was recognised in 2015.",
+   ["Can be built on land that is not used for farming or homes.","Communities near big industry may not want another large plant nearby."],
+   "Project Cypress, Louisiana USA (announced 2023, US government funding): local groups asked for a real say before it was built.",
+   ["Fits with values of caring for soil and farming for the future.","Builds on Indigenous knowledge, which should be respected and credited."],
+   "Amazon, Brazil: Indigenous peoples made charcoal-rich 'terra preta' soils hundreds to thousands of years ago that are still fertile.",
+   ["Many coastal and Indigenous communities see the sea as part of their culture and identity.","Changing the ocean on purpose worries many people."],
+   "Haida Gwaii (2012): a Haida village funded it to bring back salmon, but the Council of the Haida Nation said it was not told."]),
+  sheSlide("Collaboration","How do scientists, governments and industries work together on this technology?",[
+   ["Industry builds and runs the site. Government regulators issue carbon credits.","Scientists choose safe rock and monitor for leaks."],
+   "CO2CRC Otway, Victoria (since 2008): scientists, government and industry test how to store and monitor CO&#8322; underground.",
+   ["Needs cheap renewable energy and safe underground storage.","Different companies supply each part."],
+   "Iceland: Climeworks captures the CO&#8322;, Carbfix (started as a university research project) turns it to stone, and a geothermal power station supplies the energy.",
+   ["Farmers, scientists and biochar makers work together.","Field trials test whether it helps crops and how long the carbon stays."],
+   "NSW Department of Primary Industries, Wollongbar NSW: scientists have run biochar trials with farmers since the 2000s.",
+   ["Countries must agree on rules for the shared ocean.","Scientists test it carefully before anyone uses it."],
+   "LOHAFEX (2009): German and Indian scientists tested iron in the Southern Ocean. Little carbon sank because tiny animals ate the plankton."]),
+  write(12,"3A",["For each SHE perspective, write dot points for Technology A and Technology B.","Add a <b>real example</b> for each row: who, where and when.","Use the examples on these slides or your own research."])
   ]},
 
 { n:10, part:3, title:"Write your SHE analysis",
